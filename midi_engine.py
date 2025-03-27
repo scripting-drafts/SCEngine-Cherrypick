@@ -1,24 +1,38 @@
 import rtmidi
 from time import sleep
 import random
+from sys import exit
 
 midiout = rtmidi.MidiOut()
 available_ports = midiout.get_ports()
 print(available_ports)
 
 if available_ports:
-    midiout.open_port(0)
-    print('opened port')
+    selected_port = 1
+    midiout.open_port(selected_port)
+    print(f'opened port {selected_port}')
 else:
     midiout.open_virtual_port("My virtual output")
     print('opened virtual port')
 
-# Midi ranges for A
-# 21, 46
-# 33, 58
+def get_harmonic_range(hr='higher'):
+        if hr == 'higher':
+            n = [x for x in range(69, 94)]
+            return n
+        elif hr == 'default':
+            n = [x for x in range(33, 58)] # 33, 58
 
-# Midi Range
-n = [x for x in range(33, 58)]
+        elif hr == 'low':
+            n = [x for x in range(21, 46)]
+
+        else:
+            exit()
+
+        return n
+
+n = get_harmonic_range()
+# Simple solution
+# n = [x for x in range(33, 58)]
 
 # Scales
 diminished = [2, 4, 6, 7, 9]
@@ -54,6 +68,8 @@ s = s + [x + 12 for x in s if x != 0]
 rx, rx1, rx2, rx3, rx4, rx5, rx6 = s[0], s[1], s[2], s[3], s[4], s[5], s[6]
 
 count = 1
+rxs = {}
+sls = {}
 
 with midiout:
     sleep(1)
@@ -65,15 +81,49 @@ with midiout:
             midiout.send_message(note_on)
             # sleep(random.uniform(0.1, 1))
             # sleep(random.choice([0.1, 0.3]))
-            sleep(0.3)
+            sl = 1
+            sleep(sl)
             midiout.send_message(note_off)
 
+            key = str(rx) + str(count)
+            value = rx
+            rxs[key] = value 
+
+            key = str(sl) + str(count)
+            value = sl
+            sls[key] = value 
+            # No repeat
             rx1, rx2, rx3, rx4 = rx, rx1, rx2, rx3
 
             count += 1
 
             if count == 16:
-                count = 1
+                break
+
+        except KeyboardInterrupt:
+            midiout.send_message(note_off)
+            del midiout
+            exit()
+
+    # Debug
+    print("{:<8} {:<15}".format('Key','Label'))
+    for k, v in zip(rxs.keys(), rxs.values()):
+        print("{:<8} {:<15}".format(k, v))
+
+
+    print("{:<8} {:<15}".format('Key','Label'))
+    for k, v in zip(sls.keys(), sls.values()):
+        print("{:<8} {:<15}".format(k, v))
+
+    while True:
+        try:
+            for rx, sl in zip(rxs.values(), sls.values()):
+                note_on = [0x90, rx, 112]
+                note_off = [0x80, rx, 0]
+                midiout.send_message(note_on)
+
+                sleep(sl)
+                midiout.send_message(note_off)
 
         except KeyboardInterrupt:
             midiout.send_message(note_off)
