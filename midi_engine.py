@@ -8,7 +8,7 @@ available_ports = midiout.get_ports()
 print(available_ports)
 
 if available_ports:
-    selected_port = 1
+    selected_port = 0
     midiout.open_port(selected_port)
     print(f'opened port {selected_port}')
 else:
@@ -61,17 +61,20 @@ else:
     print('Wrong option')
     exit()
 
-# Add octave
-s = s + [x + 12 for x in s if x != 0]
+
 
 # Don't repeat notes
-rx, rx1, rx2, rx3, rx4, rx5, rx6 = s[0], s[1], s[2], s[3], s[4], s[5], s[6]
+if scale == 2 or scale == 3:
+# Add octave
+    s = s + [x + 12 for x in s if x != 0]
+    rx, rx1, rx2, rx3, rx4, rx5, rx6, rx7 = s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7]
 
 count = 1
 rxs = {}
 sls = {}
 
 with midiout:
+    # debugging
     sleep(1)
     while True:
         try:
