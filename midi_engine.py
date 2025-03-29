@@ -2,6 +2,10 @@ import rtmidi
 from time import sleep
 import random
 from sys import exit
+import secrets
+
+hextoken_ = secrets.token_hex()
+print(hextoken_)
 
 midiout = rtmidi.MidiOut()
 available_ports = midiout.get_ports()
@@ -71,30 +75,64 @@ if scale == 2 or scale == 3:
 
 count = 1
 rxs = {}
-sls = {}
+sleep_time_intervals = {}
+
+def timer():
+    '''
+    Calculating Bar Duration:
+    length = 60 seconds
+
+    beat_at_140 = 1.716 seconds aprox (60 seconds / 140 BPM = 0.429 seconds/beat). 
+    BAR_4_beats = 0.4285714285714286
+
+    A bar (or measure) typically consists of 4 beats, so a bar would last approximately 1.716 seconds (0.429 seconds/beat * 4 beats = 1.716 seconds/bar). 
+    Therefore, 16 bars would last about 27.45 seconds (1.716 seconds/bar * 16 bars = 27.45 seconds). 
+    Actually -> 27.42857142857143
+    '0.4285714285714286'
+    '''
+    def formulate_time():
+        t = random.uniform(0.0000000000000000, 0.4285714285714286)
+        
+        return t
+    
+    def even_time(t):
+        t = 0.4285714285714286 - t
+
+        return t
+    
+    return t
 
 with midiout:
     # debugging
     sleep(1)
     while True:
         try:
-            rx = n[random.choice([x for x in s if x != rx or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6])]
+            possible_notes = [x for x in s if x != rx0 or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6, x != rx7]
+            rx = n[random.choice(possible_notes)]
+            # note "or x"
             note_on = [0x90, rx, 112]
             note_off = [0x80, rx, 0]
             midiout.send_message(note_on)
             # sleep(random.uniform(0.1, 1))
             # sleep(random.choice([0.1, 0.3]))
-            sl = 1
-            sleep(sl)
+            time_interval = timer()
+            formulated_time_interval = time_interval.formulate_time()
+            sleep(formulated_time_interval)
             midiout.send_message(note_off)
+            even_time = time_interval.even_time(formulated_time_interval)
 
             key = str(rx) + str(count)
             value = rx
-            rxs[key] = value 
+            rxs[key] = value
 
-            key = str(sl) + str(count)
-            value = sl
-            sls[key] = value 
+            def make_key():
+                key = str(even_time) + str(count)
+                key = str(formulated_time_interval) + str(count)
+
+                return key
+            
+            value = time_interval
+            sleep_time_intervals[key] = value 
             # No repeat
             rx1, rx2, rx3, rx4 = rx, rx1, rx2, rx3
 
@@ -102,6 +140,16 @@ with midiout:
 
             if count == 16:
                 break
+
+            for rx, sleep_time_interval in zip(rxs.values(), sleep_time_intervals.values()):
+                note_on = [0x90, rx, 112]
+                note_off = [0x80, rx, 0]
+                midiout.send_message(note_on)
+
+                sleep(sleep_time_interval)
+                midiout.send_message(note_off)
+
+
 
         except KeyboardInterrupt:
             midiout.send_message(note_off)
@@ -115,17 +163,17 @@ with midiout:
 
 
     print("{:<8} {:<15}".format('Key','Label'))
-    for k, v in zip(sls.keys(), sls.values()):
+    for k, v in zip(sleep_time_intervals.keys(), sleep_time_intervals.values()):
         print("{:<8} {:<15}".format(k, v))
 
     while True:
         try:
-            for rx, sl in zip(rxs.values(), sls.values()):
+            for rx, sleep_time_interval in zip(rxs.values(), sleep_time_intervals.values()):
                 note_on = [0x90, rx, 112]
                 note_off = [0x80, rx, 0]
                 midiout.send_message(note_on)
 
-                sleep(sl)
+                sleep_time_intervaleep(sleep_time_interval)
                 midiout.send_message(note_off)
 
         except KeyboardInterrupt:
