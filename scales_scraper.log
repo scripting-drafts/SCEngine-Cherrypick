@@ -1,0 +1,647 @@
+2025-03-29 16:54:38,629 [seleniumwire.storage] Using default request storage
+2025-03-29 16:54:38,804 [seleniumwire.backend] Created proxy listening on 127.0.0.1:28538
+2025-03-29 22:43:56,907 [seleniumwire.storage] Using default request storage
+2025-03-29 22:43:56,923 [seleniumwire.backend] Created proxy listening on 127.0.0.1:29685
+2025-03-29 23:24:09,310 [scales_scraper] 0.05165592861074065
+2025-03-29 23:39:06,766 [scales_scraper] 0.27322137615691844
+2025-03-29 23:39:41,925 [scales_scraper] 0.21543741502944455
+2025-03-30 15:55:06,045 [scales_scraper] 0.21419666416740202
+2025-03-30 16:08:23,903 [scales_scraper] 0.29767931527173275
+2025-03-30 16:08:24,203 [scales_scraper] 0.15155975974018396
+2025-03-30 16:08:24,361 [scales_scraper] 0.17481431200913547
+2025-03-30 16:08:24,542 [scales_scraper] 0.15873021075478644
+2025-03-30 16:08:24,712 [scales_scraper] 0.006679622114556575
+2025-03-30 16:08:24,721 [scales_scraper] 0.03908832947820649
+2025-03-30 16:08:24,762 [scales_scraper] 0.19236666241438255
+2025-03-30 16:08:24,963 [scales_scraper] 0.2693774376473451
+2025-03-30 16:08:25,233 [scales_scraper] 0.30835388826363974
+2025-03-30 16:08:25,543 [scales_scraper] 0.0747450684155992
+2025-03-30 16:08:25,621 [scales_scraper] 0.07589761627375972
+2025-03-30 16:08:25,703 [scales_scraper] 0.13840949072204173
+2025-03-30 16:08:25,843 [scales_scraper] 0.2324677387528687
+2025-03-30 16:08:26,093 [scales_scraper] 0.3704424779355236
+2025-03-30 16:08:26,473 [scales_scraper] 0.10631376583453185
+2025-03-30 16:19:24,365 [scales_scraper] 0.32150713247189117
+2025-03-30 16:19:24,801 [scales_scraper] 0.20430096502610634
+2025-03-30 16:19:25,256 [scales_scraper] 0.1195118041058803
+2025-03-30 16:19:25,686 [scales_scraper] 0.22014362965146259
+2025-03-30 16:19:26,139 [scales_scraper] 0.06871216188652701
+2025-03-30 16:19:26,590 [scales_scraper] 0.34964545678269304
+2025-03-30 16:19:27,043 [scales_scraper] 0.011597702398244156
+2025-03-30 16:19:27,480 [scales_scraper] 0.322088508126627
+2025-03-30 16:19:27,919 [scales_scraper] 0.03158321360778303
+2025-03-30 16:19:28,372 [scales_scraper] 0.00871281751755718
+2025-03-30 16:19:28,809 [scales_scraper] 0.40523500781772476
+2025-03-30 16:19:29,248 [scales_scraper] 0.3290536597709963
+2025-03-30 16:19:29,701 [scales_scraper] 0.3370308583405248
+2025-03-30 16:19:30,151 [scales_scraper] 0.0419406595101018
+2025-03-30 16:19:30,587 [scales_scraper] 0.3210398112625868
+2025-03-30 16:35:08,175 [scales_scraper] silence_balancer=0.3023062299162689
+2025-03-30 16:35:08,615 [scales_scraper] silence_balancer=0.33266694617632775
+2025-03-30 16:35:09,315 [scales_scraper] silence_balancer=0.09335763931049312
+2025-03-30 16:35:09,775 [scales_scraper] silence_balancer=0.08113749498907558
+2025-03-30 16:35:10,146 [scales_scraper] silence_balancer=0.1920394531849404
+2025-03-30 16:35:10,462 [scales_scraper] silence_balancer=0.35488963119084427
+2025-03-30 16:35:10,985 [scales_scraper] silence_balancer=0.3172405250513967
+2025-03-30 16:35:11,528 [scales_scraper] silence_balancer=0.247191758409665
+2025-03-30 16:35:12,095 [scales_scraper] silence_balancer=0.1328851302836322
+2025-03-30 16:35:12,376 [scales_scraper] silence_balancer=0.31710709407016996
+2025-03-30 16:35:13,085 [scales_scraper] silence_balancer=0.0779320660005704
+2025-03-30 16:35:13,596 [scales_scraper] silence_balancer=0.03145551761825266
+2025-03-30 16:35:13,825 [scales_scraper] silence_balancer=0.26917415460469973
+2025-03-30 16:35:14,405 [scales_scraper] silence_balancer=0.14312474693750876
+2025-03-30 16:35:14,825 [scales_scraper] silence_balancer=0.18540933071104035
+2025-03-30 16:36:24,414 [scales_scraper] rx=76
+2025-03-30 16:36:24,415 [scales_scraper] duration_time=0.26371135492398673
+2025-03-30 16:36:24,683 [scales_scraper] silence_balancer=0.16486007364744187
+2025-03-30 16:36:24,863 [scales_scraper] rx=71
+2025-03-30 16:36:24,863 [scales_scraper] duration_time=0.04760641621760883
+2025-03-30 16:36:24,923 [scales_scraper] silence_balancer=0.38096501235381974
+2025-03-30 16:36:25,323 [scales_scraper] rx=78
+2025-03-30 16:36:25,324 [scales_scraper] duration_time=0.31942091023451774
+2025-03-30 16:36:25,653 [scales_scraper] silence_balancer=0.10915051833691086
+2025-03-30 16:36:25,773 [scales_scraper] rx=93
+2025-03-30 16:36:25,773 [scales_scraper] duration_time=0.06708936241259776
+2025-03-30 16:36:25,853 [scales_scraper] silence_balancer=0.36148206615883083
+2025-03-30 16:36:26,233 [scales_scraper] rx=90
+2025-03-30 16:36:26,234 [scales_scraper] duration_time=0.18756520517519498
+2025-03-30 16:36:26,433 [scales_scraper] silence_balancer=0.24100622339623362
+2025-03-30 16:50:58,837 [scales_scraper] rx=69
+2025-03-30 16:50:58,837 [scales_scraper] duration_time=0.3000048591858016
+2025-03-30 16:50:59,157 [scales_scraper] silence_balancer=0.128566569385627
+2025-03-30 16:51:41,387 [scales_scraper] rx=82
+2025-03-30 16:51:41,388 [scales_scraper] duration_time=0.35204964977270836
+2025-03-30 16:51:41,747 [scales_scraper] silence_balancer=0.07652177879872024
+2025-03-30 16:52:34,920 [scales_scraper] rx=88
+2025-03-30 16:52:34,921 [scales_scraper] duration_time=0.118994616679835
+2025-03-30 16:52:35,052 [scales_scraper] silence_balancer=0.3095768118915936
+2025-03-30 16:55:11,595 [scales_scraper] rx=74
+2025-03-30 16:55:11,596 [scales_scraper] duration_time=0.2778559890393218
+2025-03-30 16:55:11,894 [scales_scraper] silence_balancer=0.1507154395321068
+2025-03-30 16:55:12,054 [scales_scraper] remainder=None
+2025-03-30 16:55:12,054 [scales_scraper] rx=78
+2025-03-30 16:55:12,054 [scales_scraper] duration_time=0.3981494563308933
+2025-03-30 16:55:12,454 [scales_scraper] silence_balancer=0.030421972240535278
+2025-03-30 16:55:12,493 [scales_scraper] remainder=None
+2025-03-30 16:55:12,494 [scales_scraper] rx=86
+2025-03-30 16:55:12,496 [scales_scraper] duration_time=0.18036991856856732
+2025-03-30 16:55:12,688 [scales_scraper] silence_balancer=0.24820151000286128
+2025-03-30 16:55:12,944 [scales_scraper] remainder=None
+2025-03-30 16:55:12,944 [scales_scraper] rx=69
+2025-03-30 16:55:12,946 [scales_scraper] duration_time=0.3797236745087502
+2025-03-30 16:55:13,333 [scales_scraper] silence_balancer=0.048847754062678383
+2025-03-30 16:55:13,393 [scales_scraper] remainder=None
+2025-03-30 16:55:13,394 [scales_scraper] rx=69
+2025-03-30 16:55:13,394 [scales_scraper] duration_time=0.3205905317208299
+2025-03-30 16:55:13,734 [scales_scraper] silence_balancer=0.1079808968505987
+2025-03-30 16:55:13,843 [scales_scraper] remainder=None
+2025-03-30 16:55:13,844 [scales_scraper] rx=80
+2025-03-30 16:55:13,844 [scales_scraper] duration_time=0.011761947731762932
+2025-03-30 16:55:13,863 [scales_scraper] silence_balancer=0.4168094808396657
+2025-03-30 16:55:14,293 [scales_scraper] remainder=None
+2025-03-30 16:55:14,294 [scales_scraper] rx=83
+2025-03-30 16:55:14,296 [scales_scraper] duration_time=0.044382454395649605
+2025-03-30 16:55:14,350 [scales_scraper] silence_balancer=0.384188974175779
+2025-03-30 16:55:14,751 [scales_scraper] remainder=None
+2025-03-30 16:55:14,753 [scales_scraper] rx=83
+2025-03-30 16:55:14,754 [scales_scraper] duration_time=0.39903407057059975
+2025-03-30 16:55:15,164 [scales_scraper] silence_balancer=0.02953735800082885
+2025-03-30 16:55:15,204 [scales_scraper] remainder=None
+2025-03-30 16:55:15,204 [scales_scraper] rx=92
+2025-03-30 16:55:15,204 [scales_scraper] duration_time=0.21211466375592317
+2025-03-30 16:55:15,423 [scales_scraper] silence_balancer=0.21645676481550544
+2025-03-30 16:55:15,644 [scales_scraper] remainder=None
+2025-03-30 16:55:15,644 [scales_scraper] rx=74
+2025-03-30 16:55:15,644 [scales_scraper] duration_time=0.41276661763058053
+2025-03-30 16:55:16,074 [scales_scraper] silence_balancer=0.01580481094084807
+2025-03-30 16:55:16,093 [scales_scraper] remainder=None
+2025-03-30 16:55:16,094 [scales_scraper] rx=85
+2025-03-30 16:55:16,094 [scales_scraper] duration_time=0.2969561474314191
+2025-03-30 16:55:16,393 [scales_scraper] silence_balancer=0.13161528114000948
+2025-03-30 16:55:16,533 [scales_scraper] remainder=None
+2025-03-30 16:55:16,534 [scales_scraper] rx=93
+2025-03-30 16:55:16,536 [scales_scraper] duration_time=0.09643492058419549
+2025-03-30 16:55:16,643 [scales_scraper] silence_balancer=0.3321365079872331
+2025-03-30 16:55:16,984 [scales_scraper] remainder=None
+2025-03-30 16:55:16,984 [scales_scraper] rx=81
+2025-03-30 16:55:16,985 [scales_scraper] duration_time=0.273691162420182
+2025-03-30 16:55:17,274 [scales_scraper] silence_balancer=0.15488026615124662
+2025-03-30 16:55:17,433 [scales_scraper] remainder=None
+2025-03-30 16:55:17,434 [scales_scraper] rx=81
+2025-03-30 16:55:17,434 [scales_scraper] duration_time=0.3923848882887492
+2025-03-30 16:55:17,844 [scales_scraper] silence_balancer=0.036186540282679425
+2025-03-30 16:55:17,883 [scales_scraper] remainder=None
+2025-03-30 16:55:17,884 [scales_scraper] rx=81
+2025-03-30 16:55:17,884 [scales_scraper] duration_time=0.18259871954626994
+2025-03-30 16:55:18,083 [scales_scraper] silence_balancer=0.24597270902515866
+2025-03-30 16:55:18,343 [scales_scraper] remainder=None
+2025-03-30 17:04:10,163 [scales_scraper] rx=78
+2025-03-30 17:04:10,164 [scales_scraper] duration_time=0.1621789338670809
+2025-03-30 17:04:10,343 [scales_scraper] silence_balancer=0.26639249470434767
+2025-03-30 17:04:14,203 [scales_scraper] Available Ports: ['Microsoft GS Wavetable Synth 0', 'loopMIDI Port 1', 'loopMIDI Port 1 2']
+2025-03-30 17:04:16,977 [scales_scraper] rx=88
+2025-03-30 17:04:16,977 [scales_scraper] duration_time=0.1968215983674235
+2025-03-30 17:04:17,177 [scales_scraper] silence_balancer=0.2317498302040051
+2025-03-30 17:09:15,999 [scales_scraper] Available Ports: ['Microsoft GS Wavetable Synth 0', 'loopMIDI Port 1', 'loopMIDI Port 1 2']
+2025-03-30 17:09:18,899 [scales_scraper] rx=73
+2025-03-30 17:09:18,899 [scales_scraper] note_length=0.17161670318431274
+2025-03-30 17:09:19,078 [scales_scraper] silence_balancer=0.25695472538711583
+2025-03-30 17:09:56,058 [scales_scraper] Available Ports: ['Microsoft GS Wavetable Synth 0', 'loopMIDI Port 1', 'loopMIDI Port 1 2']
+2025-03-30 17:09:59,822 [scales_scraper] rx=79
+2025-03-30 17:09:59,823 [scales_scraper] note_length=0.26485591628322225
+2025-03-30 17:10:00,092 [scales_scraper] silence_balancer=0.16371551228820636
+2025-03-30 17:10:59,994 [scales_scraper] Available Ports: ['Microsoft GS Wavetable Synth 0', 'loopMIDI Port 1', 'loopMIDI Port 1 2']
+2025-03-30 17:11:02,892 [scales_scraper] rx=90
+2025-03-30 17:11:02,893 [scales_scraper] note_length=0.045661891586213414
+2025-03-30 17:11:02,952 [scales_scraper] silence_balancer=0.3829095369852152
+2025-03-30 17:20:46,788 [scales_scraper] Available Ports: ['Microsoft GS Wavetable Synth 0', 'loopMIDI Port 1', 'loopMIDI Port 1 2']
+2025-03-30 17:20:49,674 [scales_scraper] rx=80
+2025-03-30 17:20:49,674 [scales_scraper] note_length=0.3340889745143021
+2025-03-30 17:20:50,014 [scales_scraper] silence_balancer=0.09448245405712652
+2025-03-30 17:21:36,977 [scales_scraper] Available Ports: ['Microsoft GS Wavetable Synth 0', 'loopMIDI Port 1', 'loopMIDI Port 1 2']
+2025-03-30 17:21:39,806 [scales_scraper] rx=80
+2025-03-30 17:21:39,806 [scales_scraper] note_length=0.3453507670815255
+2025-03-30 17:21:40,167 [scales_scraper] silence_balancer=0.08322066148990309
+2025-03-30 17:21:56,270 [scales_scraper] Available Ports: ['Microsoft GS Wavetable Synth 0', 'loopMIDI Port 1', 'loopMIDI Port 1 2']
+2025-03-30 17:21:59,016 [scales_scraper] rx=69
+2025-03-30 17:21:59,016 [scales_scraper] note_length=0.07401771296877882
+2025-03-30 17:21:59,096 [scales_scraper] silence_balancer=0.3545537156026498
+2025-03-30 17:22:34,748 [scales_scraper] Available Ports: ['Microsoft GS Wavetable Synth 0', 'loopMIDI Port 1', 'loopMIDI Port 1 2']
+2025-03-30 17:22:37,749 [scales_scraper] rx=92
+2025-03-30 17:22:37,750 [scales_scraper] note_length=0.20774848248305702
+2025-03-30 17:22:37,967 [scales_scraper] silence_balancer=0.22082294608837158
+2025-03-30 17:22:58,708 [scales_scraper] Available Ports: ['Microsoft GS Wavetable Synth 0', 'loopMIDI Port 1', 'loopMIDI Port 1 2']
+2025-03-30 17:23:01,095 [scales_scraper] rx=93
+2025-03-30 17:23:01,096 [scales_scraper] duration_time=0.3494138301677931
+2025-03-30 17:23:01,453 [scales_scraper] silence_balancer=0.07915759840363551
+2025-03-30 17:23:13,548 [scales_scraper] Available Ports: ['Microsoft GS Wavetable Synth 0', 'loopMIDI Port 1', 'loopMIDI Port 1 2']
+2025-03-30 17:23:16,383 [scales_scraper] rx=90
+2025-03-30 17:23:16,383 [scales_scraper] duration_time=0.2665958096216163
+2025-03-30 17:23:16,663 [scales_scraper] silence_balancer=0.16197561894981233
+2025-03-30 17:46:08,269 [scales_scraper] Available Ports: ['Microsoft GS Wavetable Synth 0', 'loopMIDI Port 1', 'loopMIDI Port 1 2']
+2025-03-30 17:46:11,195 [scales_scraper] rx=93
+2025-03-30 17:46:11,195 [scales_scraper] note_length=0.10256754887741731
+2025-03-30 17:46:11,315 [scales_scraper] silence_balancer=0.3260038796940113
+2025-03-30 17:47:26,262 [scales_scraper] Available Ports: ['Microsoft GS Wavetable Synth 0', 'loopMIDI Port 1', 'loopMIDI Port 1 2']
+2025-03-30 17:47:28,754 [scales_scraper] rx=80
+2025-03-30 17:47:28,755 [scales_scraper] note_length=0.12273420430360889
+2025-03-30 17:47:28,894 [scales_scraper] silence_balancer=0.30583722426781973
+2025-03-30 17:47:29,214 [scales_scraper] 1
+2025-03-30 17:47:56,415 [scales_scraper] Available Ports: ['Microsoft GS Wavetable Synth 0', 'loopMIDI Port 1', 'loopMIDI Port 1 2']
+2025-03-30 17:47:58,023 [scales_scraper] rx=83
+2025-03-30 17:47:58,023 [scales_scraper] note_length=0.4180954858856461
+2025-03-30 17:47:58,443 [scales_scraper] silence_balancer=0.010475942685782502
+2025-03-30 17:53:04,818 [scales_scraper] Available Ports: ['Microsoft GS Wavetable Synth 0', 'loopMIDI Port 1', 'loopMIDI Port 1 2']
+2025-03-30 17:53:08,293 [scales_scraper] rx=81
+2025-03-30 17:53:08,294 [scales_scraper] note_length=0.03324586425881743
+2025-03-30 17:53:08,333 [scales_scraper] silence_balancer=0.3953255643126112
+2025-03-30 17:54:25,639 [scales_scraper] Available Ports: ['Microsoft GS Wavetable Synth 0', 'loopMIDI Port 1', 'loopMIDI Port 1 2']
+2025-03-30 17:54:27,885 [scales_scraper] rx=71
+2025-03-30 17:54:27,885 [scales_scraper] note_length=0.33431443603897026
+2025-03-30 17:54:28,224 [scales_scraper] silence_balancer=0.09425699253245834
+2025-03-30 17:58:15,743 [scales_scraper] Available Ports: ['Microsoft GS Wavetable Synth 0', 'loopMIDI Port 1', 'loopMIDI Port 1 2']
+2025-03-30 17:58:18,369 [scales_scraper] rx=73
+2025-03-30 17:58:18,369 [scales_scraper] note_length=0.21915131725221867
+2025-03-30 17:58:18,608 [scales_scraper] silence_balancer=0.20942011131920993
+2025-03-30 17:58:18,828 [scales_scraper] rx=81
+2025-03-30 17:58:18,829 [scales_scraper] note_length=0.07806102587658457
+2025-03-30 17:58:18,908 [scales_scraper] silence_balancer=0.350510402694844
+2025-03-30 17:58:19,268 [scales_scraper] rx=92
+2025-03-30 17:58:19,269 [scales_scraper] note_length=0.1894307116218799
+2025-03-30 17:58:19,468 [scales_scraper] silence_balancer=0.2391407169495487
+2025-03-30 17:58:19,718 [scales_scraper] rx=85
+2025-03-30 17:58:19,718 [scales_scraper] note_length=0.040925332615802654
+2025-03-30 17:58:19,778 [scales_scraper] silence_balancer=0.38764609595562594
+2025-03-30 17:58:20,178 [scales_scraper] rx=92
+2025-03-30 17:58:20,178 [scales_scraper] note_length=0.04446731110537894
+2025-03-30 17:58:20,238 [scales_scraper] silence_balancer=0.38410411746604967
+2025-03-30 17:58:20,638 [scales_scraper] rx=88
+2025-03-30 17:58:20,638 [scales_scraper] note_length=0.21398404690121958
+2025-03-30 17:58:20,858 [scales_scraper] silence_balancer=0.21458738167020902
+2025-03-30 17:58:21,075 [scales_scraper] rx=69
+2025-03-30 17:58:21,075 [scales_scraper] note_length=0.340146181501414
+2025-03-30 17:58:21,429 [scales_scraper] silence_balancer=0.08842524707001459
+2025-03-30 17:58:21,525 [scales_scraper] rx=81
+2025-03-30 17:58:21,525 [scales_scraper] note_length=0.16673611313544387
+2025-03-30 17:58:21,708 [scales_scraper] silence_balancer=0.2618353154359847
+2025-03-30 17:58:21,975 [scales_scraper] rx=80
+2025-03-30 17:58:21,976 [scales_scraper] note_length=0.32034768530056745
+2025-03-30 17:58:22,308 [scales_scraper] silence_balancer=0.10822374327086115
+2025-03-30 17:58:22,429 [scales_scraper] rx=73
+2025-03-30 17:58:22,429 [scales_scraper] note_length=0.3769881730094055
+2025-03-30 17:58:22,818 [scales_scraper] silence_balancer=0.05158325556202309
+2025-03-30 17:58:22,878 [scales_scraper] rx=85
+2025-03-30 17:58:22,879 [scales_scraper] note_length=0.29858978733024955
+2025-03-30 17:58:23,198 [scales_scraper] silence_balancer=0.12998164124117906
+2025-03-30 17:58:23,338 [scales_scraper] rx=83
+2025-03-30 17:58:23,338 [scales_scraper] note_length=0.25947956500285574
+2025-03-30 17:58:23,618 [scales_scraper] silence_balancer=0.16909186356857286
+2025-03-30 17:58:23,798 [scales_scraper] rx=78
+2025-03-30 17:58:23,799 [scales_scraper] note_length=0.2834919154553754
+2025-03-30 17:58:24,098 [scales_scraper] silence_balancer=0.14507951311605322
+2025-03-30 17:58:24,248 [scales_scraper] rx=69
+2025-03-30 17:58:24,248 [scales_scraper] note_length=0.19324597407186503
+2025-03-30 17:58:24,448 [scales_scraper] silence_balancer=0.23532545449956357
+2025-03-30 17:58:24,698 [scales_scraper] rx=80
+2025-03-30 17:58:24,698 [scales_scraper] note_length=0.23778738832566823
+2025-03-30 17:58:24,938 [scales_scraper] silence_balancer=0.19078404024576037
+2025-03-30 18:02:53,315 [scales_scraper] Available Ports: ['Microsoft GS Wavetable Synth 0', 'loopMIDI Port 1', 'loopMIDI Port 1 2']
+2025-03-30 18:02:55,691 [scales_scraper] rx=83
+2025-03-30 18:02:55,692 [scales_scraper] note_length=0.01967253737894735
+2025-03-30 18:02:55,731 [scales_scraper] silence_balancer=0.40889889119248124
+2025-03-30 18:02:56,144 [scales_scraper] rx=78
+2025-03-30 18:02:56,144 [scales_scraper] note_length=0.018714235123864133
+2025-03-30 18:02:56,166 [scales_scraper] silence_balancer=0.4098571934475645
+2025-03-30 18:02:56,591 [scales_scraper] rx=86
+2025-03-30 18:02:56,591 [scales_scraper] note_length=0.1289127442042004
+2025-03-30 18:02:56,731 [scales_scraper] silence_balancer=0.2996586843672282
+2025-03-30 18:02:57,041 [scales_scraper] rx=80
+2025-03-30 18:02:57,042 [scales_scraper] note_length=0.19886286045308513
+2025-03-30 18:02:57,251 [scales_scraper] silence_balancer=0.22970856811834348
+2025-03-30 18:02:57,486 [scales_scraper] rx=85
+2025-03-30 18:02:57,486 [scales_scraper] note_length=0.41195825248088463
+2025-03-30 18:02:57,901 [scales_scraper] silence_balancer=0.01661317609054397
+2025-03-30 18:02:57,921 [scales_scraper] rx=69
+2025-03-30 18:02:57,921 [scales_scraper] note_length=0.2547029808508925
+2025-03-30 18:02:58,181 [scales_scraper] silence_balancer=0.1738684477205361
+2025-03-30 18:02:58,360 [scales_scraper] rx=80
+2025-03-30 18:02:58,362 [scales_scraper] note_length=0.3738842025792316
+2025-03-30 18:02:58,741 [scales_scraper] silence_balancer=0.054687225992197
+2025-03-30 18:02:58,800 [scales_scraper] rx=73
+2025-03-30 18:02:58,801 [scales_scraper] note_length=0.12988094574232173
+2025-03-30 18:02:58,940 [scales_scraper] silence_balancer=0.2986904828291069
+2025-03-30 18:02:59,241 [scales_scraper] rx=88
+2025-03-30 18:02:59,241 [scales_scraper] note_length=0.2408860450146342
+2025-03-30 18:02:59,501 [scales_scraper] silence_balancer=0.1876853835567944
+2025-03-30 18:02:59,701 [scales_scraper] rx=92
+2025-03-30 18:02:59,701 [scales_scraper] note_length=0.05358437637696226
+2025-03-30 18:02:59,760 [scales_scraper] silence_balancer=0.3749870521944663
+2025-03-30 18:03:00,141 [scales_scraper] rx=73
+2025-03-30 18:03:00,141 [scales_scraper] note_length=0.39545190281407033
+2025-03-30 18:03:00,541 [scales_scraper] silence_balancer=0.03311952575735827
+2025-03-30 18:03:00,581 [scales_scraper] rx=71
+2025-03-30 18:03:00,581 [scales_scraper] note_length=0.3013747290896332
+2025-03-30 18:03:00,901 [scales_scraper] silence_balancer=0.1271966994817954
+2025-03-30 18:03:01,040 [scales_scraper] rx=93
+2025-03-30 18:03:01,042 [scales_scraper] note_length=0.3896818854016299
+2025-03-30 18:03:01,441 [scales_scraper] silence_balancer=0.0388895431697987
+2025-03-30 18:03:01,480 [scales_scraper] rx=76
+2025-03-30 18:03:01,481 [scales_scraper] note_length=0.2974080324287317
+2025-03-30 18:03:01,781 [scales_scraper] silence_balancer=0.1311633961426969
+2025-03-30 18:03:01,921 [scales_scraper] rx=80
+2025-03-30 18:03:01,921 [scales_scraper] note_length=0.07425135088021999
+2025-03-30 18:03:02,001 [scales_scraper] silence_balancer=0.3543200776912086
+2025-03-30 18:03:02,360 [scales_scraper] rx=80
+2025-03-30 18:03:02,361 [scales_scraper] note_length=0.23908281274612958
+2025-03-30 18:03:02,621 [scales_scraper] silence_balancer=0.18948861582529902
+2025-03-30 18:03:02,821 [scales_scraper] Key      Label          
+2025-03-30 18:03:02,821 [scales_scraper] 1        83             
+2025-03-30 18:03:02,821 [scales_scraper] 2        78             
+2025-03-30 18:03:02,821 [scales_scraper] 3        86             
+2025-03-30 18:03:02,821 [scales_scraper] 4        80             
+2025-03-30 18:03:02,821 [scales_scraper] 5        85             
+2025-03-30 18:03:02,821 [scales_scraper] 6        69             
+2025-03-30 18:03:02,821 [scales_scraper] 7        80             
+2025-03-30 18:03:02,821 [scales_scraper] 8        73             
+2025-03-30 18:03:02,821 [scales_scraper] 9        88             
+2025-03-30 18:03:02,821 [scales_scraper] 10       92             
+2025-03-30 18:03:02,821 [scales_scraper] 11       73             
+2025-03-30 18:03:02,821 [scales_scraper] 12       71             
+2025-03-30 18:03:02,821 [scales_scraper] 13       93             
+2025-03-30 18:03:02,821 [scales_scraper] 14       76             
+2025-03-30 18:03:02,821 [scales_scraper] 15       80             
+2025-03-30 18:03:02,821 [scales_scraper] 16       80             
+2025-03-30 18:03:02,821 [scales_scraper] Key      Label          
+2025-03-30 18:03:02,830 [scales_scraper] 1        0.01967253737894735
+2025-03-30 18:03:02,831 [scales_scraper] 2        0.018714235123864133
+2025-03-30 18:03:02,831 [scales_scraper] 3        0.1289127442042004
+2025-03-30 18:03:02,831 [scales_scraper] 4        0.19886286045308513
+2025-03-30 18:03:02,832 [scales_scraper] 5        0.41195825248088463
+2025-03-30 18:03:02,832 [scales_scraper] 6        0.2547029808508925
+2025-03-30 18:03:02,832 [scales_scraper] 7        0.3738842025792316
+2025-03-30 18:03:02,832 [scales_scraper] 8        0.12988094574232173
+2025-03-30 18:03:02,832 [scales_scraper] 9        0.2408860450146342
+2025-03-30 18:03:02,832 [scales_scraper] 10       0.05358437637696226
+2025-03-30 18:03:02,832 [scales_scraper] 11       0.39545190281407033
+2025-03-30 18:03:02,832 [scales_scraper] 12       0.3013747290896332
+2025-03-30 18:03:02,832 [scales_scraper] 13       0.3896818854016299
+2025-03-30 18:03:02,832 [scales_scraper] 14       0.2974080324287317
+2025-03-30 18:03:02,832 [scales_scraper] 15       0.07425135088021999
+2025-03-30 18:03:02,832 [scales_scraper] 16       0.23908281274612958
+2025-03-30 18:03:02,832 [scales_scraper] Key      Label          
+2025-03-30 18:03:02,832 [scales_scraper] 1        0.40889889119248124
+2025-03-30 18:03:02,832 [scales_scraper] 2        0.4098571934475645
+2025-03-30 18:03:02,832 [scales_scraper] 3        0.2996586843672282
+2025-03-30 18:03:02,832 [scales_scraper] 4        0.22970856811834348
+2025-03-30 18:03:02,832 [scales_scraper] 5        0.01661317609054397
+2025-03-30 18:03:02,832 [scales_scraper] 6        0.1738684477205361
+2025-03-30 18:03:02,832 [scales_scraper] 7        0.054687225992197
+2025-03-30 18:03:02,832 [scales_scraper] 8        0.2986904828291069
+2025-03-30 18:03:02,832 [scales_scraper] 9        0.1876853835567944
+2025-03-30 18:03:02,832 [scales_scraper] 10       0.3749870521944663
+2025-03-30 18:03:02,832 [scales_scraper] 11       0.03311952575735827
+2025-03-30 18:03:02,832 [scales_scraper] 12       0.1271966994817954
+2025-03-30 18:03:02,832 [scales_scraper] 13       0.0388895431697987
+2025-03-30 18:03:02,832 [scales_scraper] 14       0.1311633961426969
+2025-03-30 18:03:02,832 [scales_scraper] 15       0.3543200776912086
+2025-03-30 18:03:02,841 [scales_scraper] 16       0.18948861582529902
+2025-03-30 18:04:34,360 [scales_scraper] Available Ports: ['Microsoft GS Wavetable Synth 0', 'loopMIDI Port 1', 'loopMIDI Port 1 2']
+2025-03-30 18:04:36,810 [scales_scraper] rx=69
+2025-03-30 18:04:36,810 [scales_scraper] note_length=0.08769725135922055
+2025-03-30 18:04:36,910 [scales_scraper] silence_balancer=0.34087417721220803
+2025-03-30 18:04:37,269 [scales_scraper] rx=88
+2025-03-30 18:04:37,270 [scales_scraper] note_length=0.13751694805023731
+2025-03-30 18:04:37,425 [scales_scraper] silence_balancer=0.2910544805211913
+2025-03-30 18:04:37,729 [scales_scraper] rx=80
+2025-03-30 18:04:37,730 [scales_scraper] note_length=0.11883586881244147
+2025-03-30 18:04:37,849 [scales_scraper] silence_balancer=0.30973555975898714
+2025-03-30 18:04:38,169 [scales_scraper] rx=73
+2025-03-30 18:04:38,169 [scales_scraper] note_length=0.2622863862025563
+2025-03-30 18:04:38,446 [scales_scraper] silence_balancer=0.16628504236887232
+2025-03-30 18:04:38,627 [scales_scraper] rx=73
+2025-03-30 18:04:38,627 [scales_scraper] note_length=0.13959990790698756
+2025-03-30 18:04:38,777 [scales_scraper] silence_balancer=0.28897152066444104
+2025-03-30 18:04:39,069 [scales_scraper] rx=76
+2025-03-30 18:04:39,070 [scales_scraper] note_length=0.18101553788625885
+2025-03-30 18:04:39,261 [scales_scraper] silence_balancer=0.24755589068516975
+2025-03-30 18:04:39,511 [scales_scraper] rx=86
+2025-03-30 18:04:39,511 [scales_scraper] note_length=0.050592144419089
+2025-03-30 18:04:39,577 [scales_scraper] silence_balancer=0.3779792841523396
+2025-03-30 18:04:39,963 [scales_scraper] rx=78
+2025-03-30 18:04:39,964 [scales_scraper] note_length=0.2396245683447408
+2025-03-30 18:04:40,209 [scales_scraper] silence_balancer=0.1889468602266878
+2025-03-30 18:04:40,419 [scales_scraper] rx=71
+2025-03-30 18:04:40,420 [scales_scraper] note_length=0.3878977001228344
+2025-03-30 18:04:40,819 [scales_scraper] silence_balancer=0.04067372844859418
+2025-03-30 18:04:40,880 [scales_scraper] rx=74
+2025-03-30 18:04:40,880 [scales_scraper] note_length=0.08279011077547652
+2025-03-30 18:04:40,979 [scales_scraper] silence_balancer=0.3457813177959521
+2025-03-30 18:04:41,339 [scales_scraper] rx=71
+2025-03-30 18:04:41,340 [scales_scraper] note_length=0.21820660795236574
+2025-03-30 18:04:41,559 [scales_scraper] silence_balancer=0.21036482061906286
+2025-03-30 18:04:41,779 [scales_scraper] rx=83
+2025-03-30 18:04:41,780 [scales_scraper] note_length=0.06272833450823455
+2025-03-30 18:04:41,859 [scales_scraper] silence_balancer=0.36584309406319404
+2025-03-30 18:04:42,239 [scales_scraper] rx=92
+2025-03-30 18:04:42,240 [scales_scraper] note_length=0.08980521157776963
+2025-03-30 18:04:42,340 [scales_scraper] silence_balancer=0.33876621699365894
+2025-03-30 18:04:42,680 [scales_scraper] rx=93
+2025-03-30 18:04:42,680 [scales_scraper] note_length=0.20910139575444467
+2025-03-30 18:04:42,899 [scales_scraper] silence_balancer=0.21947003281698393
+2025-03-30 18:04:43,139 [scales_scraper] rx=92
+2025-03-30 18:04:43,140 [scales_scraper] note_length=0.37606553410142046
+2025-03-30 18:04:43,519 [scales_scraper] silence_balancer=0.05250589447000814
+2025-03-30 18:04:43,579 [scales_scraper] rx=88
+2025-03-30 18:04:43,579 [scales_scraper] note_length=0.32577580480318186
+2025-03-30 18:04:43,919 [scales_scraper] silence_balancer=0.10279562376824675
+2025-03-30 18:04:44,040 [scales_scraper] Key      Label          
+2025-03-30 18:04:44,040 [scales_scraper] 1        69             
+2025-03-30 18:04:44,041 [scales_scraper] 2        88             
+2025-03-30 18:04:44,041 [scales_scraper] 3        80             
+2025-03-30 18:04:44,041 [scales_scraper] 4        73             
+2025-03-30 18:04:44,041 [scales_scraper] 5        73             
+2025-03-30 18:04:44,041 [scales_scraper] 6        76             
+2025-03-30 18:04:44,041 [scales_scraper] 7        86             
+2025-03-30 18:04:44,041 [scales_scraper] 8        78             
+2025-03-30 18:04:44,041 [scales_scraper] 9        71             
+2025-03-30 18:04:44,041 [scales_scraper] 10       74             
+2025-03-30 18:04:44,041 [scales_scraper] 11       71             
+2025-03-30 18:04:44,041 [scales_scraper] 12       83             
+2025-03-30 18:04:44,041 [scales_scraper] 13       92             
+2025-03-30 18:04:44,049 [scales_scraper] 14       93             
+2025-03-30 18:04:44,049 [scales_scraper] 15       92             
+2025-03-30 18:04:44,049 [scales_scraper] 16       88             
+2025-03-30 18:04:44,049 [scales_scraper] Key      Label          
+2025-03-30 18:04:44,049 [scales_scraper] 1        0.08769725135922055
+2025-03-30 18:04:44,049 [scales_scraper] 2        0.13751694805023731
+2025-03-30 18:04:44,049 [scales_scraper] 3        0.11883586881244147
+2025-03-30 18:04:44,049 [scales_scraper] 4        0.2622863862025563
+2025-03-30 18:04:44,049 [scales_scraper] 5        0.13959990790698756
+2025-03-30 18:04:44,049 [scales_scraper] 6        0.18101553788625885
+2025-03-30 18:04:44,049 [scales_scraper] 7        0.050592144419089
+2025-03-30 18:04:44,049 [scales_scraper] 8        0.2396245683447408
+2025-03-30 18:04:44,049 [scales_scraper] 9        0.3878977001228344
+2025-03-30 18:04:44,049 [scales_scraper] 10       0.08279011077547652
+2025-03-30 18:04:44,049 [scales_scraper] 11       0.21820660795236574
+2025-03-30 18:04:44,049 [scales_scraper] 12       0.06272833450823455
+2025-03-30 18:04:44,049 [scales_scraper] 13       0.08980521157776963
+2025-03-30 18:04:44,049 [scales_scraper] 14       0.20910139575444467
+2025-03-30 18:04:44,049 [scales_scraper] 15       0.37606553410142046
+2025-03-30 18:04:44,049 [scales_scraper] 16       0.32577580480318186
+2025-03-30 18:04:44,049 [scales_scraper] Key      Label          
+2025-03-30 18:04:44,049 [scales_scraper] 1        0.34087417721220803
+2025-03-30 18:04:44,049 [scales_scraper] 2        0.2910544805211913
+2025-03-30 18:04:44,049 [scales_scraper] 3        0.30973555975898714
+2025-03-30 18:04:44,049 [scales_scraper] 4        0.16628504236887232
+2025-03-30 18:04:44,049 [scales_scraper] 5        0.28897152066444104
+2025-03-30 18:04:44,049 [scales_scraper] 6        0.24755589068516975
+2025-03-30 18:04:44,049 [scales_scraper] 7        0.3779792841523396
+2025-03-30 18:04:44,049 [scales_scraper] 8        0.1889468602266878
+2025-03-30 18:04:44,049 [scales_scraper] 9        0.04067372844859418
+2025-03-30 18:04:44,049 [scales_scraper] 10       0.3457813177959521
+2025-03-30 18:04:44,059 [scales_scraper] 11       0.21036482061906286
+2025-03-30 18:04:44,061 [scales_scraper] 12       0.36584309406319404
+2025-03-30 18:04:44,061 [scales_scraper] 13       0.33876621699365894
+2025-03-30 18:04:44,061 [scales_scraper] 14       0.21947003281698393
+2025-03-30 18:04:44,061 [scales_scraper] 15       0.05250589447000814
+2025-03-30 18:04:44,061 [scales_scraper] 16       0.10279562376824675
+2025-03-30 18:05:25,595 [scales_scraper] Available Ports: ['Microsoft GS Wavetable Synth 0', 'loopMIDI Port 1', 'loopMIDI Port 1 2']
+2025-03-30 18:05:29,646 [scales_scraper] rx=72
+2025-03-30 18:05:29,646 [scales_scraper] note_length=0.3975505115313067
+2025-03-30 18:05:30,066 [scales_scraper] silence_balancer=0.031020917040121887
+2025-03-30 18:05:30,106 [scales_scraper] rx=81
+2025-03-30 18:05:30,106 [scales_scraper] note_length=0.3950909356397404
+2025-03-30 18:05:30,506 [scales_scraper] silence_balancer=0.0334804929316882
+2025-03-30 18:05:30,546 [scales_scraper] rx=86
+2025-03-30 18:05:30,547 [scales_scraper] note_length=0.33790931339427854
+2025-03-30 18:05:30,906 [scales_scraper] silence_balancer=0.09066211517715006
+2025-03-30 18:05:31,006 [scales_scraper] rx=69
+2025-03-30 18:05:31,007 [scales_scraper] note_length=0.2534742937745224
+2025-03-30 18:05:31,266 [scales_scraper] silence_balancer=0.1750971347969062
+2025-03-30 18:05:31,446 [scales_scraper] rx=72
+2025-03-30 18:05:31,447 [scales_scraper] note_length=0.3362971500434798
+2025-03-30 18:05:31,786 [scales_scraper] silence_balancer=0.09227427852794878
+2025-03-30 18:05:31,886 [scales_scraper] rx=82
+2025-03-30 18:05:31,887 [scales_scraper] note_length=0.25178665991140575
+2025-03-30 18:05:32,146 [scales_scraper] silence_balancer=0.17678476866002285
+2025-03-30 18:05:32,326 [scales_scraper] rx=79
+2025-03-30 18:05:32,327 [scales_scraper] note_length=0.3370254560605492
+2025-03-30 18:05:32,666 [scales_scraper] silence_balancer=0.09154597251087943
+2025-03-30 18:05:32,766 [scales_scraper] rx=77
+2025-03-30 18:05:32,766 [scales_scraper] note_length=0.1443721641693797
+2025-03-30 18:05:32,926 [scales_scraper] silence_balancer=0.2841992644020489
+2025-03-30 18:05:33,226 [scales_scraper] rx=79
+2025-03-30 18:05:33,227 [scales_scraper] note_length=0.33746648746142266
+2025-03-30 18:05:33,586 [scales_scraper] silence_balancer=0.09110494111000594
+2025-03-30 18:05:33,686 [scales_scraper] rx=79
+2025-03-30 18:05:33,686 [scales_scraper] note_length=0.41116186955164363
+2025-03-30 18:05:34,106 [scales_scraper] silence_balancer=0.01740955901978497
+2025-03-30 18:05:34,126 [scales_scraper] rx=72
+2025-03-30 18:05:34,126 [scales_scraper] note_length=0.24635443157000703
+2025-03-30 18:05:34,386 [scales_scraper] silence_balancer=0.18221699700142158
+2025-03-30 18:05:34,586 [scales_scraper] rx=88
+2025-03-30 18:05:34,587 [scales_scraper] note_length=0.18501510269923754
+2025-03-30 18:05:34,786 [scales_scraper] silence_balancer=0.24355632587219106
+2025-03-30 18:05:35,046 [scales_scraper] rx=77
+2025-03-30 18:05:35,046 [scales_scraper] note_length=0.34915242300052424
+2025-03-30 18:05:35,406 [scales_scraper] silence_balancer=0.07941900557090437
+2025-03-30 18:05:35,506 [scales_scraper] rx=74
+2025-03-30 18:05:35,506 [scales_scraper] note_length=0.2627264699646532
+2025-03-30 18:05:35,786 [scales_scraper] silence_balancer=0.1658449586067754
+2025-03-30 18:05:35,966 [scales_scraper] rx=89
+2025-03-30 18:05:35,967 [scales_scraper] note_length=0.19682951440955396
+2025-03-30 18:05:36,166 [scales_scraper] silence_balancer=0.23174191416187465
+2025-03-30 18:05:36,416 [scales_scraper] rx=93
+2025-03-30 18:05:36,417 [scales_scraper] note_length=0.303682344947528
+2025-03-30 18:05:36,736 [scales_scraper] silence_balancer=0.12488908362390061
+2025-03-30 18:05:36,876 [scales_scraper] Key      Label          
+2025-03-30 18:05:36,876 [scales_scraper] 1        72             
+2025-03-30 18:05:36,876 [scales_scraper] 2        81             
+2025-03-30 18:05:36,876 [scales_scraper] 3        86             
+2025-03-30 18:05:36,876 [scales_scraper] 4        69             
+2025-03-30 18:05:36,881 [scales_scraper] 5        72             
+2025-03-30 18:05:36,881 [scales_scraper] 6        82             
+2025-03-30 18:05:36,883 [scales_scraper] 7        79             
+2025-03-30 18:05:36,883 [scales_scraper] 8        77             
+2025-03-30 18:05:36,883 [scales_scraper] 9        79             
+2025-03-30 18:05:36,883 [scales_scraper] 10       79             
+2025-03-30 18:05:36,883 [scales_scraper] 11       72             
+2025-03-30 18:05:36,886 [scales_scraper] 12       88             
+2025-03-30 18:05:36,887 [scales_scraper] 13       77             
+2025-03-30 18:05:36,888 [scales_scraper] 14       74             
+2025-03-30 18:05:36,888 [scales_scraper] 15       89             
+2025-03-30 18:05:36,888 [scales_scraper] 16       93             
+2025-03-30 18:05:36,888 [scales_scraper] Key      Label          
+2025-03-30 18:05:36,888 [scales_scraper] 1        0.3975505115313067
+2025-03-30 18:05:36,888 [scales_scraper] 2        0.3950909356397404
+2025-03-30 18:05:36,888 [scales_scraper] 3        0.33790931339427854
+2025-03-30 18:05:36,888 [scales_scraper] 4        0.2534742937745224
+2025-03-30 18:05:36,888 [scales_scraper] 5        0.3362971500434798
+2025-03-30 18:05:36,888 [scales_scraper] 6        0.25178665991140575
+2025-03-30 18:05:36,888 [scales_scraper] 7        0.3370254560605492
+2025-03-30 18:05:36,888 [scales_scraper] 8        0.1443721641693797
+2025-03-30 18:05:36,888 [scales_scraper] 9        0.33746648746142266
+2025-03-30 18:05:36,888 [scales_scraper] 10       0.41116186955164363
+2025-03-30 18:05:36,888 [scales_scraper] 11       0.24635443157000703
+2025-03-30 18:05:36,888 [scales_scraper] 12       0.18501510269923754
+2025-03-30 18:05:36,888 [scales_scraper] 13       0.34915242300052424
+2025-03-30 18:05:36,888 [scales_scraper] 14       0.2627264699646532
+2025-03-30 18:05:36,888 [scales_scraper] 15       0.19682951440955396
+2025-03-30 18:05:36,888 [scales_scraper] 16       0.303682344947528
+2025-03-30 18:05:36,888 [scales_scraper] Key      Label          
+2025-03-30 18:05:36,888 [scales_scraper] 1        0.031020917040121887
+2025-03-30 18:05:36,888 [scales_scraper] 2        0.0334804929316882
+2025-03-30 18:05:36,888 [scales_scraper] 3        0.09066211517715006
+2025-03-30 18:05:36,888 [scales_scraper] 4        0.1750971347969062
+2025-03-30 18:05:36,888 [scales_scraper] 5        0.09227427852794878
+2025-03-30 18:05:36,888 [scales_scraper] 6        0.17678476866002285
+2025-03-30 18:05:36,888 [scales_scraper] 7        0.09154597251087943
+2025-03-30 18:05:36,888 [scales_scraper] 8        0.2841992644020489
+2025-03-30 18:05:36,888 [scales_scraper] 9        0.09110494111000594
+2025-03-30 18:05:36,888 [scales_scraper] 10       0.01740955901978497
+2025-03-30 18:05:36,888 [scales_scraper] 11       0.18221699700142158
+2025-03-30 18:05:36,888 [scales_scraper] 12       0.24355632587219106
+2025-03-30 18:05:36,896 [scales_scraper] 13       0.07941900557090437
+2025-03-30 18:05:36,896 [scales_scraper] 14       0.1658449586067754
+2025-03-30 18:05:36,896 [scales_scraper] 15       0.23174191416187465
+2025-03-30 18:05:36,896 [scales_scraper] 16       0.12488908362390061
+2025-03-30 18:06:19,443 [scales_scraper] Available Ports: ['Microsoft GS Wavetable Synth 0', 'loopMIDI Port 1', 'loopMIDI Port 1 2']
+2025-03-30 18:06:36,674 [scales_scraper] rx=88
+2025-03-30 18:06:36,675 [scales_scraper] note_length=0.14759191445792944
+2025-03-30 18:06:36,834 [scales_scraper] silence_balancer=0.2809795141134992
+2025-03-30 18:06:37,135 [scales_scraper] rx=81
+2025-03-30 18:06:37,135 [scales_scraper] note_length=0.27005044183002613
+2025-03-30 18:06:37,415 [scales_scraper] silence_balancer=0.15852098674140247
+2025-03-30 18:06:37,574 [scales_scraper] rx=89
+2025-03-30 18:06:37,575 [scales_scraper] note_length=0.3160511334238594
+2025-03-30 18:06:37,894 [scales_scraper] silence_balancer=0.11252029514756923
+2025-03-30 18:06:38,014 [scales_scraper] rx=72
+2025-03-30 18:06:38,015 [scales_scraper] note_length=0.4228823662253845
+2025-03-30 18:06:38,455 [scales_scraper] silence_balancer=0.005689062346044105
+2025-03-30 18:06:38,474 [scales_scraper] rx=91
+2025-03-30 18:06:38,475 [scales_scraper] note_length=0.1709519544185404
+2025-03-30 18:06:38,654 [scales_scraper] silence_balancer=0.2576194741528882
+2025-03-30 18:06:38,924 [scales_scraper] rx=72
+2025-03-30 18:06:38,925 [scales_scraper] note_length=0.3589143719492984
+2025-03-30 18:06:39,285 [scales_scraper] silence_balancer=0.06965705662213018
+2025-03-30 18:06:39,364 [scales_scraper] rx=91
+2025-03-30 18:06:39,365 [scales_scraper] note_length=0.3502345676308933
+2025-03-30 18:06:39,724 [scales_scraper] silence_balancer=0.07833686094053532
+2025-03-30 18:06:39,805 [scales_scraper] rx=79
+2025-03-30 18:06:39,805 [scales_scraper] note_length=0.2528047863817174
+2025-03-30 18:06:40,064 [scales_scraper] silence_balancer=0.17576664218971122
+2025-03-30 18:06:40,245 [scales_scraper] rx=93
+2025-03-30 18:06:40,245 [scales_scraper] note_length=0.37199129934407543
+2025-03-30 18:06:40,624 [scales_scraper] silence_balancer=0.05658012922735317
+2025-03-30 18:06:40,685 [scales_scraper] rx=76
+2025-03-30 18:06:40,685 [scales_scraper] note_length=0.19465954392193816
+2025-03-30 18:06:40,884 [scales_scraper] silence_balancer=0.23391188464949045
+2025-03-30 18:06:41,124 [scales_scraper] rx=79
+2025-03-30 18:06:41,125 [scales_scraper] note_length=0.2650395923807774
+2025-03-30 18:06:41,404 [scales_scraper] silence_balancer=0.1635318361906512
+2025-03-30 18:06:41,585 [scales_scraper] rx=74
+2025-03-30 18:06:41,585 [scales_scraper] note_length=0.08602310851923249
+2025-03-30 18:06:41,684 [scales_scraper] silence_balancer=0.3425483200521961
+2025-03-30 18:06:42,045 [scales_scraper] rx=89
+2025-03-30 18:06:42,045 [scales_scraper] note_length=0.3394125493169477
+2025-03-30 18:06:42,404 [scales_scraper] silence_balancer=0.0891588792544809
+2025-03-30 18:06:42,504 [scales_scraper] rx=82
+2025-03-30 18:06:42,505 [scales_scraper] note_length=0.19871697168811994
+2025-03-30 18:06:42,704 [scales_scraper] silence_balancer=0.22985445688330866
+2025-03-30 18:06:42,940 [scales_scraper] rx=79
+2025-03-30 18:06:42,940 [scales_scraper] note_length=0.15978060290981677
+2025-03-30 18:06:43,115 [scales_scraper] silence_balancer=0.26879082566161183
+2025-03-30 18:06:43,394 [scales_scraper] rx=77
+2025-03-30 18:06:43,395 [scales_scraper] note_length=0.008522533457428325
+2025-03-30 18:06:43,414 [scales_scraper] silence_balancer=0.4200488951140003
+2025-03-30 18:06:43,854 [scales_scraper] Key      Label          
+2025-03-30 18:06:43,855 [scales_scraper] 1        88             
+2025-03-30 18:06:43,856 [scales_scraper] 2        81             
+2025-03-30 18:06:43,856 [scales_scraper] 3        89             
+2025-03-30 18:06:43,856 [scales_scraper] 4        72             
+2025-03-30 18:06:43,856 [scales_scraper] 5        91             
+2025-03-30 18:06:43,856 [scales_scraper] 6        72             
+2025-03-30 18:06:43,856 [scales_scraper] 7        91             
+2025-03-30 18:06:43,856 [scales_scraper] 8        79             
+2025-03-30 18:06:43,856 [scales_scraper] 9        93             
+2025-03-30 18:06:43,856 [scales_scraper] 10       76             
+2025-03-30 18:06:43,856 [scales_scraper] 11       79             
+2025-03-30 18:06:43,865 [scales_scraper] 12       74             
+2025-03-30 18:06:43,865 [scales_scraper] 13       89             
+2025-03-30 18:06:43,865 [scales_scraper] 14       82             
+2025-03-30 18:06:43,865 [scales_scraper] 15       79             
+2025-03-30 18:06:43,865 [scales_scraper] 16       77             
+2025-03-30 18:06:43,865 [scales_scraper] Key      Label          
+2025-03-30 18:06:43,865 [scales_scraper] 1        0.14759191445792944
+2025-03-30 18:06:43,865 [scales_scraper] 2        0.27005044183002613
+2025-03-30 18:06:43,865 [scales_scraper] 3        0.3160511334238594
+2025-03-30 18:06:43,865 [scales_scraper] 4        0.4228823662253845
+2025-03-30 18:06:43,865 [scales_scraper] 5        0.1709519544185404
+2025-03-30 18:06:43,865 [scales_scraper] 6        0.3589143719492984
+2025-03-30 18:06:43,865 [scales_scraper] 7        0.3502345676308933
+2025-03-30 18:06:43,865 [scales_scraper] 8        0.2528047863817174
+2025-03-30 18:06:43,865 [scales_scraper] 9        0.37199129934407543
+2025-03-30 18:06:43,865 [scales_scraper] 10       0.19465954392193816
+2025-03-30 18:06:43,865 [scales_scraper] 11       0.2650395923807774
+2025-03-30 18:06:43,865 [scales_scraper] 12       0.08602310851923249
+2025-03-30 18:06:43,865 [scales_scraper] 13       0.3394125493169477
+2025-03-30 18:06:43,865 [scales_scraper] 14       0.19871697168811994
+2025-03-30 18:06:43,865 [scales_scraper] 15       0.15978060290981677
+2025-03-30 18:06:43,865 [scales_scraper] 16       0.008522533457428325
+2025-03-30 18:06:43,865 [scales_scraper] Key      Label          
+2025-03-30 18:06:43,865 [scales_scraper] 1        0.2809795141134992
+2025-03-30 18:06:43,865 [scales_scraper] 2        0.15852098674140247
+2025-03-30 18:06:43,865 [scales_scraper] 3        0.11252029514756923
+2025-03-30 18:06:43,865 [scales_scraper] 4        0.005689062346044105
+2025-03-30 18:06:43,865 [scales_scraper] 5        0.2576194741528882
+2025-03-30 18:06:43,865 [scales_scraper] 6        0.06965705662213018
+2025-03-30 18:06:43,865 [scales_scraper] 7        0.07833686094053532
+2025-03-30 18:06:43,865 [scales_scraper] 8        0.17576664218971122
+2025-03-30 18:06:43,865 [scales_scraper] 9        0.05658012922735317
+2025-03-30 18:06:43,865 [scales_scraper] 10       0.23391188464949045
+2025-03-30 18:06:43,865 [scales_scraper] 11       0.1635318361906512
+2025-03-30 18:06:43,865 [scales_scraper] 12       0.3425483200521961
+2025-03-30 18:06:43,865 [scales_scraper] 13       0.0891588792544809
+2025-03-30 18:06:43,865 [scales_scraper] 14       0.22985445688330866
+2025-03-30 18:06:43,865 [scales_scraper] 15       0.26879082566161183
+2025-03-30 18:06:43,865 [scales_scraper] 16       0.4200488951140003
