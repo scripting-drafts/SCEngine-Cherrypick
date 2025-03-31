@@ -6,7 +6,7 @@
 ### Harmonies Box Engine
  - To midi-sync Cubase add an empty "EnableGSSynth.txt" to C:\Users\<user name>\AppData\Roaming\Steinberg\Cubase 14_64
   
-TODO:  
+To do:  
  - MIDI format melody rolls  
 
 ### Scales Scraper
