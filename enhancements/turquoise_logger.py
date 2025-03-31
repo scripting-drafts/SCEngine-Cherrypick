@@ -6,7 +6,7 @@ os.system('')
 
 class Logger:
     def __init__(self):
-        self.script_name = 'scales_scraper'
+        self.script_name = 'music_box'
 
     def RGB(self, red=None, green=None, blue=None, bg=False):
         '''Logger prettifier'''
@@ -24,13 +24,18 @@ class Logger:
         g2 = self.RGB(0, 0, 128)
         bold = "\033[1m"
         reset = "\033[0m"
-        logging.basicConfig(filename=f'{self.script_name}.log', encoding='UTF-8', level=logging.DEBUG, format='%(asctime)s [%(name)s] %(message)s')
+        logging.basicConfig(filename=f'resources/{self.script_name}.log', encoding='UTF-8', level=logging.DEBUG, format='%(asctime)s [%(name)s] %(message)s')
+        
         logger = logging.getLogger(f'{self.script_name}')
         logger.setLevel(logging.DEBUG)
+
         ch = logging.StreamHandler()
         ch.setLevel(logging.DEBUG)
-        formatter = logging.Formatter('%(asctime)s,%(msecs)03d {}{}[%(name)s]{}{} %(message)s'.format(bold, g1, g0, reset), '%H:%M:%S')
+        
+        formatter = logging.Formatter('%(asctime)s,%(msecs)03d {}{}[%(name)s]{}{} %(message)s'.format(bold, g1, g0, reset), '%H:%M:%S') # %(asctime)s,%(msecs)03d {}{}
+        
         ch.setFormatter(formatter)
         logger.addHandler(ch)
 
         return logger
+    

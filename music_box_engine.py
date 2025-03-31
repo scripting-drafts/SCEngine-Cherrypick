@@ -1,10 +1,13 @@
-import rtmidi
-from time import sleep
-import random
-from sys import exit
 import colorama
-import enhancements.turquoise_logger as turquoise_logger
 import enhancements.mod_initializer as gui_enhancements
+import enhancements.turquoise_logger as turquoise_logger
+import random
+import re
+import rtmidi
+from sys import exit
+from time import sleep
+from resources.timer import Timer
+from resources.multireplacer import multireplacer_initializer
 
 colorama.init()
 GREEN = colorama.Fore.GREEN
@@ -12,21 +15,28 @@ GRAY = colorama.Fore.LIGHTBLACK_EX
 RESET = colorama.Fore.RESET
 RED = colorama.Fore.RED
 
-gui_enhancements.run_music_box_engine()
-logg = turquoise_logger.Logger()
-log = logg.logging()
+gui_enhancements.run_music_box()
+
+tl_log = turquoise_logger.Logger()
+log = tl_log.logging()
+
+replacements = {
+    '[': '', ']': '', '\'': '', ', ': '\n'
+}
 
 midiout = rtmidi.MidiOut()
 available_ports = midiout.get_ports()
-log.debug(f'Available Ports: {available_ports}')
 
 if available_ports:
+    mr = multireplacer_initializer()
+    listed_ports = mr.multireplace(re.sub(r'^\s', '', str(available_ports)), replacements) # str([r'{} '.format(x) for x in available_ports]).split('\n')
+    log.debug(f'Available Ports: \n\n{listed_ports} \n')
     selected_port = 0
     midiout.open_port(selected_port)
-    print(f'opened port {selected_port}')
+    log.debug(f'Port #{selected_port} Open')
 else:
     midiout.open_virtual_port("My virtual output")
-    print('opened virtual port')
+    log.debug('W: Opened virtual port')
 
 def get_harmonic_range(hr='higher'):
         if hr == 'higher':
@@ -44,8 +54,6 @@ def get_harmonic_range(hr='higher'):
         return n
 
 n = get_harmonic_range()
-# Simple solution
-# n = [x for x in range(33, 58)]
 
 # Scales
 diminished = [2, 4, 6, 7, 9]
@@ -78,46 +86,17 @@ else:
 
 # Don't repeat notes
 if scale == 2 or scale == 3:
-# Add octave
+    # Add octave
     s = s + [x + 12 for x in s if x != 0]
     rx, rx1, rx2, rx3, rx4, rx5, rx6, rx7 = s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7]
-
-class Timer:
-    '''
-    Calculating Bar Duration:
-    length = 60 seconds
-
-    beat_at_140 = 1.716 seconds aprox (60 seconds / 140 BPM = 0.429 seconds/beat). 
-    BAR_4_beats = 0.4285714285714286
-
-    A bar (or measure) typically consists of 4 beats, so a bar would last approximately 1.716 seconds (0.429 seconds/beat * 4 beats = 1.716 seconds/bar). 
-    Therefore, 16 bars would last about 27.45 seconds (1.716 seconds/bar * 16 bars = 27.45 seconds). 
-    Actually -> 27.42857142857143
-    '0.4285714285714286'
-    '''
-    def formulate_time(self, remainder=None):
-        t = random.uniform(0.0000000000000000, 0.4285714285714286)
-        if remainder is not None:
-            t = t + remainder
-        
-        return t
-    
-    def even_time(self, t):
-        even= 0.4285714285714286 - t
-        if t != 0:
-            summary = even + t
-            remainder = 0.4285714285714286 - summary
-
-        if remainder == 0:
-            remainder = None
-
-        return even, remainder
 
 bars_count = 1
 rxs = {}
 dts = {}
 sls = {}
 remainder, remainder_use = None, None
+
+times = Timer()
 
 with midiout:
     # debugging
@@ -128,49 +107,31 @@ with midiout:
             note_on = [0x90, rx, 112]
             midiout.send_message(note_on)
             if remainder_use is not None:
-                note_length = Timer().formulate_time(remainder)
+                note_length = times.formulate_time(remainder)
             else:
-                note_length = Timer().formulate_time()
+                note_length = times.formulate_time()
             log.debug(f'{rx=}')
             log.debug(f'{note_length=}')
             sleep(note_length)
 
             note_off = [0x80, rx, 0]
             midiout.send_message(note_off)
-            silence_balancer, remainder = Timer().even_time(note_length)
+            silence_balancer, remainder = times.even_time(note_length)
             log.debug(f'{silence_balancer=}')
 
             remainder_use = random.choice([remainder, 0.])
             remainder_use = remainder_use if remainder is not None else 0
             sleep(silence_balancer + remainder_use)
-            # Always None
-            # log.debug(f'{remainder=}')
-            
-            # def save_melody_roll(bars_count, rx, note_length, silence_balancer):
+
             key = bars_count
             rxs[key] = (rx)
             dts[key] = (note_length)
             sls[key] = (silence_balancer)
-            
-            # save_melody_roll(bars_count, rx, note_length, silence_balancer)
-            # No repeat notes
-            # rx1, rx2, rx3, rx4 = rx, rx1, rx2, rx3
 
             bars_count += 1
 
             if bars_count == 17:
                 break
-
-            # for rx, note_length, silence_balancer in zip(rxs.values(), dts.values(), sls.values()):
-            #     note_on = [0x90, rx, 112]
-            #     midiout.send_message(note_on)
-            #     sleep(note_length)
-
-            #     note_off = [0x80, rx, 0]
-            #     midiout.send_message(note_off)
-            #     sleep(silence_balancer)
-
-
 
         except KeyboardInterrupt:
             midiout.send_message(note_off)

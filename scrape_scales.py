@@ -10,16 +10,15 @@ import colorama
 
 class SeleniumWireModule:
     def __init__(self):
-        
         colorama.init()
         GREEN = colorama.Fore.GREEN
         GRAY = colorama.Fore.LIGHTBLACK_EX
         RESET = colorama.Fore.RESET
         RED = colorama.Fore.RED
 
-        gui_enhancements.run_scraper()
+        gui_enhancements.run_sel()
         logg = turquoise_logger.Logger()
-        path_firefox_binary = 'tools/geckodriver.exe'
+        path_firefox_binary = 'resources/geckodriver.exe'
         path_geckodriver_log = path.abspath('resources/geckodriver.log')
         log = logg.logging()
         localhost = '127.0.0.1'
@@ -118,7 +117,6 @@ class SeleniumWireModule:
             self.log.error('Unsuccessful driver termination')
 
     def scrape_info(self):
-        gui_enhancements.run_scraper()
         self.driver.get(self.target_url)
         scale_dict = {}
         datalist = []
@@ -201,11 +199,11 @@ class SeleniumWireModule:
 
 # TEST
 wm = SeleniumWireModule()
-wm_is_up = wm.healthcheck()
+# wm_is_up = wm.healthcheck()
 
-if wm_is_up:
-    is_connected = wm.connection_attempt()
-    wm.requests_vars_get()
+# if wm_is_up:
+#     is_connected = wm.connection_attempt()
+#     wm.requests_vars_get()
 
 wm.scrape_info()
 
