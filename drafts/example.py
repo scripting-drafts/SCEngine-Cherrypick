@@ -1,4 +1,4 @@
-from engine import SamplesLibGenerate
+from ..engine import SamplesLibGenerate
 
 generate_samples = SamplesLibGenerate()
 
