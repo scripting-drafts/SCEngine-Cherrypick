@@ -1,7 +1,13 @@
 ## Harmony Engines and Scrapers
     
- -  For midi engine sync with Cubase on Windows 10  
-EnableGSSynth.txt >> C:\Users\<user name>\AppData\Roaming\Steinberg\Cubase 14_64
+### SuperCollider Engine  
+Test it with the test example
   
+### Harmonies Box Engine  
+Midi engine sync with Cubase on Windows 10:  
+EnableGSSynth.txt >> C:\Users\<user name>\AppData\Roaming\Steinberg\Cubase 14_64  
 TODO:  
- - MIDI format melody rolls 
+ - MIDI format melody rolls  
+
+### Scales Scraper  
+![Based on these Selenium Module](https://github.com/scripting-drafts/Selenium-Module)  
