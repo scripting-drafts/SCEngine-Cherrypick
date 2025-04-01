@@ -109,6 +109,9 @@ class SeleniumWireModule:
                     log.debug(f'REQ: {request.url}')
                     log.debug(f'STAT: {request.response.status_code}')
                     log.debug('CT:' +  request.response.headers['content-type'] + '\n')
+                    self.req_stat_ct = [str(request.url), str(request.response.status_code), request.response.headers['content-type']]
+
+                del self.driver.requests
         if not self.is_connected:
             log.debug('The driver is not available')
 
@@ -130,19 +133,32 @@ class SeleniumWireModule:
             log.error('Unsuccessful driver termination')
 
     def scrape_info(self):
+        '''Ecclesiastical Modes'''
         log = self.log
-        sleep(3)
         self.connection_attempt(url=self.target_url, max_attempts_count=1)
+        self.requests_vars_get()
+
+        Scale_Names = self.driver.find_element(By.CSS_SELECTOR, 'table.lists:nth-child(4) > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(1) > b:nth-child(1)').text
+        'table.lists:nth-child(4) > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(1)'
 
         scale_dict = {}
         datalist = []
         musical_modes = 3 # 1st Mode in page
         try:
             data = {}
-            Title = self.driver.find_element(By.CSS_SELECTOR, 'table.lists:nth-child(4) > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(1) > b:nth-child(1)').text
-            Name, Intervals, AKA = [self.driver.find_element(By.CSS_SELECTOR, 'table.lists:nth-child(4) > tbody:nth-child(1) > tr:nth-child(1) > th:nth-child({})'.format(str(x))).text for x in [2, 3, 4]]
-            log.debug(Title)
+            Title, Name, Intervals, AKA = 'Title' + ''.join([self.driver.find_element(By.CSS_SELECTOR, 'table.lists:nth-child(4) > tbody:nth-child(1) > tr:nth-child(1) > th:nth-child({})'.format(str(x))).text for x in [2, 3, 4]])
             log.debug(f'{Title}, {Name}, {Intervals}, {AKA}')
+        
+            Scale_Names_Amount = 0
+
+            for i in range (90):
+                self.driver.find_element(By.CSS_SELECTOR, f'table.lists:nth-child(4) > tbody:nth-child(1) > tr:nth-child({i}) > td:nth-child(1) > b:nth-child(1)')
+
+            scales_name = self.driver.find_element(By.CSS_SELECTOR, 'table.lists:nth-child(4) > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(1) > b:nth-child(1)').text
+            
+            for i in range(2, 4):
+                data['Scale Name'], data['Name'], data['Intervals'], data['AKA'] = self.driver.find_element(By.CSS_SELECTOR, f'table.lists:nth-child(4) > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child({i})')
+            'table.lists:nth-child(4) > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(3)'
 
             for musical_mode_position in range(3, 40):
                 data = {}
@@ -220,7 +236,7 @@ wm_is_up = wm.healthcheck()
 
 if wm_is_up:
     is_connected = wm.connection_attempt(wm.initial_url)
-    # wm.requests_vars_get()
+    wm.requests_vars_get()
 
 wm.scrape_info()
 wm.tearDown()
