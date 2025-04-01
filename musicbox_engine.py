@@ -8,6 +8,7 @@ from sys import exit
 from time import sleep
 from resources.timer import Timer
 from resources.multireplacer import multireplacer_initializer
+import pandas as pd
 
 colorama.init()
 GREEN = colorama.Fore.GREEN
@@ -54,6 +55,8 @@ def get_harmonic_range(hr='higher'):
         return n
 
 n = get_harmonic_range()
+
+# df = pd.read_excel(f'resources/{scales}.xlsx', sheet_name='Sheet1', header=0)
 
 # Scales
 diminished = [2, 4, 6, 7, 9]
