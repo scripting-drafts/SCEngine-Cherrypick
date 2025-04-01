@@ -7,6 +7,7 @@
  - To midi-sync Cubase add an empty "EnableGSSynth.txt" to C:\Users\<user name>\AppData\Roaming\Steinberg\Cubase 14_64
   
 To do:  
+ - Scales inclusive distribution  
  - MIDI format melody rolls  
 
 ### Scales Scraper

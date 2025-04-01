@@ -4,6 +4,7 @@ from os import path
 from seleniumwire import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
+from time import sleep
 import enhancements.turquoise_logger as turquoise_logger
 import enhancements.mod_initializer as gui_enhancements
 import colorama
@@ -81,7 +82,11 @@ class SeleniumWireModule:
 
             if len(self.driver.requests) > 0:
                 if self.driver.requests[0].response.status_code == 200:
-                    self.log.debug(f'Connection reached | Attempts: {attempts_count}')
+                    self.log.debug(f''''Connection reached | Attempts: {attempts_count}
+                                        
+            Functioning server will proceed to target
+                                   
+                                    ''')
                     attempts_count = max_attempts_count
                     is_connected = True
             
@@ -96,36 +101,49 @@ class SeleniumWireModule:
     def requests_vars_get(self):
         '''Outputs REQ (Request URL), STAT (Status Code) and CT (Content Type) within responses in requests'''
         print('\n' + 'Responses summary')
+        log = self.log
         if self.is_connected:
             for request in self.driver.requests:
                 if request.response:
-                    self.log.debug(f'REQ: {request.url}')
-                    self.log.debug(f'STAT: {request.response.status_code}')
-                    self.log.debug('CT:' +  request.response.headers['content-type'] + '\n')
+                    log.debug(f'REQ: {request.url}')
+                    log.debug(f'STAT: {request.response.status_code}')
+                    log.debug('CT:' +  request.response.headers['content-type'] + '\n')
         if not self.is_connected:
-            self.log.debug('The driver is not available')
+            log.debug('The driver is not available')
 
     def tearDown(self):
-        '''Graceful shutdown and status verification'''
+        log = self.log
+        log.debug('''
+                  
+            Graceful shutdown and status verification
+                  
+                  ''')
+        
         self.driver.quit()
-        self.log.debug('Verifying webdriver shutdown')
+        log.debug('Verifying webdriver shutdown')
         status = self.healthcheck()
 
         if status == False:
-            self.log.debug('Successful driver termination')
+            log.debug('Successful driver termination')
         else:
-            self.log.error('Unsuccessful driver termination')
+            log.error('Unsuccessful driver termination')
 
     def scrape_info(self):
+        log = self.log
+        sleep(3)
         self.driver.get(self.target_url)
+
         scale_dict = {}
         datalist = []
         musical_modes = 3 # 1st Mode in page
         try:
             column_lines = self.driver.find_elements(By.CSS_SELECTOR, 'table.lists > tbody:nth-child(1) > tr')
             Name, Intervals, also_known_as = column_lines[0].text
+
+            log.debug(column_lines)
+            log.debug(Name, Intervals, also_known_as)
             
-            self.log.debug('INFO: {}, {}, {}'.format(Name, Intervals, also_known_as))
+            log.debug('INFO: {}, {}, {}'.format(Name, Intervals, also_known_as))
 
             for musical_mode_position in range(3, 40):
                 data = {}
@@ -137,12 +155,12 @@ class SeleniumWireModule:
                 #     tr = f'table.lists:nth-child(4) > tbody:nth-child(1) > tr:nth-child({})'    # 7
         
                 # except Exception as e:
-                #     self.log.debug('Warning: No Title Exception')
-                #     self.log.debug(f'Exception: {e}')
+                #     log.debug('Warning: No Title Exception')
+                #     log.debug(f'Exception: {e}')
 
         except Exception as e:
-            self.log.debug('Warning: No Title Exception')
-            self.log.debug(f'Exception: {e}')
+            log.debug('Warning: No Title Exception')
+            log.debug(f'Exception: {e}')
 
     #         for line in column_lines:
                 
@@ -162,8 +180,8 @@ class SeleniumWireModule:
                 
 
     #                 except Exception as e:
-    #                     self.log.debug('Warning: No Title Exception')
-    #                     self.log.debug(f'Exception: {e}')
+    #                     log.debug('Warning: No Title Exception')
+    #                     log.debug(f'Exception: {e}')
                 
     #         for position in 999999:
     #                     contents_selector = 'table.lists:nth-child(4) > tbody:nth-child(1) > tr:nth-child(7)'
@@ -199,14 +217,13 @@ class SeleniumWireModule:
 
 # TEST
 wm = SeleniumWireModule()
-# wm_is_up = wm.healthcheck()
+wm_is_up = wm.healthcheck()
 
-# if wm_is_up:
-#     is_connected = wm.connection_attempt()
-#     wm.requests_vars_get()
+if wm_is_up:
+    is_connected = wm.connection_attempt()
+    # wm.requests_vars_get()
 
 wm.scrape_info()
-
 wm.tearDown()
 
 # parent

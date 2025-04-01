@@ -66,5 +66,4 @@ def run_music_box():
 
 def attribution():
     print('''\U0001F310 Developed by Gerard Sala @ https://www.github.com/scripting-drafts
-          
           ''')
