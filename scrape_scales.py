@@ -8,6 +8,7 @@ from time import sleep
 import enhancements.turquoise_logger as turquoise_logger
 import enhancements.mod_initializer as gui_enhancements
 import colorama
+from sys import exit
 
 class SeleniumWireModule:
     def __init__(self):
@@ -72,13 +73,13 @@ class SeleniumWireModule:
         
         return status
 
-    def connection_attempt(self, max_attempts_count=2):
+    def connection_attempt(self, url=None, max_attempts_count=2):
         '''Commits attempts_count connection attempts to the given initial_url'''
         attempts_count = 1
 
         while not attempts_count > max_attempts_count:
-            self.log.debug(f'{self.localhost} <-> {self.initial_url}')
-            self.driver.get(self.initial_url)
+            self.log.debug(f'{self.localhost} <-> {url}')
+            self.driver.get(url)
 
             if len(self.driver.requests) > 0:
                 if self.driver.requests[0].response.status_code == 200:
@@ -131,19 +132,17 @@ class SeleniumWireModule:
     def scrape_info(self):
         log = self.log
         sleep(3)
-        self.driver.get(self.target_url)
+        self.connection_attempt(url=self.target_url, max_attempts_count=1)
 
         scale_dict = {}
         datalist = []
         musical_modes = 3 # 1st Mode in page
         try:
-            column_lines = self.driver.find_elements(By.CSS_SELECTOR, 'table.lists > tbody:nth-child(1) > tr')
-            Name, Intervals, also_known_as = column_lines[0].text
-
-            log.debug(column_lines)
-            log.debug(Name, Intervals, also_known_as)
-            
-            log.debug('INFO: {}, {}, {}'.format(Name, Intervals, also_known_as))
+            data = {}
+            Title = self.driver.find_element(By.CSS_SELECTOR, 'table.lists:nth-child(4) > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(1) > b:nth-child(1)').text
+            Name, Intervals, AKA = [self.driver.find_element(By.CSS_SELECTOR, 'table.lists:nth-child(4) > tbody:nth-child(1) > tr:nth-child(1) > th:nth-child({})'.format(str(x))).text for x in [2, 3, 4]]
+            log.debug(Title)
+            log.debug(f'{Title}, {Name}, {Intervals}, {AKA}')
 
             for musical_mode_position in range(3, 40):
                 data = {}
@@ -220,7 +219,7 @@ wm = SeleniumWireModule()
 wm_is_up = wm.healthcheck()
 
 if wm_is_up:
-    is_connected = wm.connection_attempt()
+    is_connected = wm.connection_attempt(wm.initial_url)
     # wm.requests_vars_get()
 
 wm.scrape_info()
