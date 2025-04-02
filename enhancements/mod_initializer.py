@@ -64,6 +64,21 @@ def run_music_box():
     
     attribution()
 
+def run_music_engine():
+    print(r'''
+    ___  ___          _        _____            _            
+    |  \/  |         (_)      |  ___|          (_)           
+    | .  . |_   _ ___ _  ___  | |__ _ __   __ _ _ _ __   ___ 
+    | |\/| | | | / __| |/ __| |  __| '_ \ / _` | | '_ \ / _ \
+    | |  | | |_| \__ \ | (__  | |__| | | | (_| | | | | |  __/
+    \_|  |_/\__,_|___/_|\___| \____/_| |_|\__, |_|_| |_|\___|
+                                        __/ |             
+                                        |___/              
+          
+          ''')
+
+    attribution()    
+
 def attribution():
     print('''\U0001F310 Developed by Gerard Sala @ https://www.github.com/scripting-drafts
           ''')
