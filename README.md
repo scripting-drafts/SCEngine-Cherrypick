@@ -12,3 +12,6 @@ To do:
 
 ### Scales Scraper
 ![Based on these Selenium Module](https://github.com/scripting-drafts/Selenium-Module)  
+
+Requirements:
+ - pip install openpyxl

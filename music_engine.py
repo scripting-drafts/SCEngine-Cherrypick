@@ -9,6 +9,7 @@ from time import sleep
 from resources.timer import Timer
 from resources.multireplacer import multireplacer_initializer
 import pandas as pd
+import numpy as np
 
 colorama.init()
 GREEN = colorama.Fore.GREEN
@@ -21,8 +22,12 @@ gui_enhancements.run_music_box()
 tl_log = turquoise_logger.Logger()
 log = tl_log.logging()
 
-replacements = {
-    '[': '', ']': '', '\'': '', ', ': '\n'
+replacements_ports_and_list_tuples = {
+    '[': '', ']':'',
+    '\'':'',
+    ', ':'\n',
+    '(':'',
+    ')':'',
 }
 
 midiout = rtmidi.MidiOut()
@@ -56,8 +61,6 @@ def get_harmonic_range(hr='higher'):
 
 n = get_harmonic_range()
 
-# df = pd.read_excel(f'resources/{scales}.xlsx', sheet_name='Sheet1', header=0)
-
 # Scales
 diminished = [2, 4, 6, 7, 9]
 major = [0, 2, 4, 5, 7, 9, 11, 12]
@@ -65,11 +68,14 @@ minor = [0, 1, 3, 5, 7, 8, 10, 12]
 augmented = [3, 5, 6, 8, 10]
 
 scale = int(input('''
-    Choose a scale:
+    Choose a scale or a group:
     1. diminished
     2. major
     3. minor
     4. augmented
+                  
+    5. Standard
+    6. More
 
     '''))
 
@@ -81,6 +87,23 @@ elif scale == 3:
     s = minor
 elif scale == 4:
     s = augmented
+elif scale == 5:
+    pass
+elif scale == 6:
+    df = pd.read_excel('resources/scales/Scales-Other.xlsx', sheet_name='Sheet1', index_col=0, header=0)
+    # for ind, scale_name in enumerate(df.loc[1:14, ['Name', 'aka*']]):
+    geographically_located_scales = set([geo for geo in df.index.to_list() if geo is not np.nan])
+    sorted_geographically_scales = sorted(geographically_located_scales)
+    sorted_geographically_scales = ''.join([f'{i}. {y}' + r'\n' for i, y in list(enumerate([sorted_geographically_scales]))])
+    log.debug([rf'{i}. {x}\n' for (i, x) in enumerate([n.strip() for n in sorted_geographically_scales])])
+    
+    # scales_index = int([input(rf'{i}. {x}\n' for (i, x) in list(enumerate(sorted_geographically_scales)))])
+    
+    # scales_index = [input(f'{i}. {x}\n' for i, x in enumerate(geographically_located_scales))]
+    # scale = int(
+    #     [input(f'{i}. {x} \n') for i, x in enumerate(df.iloc[1:14, [2, 4]])]
+    #     )
+    log.debug(scales_index)
 else:
     print('Wrong option')
     exit()
