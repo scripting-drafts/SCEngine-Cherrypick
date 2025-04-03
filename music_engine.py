@@ -87,21 +87,21 @@ scale = int(input('''
 
 def section_geolocated_scales(chosen_geoscale, df):
     if chosen_geoscale == 'Arabian':
-        scales_data = df.iloc[2:15]
+        scales_data = df.iloc[0:13]
     if chosen_geoscale == 'Chinese':
-        scales_data = df.iloc[15:20]
+        scales_data = df.iloc[13:18]
     if chosen_geoscale == 'Exotic':
-        scales_data = df.iloc[20:24]
+        scales_data = df.iloc[18:22]
     if chosen_geoscale == 'Greek':
-        scales_data = df.iloc[24:39]
+        scales_data = df.iloc[22:37]
     if chosen_geoscale == 'Indian':
-        scales_data = df.iloc[39:63]
+        scales_data = df.iloc[37:61]
     if chosen_geoscale == 'Indonesian':
-        scales_data = df.iloc[63:68]
+        scales_data = df.iloc[61:66]
     if chosen_geoscale == 'Japanese':
-        scales_data = df.iloc[20:79]
+        scales_data = df.iloc[66:76]
     if chosen_geoscale == 'Jewish':
-        scales_data = df.iloc[79:82]
+        scales_data = df.iloc[76:79]
 
     return scales_data
 
@@ -126,11 +126,8 @@ elif scale == 3:
 elif scale == 5:
     pass
 elif scale == 6:  # debug
-
-    # Get depth into the Scale sorted by Title (Geo)
     log.info('6 - Scale Groups')
     df = pd.read_excel('resources/scales/Scales-Other.xlsx', sheet_name='Sheet1', index_col=0, header=0)
-    # for ind, scale_name in enumerate(df.loc[1:14, ['Name', 'aka*']]):
     geographically_located_scales = set([geo for geo in df.index.to_list() if geo is not np.nan])
     sorted_geographically_scales = sorted(geographically_located_scales)
     
@@ -140,36 +137,26 @@ elif scale == 6:  # debug
     
     scales = int(input(f'\n{formatted_geo_scales}')) - 1 # (list vs GUI)
     chosen_geoloc = sorted(set([geo for geo in df.index.to_list() if geo is not np.nan]))[scales]
+    
+    clear()
     log.info(f'6 - Scale Groups - {chosen_geoloc}')
 
     scales_data = section_geolocated_scales(chosen_geoloc, df)
     scales_data_len = len(scales_data[:])
 
-    scales_names_for_input = []
-    for num, i, y in zip(range(1, scales_data_len + 1 ), scales_data['Name'], scales_data['aka*']):
+    scales_for_input = []
+    for num, i, intervals, y in zip(range(1, scales_data_len + 1 ), scales_data['Name'], scales_data['Intervals'], scales_data['aka*']):
         if y != '-':
-            scales_names_for_input.append(f'{str(num)}. {i}, also known as {y}  ')
+            scales_for_input.append([[f'{str(num)}. {i}, also known as {y}  '], [intervals]])
             
         else:
-            scales_names_for_input.append(f'{str(num)}. {i}  ')
+            scales_for_input.append([[f'{str(num)}. {i}  '], [intervals]])
 
-    scales_names_for_input = ''.join(scales_names_for_input).replace('  ', '\n')
-    clear()
-    scale = int(input(scales_names_for_input)) - 1
+    scale_names_for_input = ''.join([''.join(s[0]) for s in scales_for_input]).replace('  ', '\n')
+    scale_choice = int(input(scale_names_for_input)) - 1
+    scale = scales_for_input[scale_choice][1]
+    scale = ''.join(scale)
     mutilate_scale(scale)
-    
-    # formatted_geo_scales = [data for data in df.loc[chosen_geoloc, :]]
-    # log.debug(formatted_geo_scales)
-    # exit()
-    # scale = section_geolocated_scales(chosen_geoloc, ''.join(formatted_geo_scales))
-    
-    # log.debug(scale)
-
-    #### WORKENG also
-    # name_located_scales = [[x for x in data] for data in df.iloc[geo_scale_loc, :]]
-    # section_geolocated_scales(geo_scale_loc)
-    # scale = int(input(scale)) - 1
-    # mutilate_scale(scale)
 
 else:
     print('Wrong option')
