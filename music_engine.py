@@ -85,23 +85,23 @@ scale = int(input('''
 
 # scales_data = None
 
-def section_geolocated_scales(chosen_geoscale, formatted_geoscales):
+def section_geolocated_scales(chosen_geoscale, df):
     if chosen_geoscale == 'Arabian':
-        scales_data = formatted_geoscales[2:15]
+        scales_data = df.iloc[2:15]
     if chosen_geoscale == 'Chinese':
-        scales_data = formatted_geoscales[15:20]
+        scales_data = df.iloc[15:20]
     if chosen_geoscale == 'Exotic':
-        scales_data = formatted_geoscales[20:24]
+        scales_data = df.iloc[20:24]
     if chosen_geoscale == 'Greek':
-        scales_data = formatted_geoscales[24:39]
+        scales_data = df.iloc[24:39]
     if chosen_geoscale == 'Indian':
-        scales_data = formatted_geoscales[39:63]
+        scales_data = df.iloc[39:63]
     if chosen_geoscale == 'Indonesian':
-        scales_data = formatted_geoscales[63:68]
+        scales_data = df.iloc[63:68]
     if chosen_geoscale == 'Japanese':
-        scales_data = formatted_geoscales[20:79]
+        scales_data = df.iloc[20:79]
     if chosen_geoscale == 'Jewish':
-        scales_data = formatted_geoscales[79:82]
+        scales_data = df.iloc[79:82]
 
     return scales_data
 
@@ -125,42 +125,51 @@ elif scale == 3:
     s = augmented
 elif scale == 5:
     pass
-elif scale == 6:
+elif scale == 6:  # debug
 
     # Get depth into the Scale sorted by Title (Geo)
-    log.info('6 - More Scales')
-    df = pd.read_excel('resources/scales/Scales-Other.xlsx', sheet_name='Sheet1', index_col=1, header=0)
+    log.info('6 - Scale Groups')
+    df = pd.read_excel('resources/scales/Scales-Other.xlsx', sheet_name='Sheet1', index_col=0, header=0)
     # for ind, scale_name in enumerate(df.loc[1:14, ['Name', 'aka*']]):
     geographically_located_scales = set([geo for geo in df.index.to_list() if geo is not np.nan])
     sorted_geographically_scales = sorted(geographically_located_scales)
-    log.debug(sorted_geographically_scales)
     
     len_geo_scales = len(sorted_geographically_scales)
     listed_geo_scales = ''.join([f'{str(num)}. {i}  ' for num, i in zip(range(1, len_geo_scales + 1 ), sorted_geographically_scales)])
     formatted_geo_scales = listed_geo_scales.replace('  ', '\n')
-    # log.debug(formatted_geo_scales)
     
-    scales = int(input(formatted_geo_scales)) - 1
-    # debug
-    # geo_scale_loc= 0
-    clear()
+    scales = int(input(f'\n{formatted_geo_scales}')) - 1 # (list vs GUI)
+    chosen_geoloc = sorted(set([geo for geo in df.index.to_list() if geo is not np.nan]))[scales]
+    log.info(f'6 - Scale Groups - {chosen_geoloc}')
 
-    chosen_geoloc = sorted_geographically_scales[scales]
-    log.info(f'6 - More Scales - {chosen_geoloc}')
+    scales_data = section_geolocated_scales(chosen_geoloc, df)
+    scales_data_len = len(scales_data[:])
+
+    scales_names_for_input = []
+    for num, i, y in zip(range(1, scales_data_len + 1 ), scales_data['Name'], scales_data['aka*']):
+        if y != '-':
+            scales_names_for_input.append(f'{str(num)}. {i}, also known as {y}  ')
+            
+        else:
+            scales_names_for_input.append(f'{str(num)}. {i}  ')
+
+    scales_names_for_input = ''.join(scales_names_for_input).replace('  ', '\n')
+    clear()
+    scale = int(input(scales_names_for_input)) - 1
+    mutilate_scale(scale)
     
-    
-    formatted_geo_scales = [data for data in df.loc[chosen_geoloc, :]]
-    log.debug(formatted_geo_scales)
-    exit()
-    scale = section_geolocated_scales(chosen_geoloc, ''.join(formatted_geo_scales))
+    # formatted_geo_scales = [data for data in df.loc[chosen_geoloc, :]]
+    # log.debug(formatted_geo_scales)
+    # exit()
+    # scale = section_geolocated_scales(chosen_geoloc, ''.join(formatted_geo_scales))
     
     # log.debug(scale)
 
     #### WORKENG also
     # name_located_scales = [[x for x in data] for data in df.iloc[geo_scale_loc, :]]
     # section_geolocated_scales(geo_scale_loc)
-    scale = int(input(scale)) - 1
-    mutilate_scale(scale)
+    # scale = int(input(scale)) - 1
+    # mutilate_scale(scale)
 
 else:
     print('Wrong option')
