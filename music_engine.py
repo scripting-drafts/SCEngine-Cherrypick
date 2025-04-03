@@ -106,12 +106,24 @@ def section_geolocated_scales(chosen_geoscale, df):
     return scales_data
 
 def mutilate_scale(scale):
-    multilated_scale = str([float(note) - .5 for note in scale.split('-') if 'b' in note])
-    multilated_scale = str([float(note) + .5 for note in scale.split('-') if '#' in note])
-    tempered_scale = multilated_scale.split()
-    log.debug(f'tempered_scale_result: {tempered_scale}')
+    log.debug(f'Default Scale: {scale}')
+    s = []
+    for note in scale.split('-'):
+        if '#' in note:
+            note = note.replace(r'#', '')
+            s.append(float(note) + .5)
+        if 'b' in note:
+            note = note.replace(r'b', '')
+            s.append(float(note) - .5)
 
-    tempered_scale
+        note = float(note)
+
+        s.append(note)
+        
+
+    log.debug(f'Scale Result: {''.join(s)}')
+
+    return s
 
 # debug
 # scale = 6
@@ -148,7 +160,6 @@ elif scale == 6:  # debug
     for num, i, intervals, y in zip(range(1, scales_data_len + 1 ), scales_data['Name'], scales_data['Intervals'], scales_data['aka*']):
         if y != '-':
             scales_for_input.append([[f'{str(num)}. {i}, also known as {y}  '], [intervals]])
-            
         else:
             scales_for_input.append([[f'{str(num)}. {i}  '], [intervals]])
 
@@ -156,7 +167,14 @@ elif scale == 6:  # debug
     scale_choice = int(input(scale_names_for_input)) - 1
     scale = scales_for_input[scale_choice][1]
     scale = ''.join(scale)
-    mutilate_scale(scale)
+    s = mutilate_scale(scale)
+
+    scale_names_for_input = ''.join([''.join(s[1]) for s in scales_for_input]).replace('  ', '\n')
+    # scale_choice = int(input(scale_names_for_input)) - 1
+    # scale = scales_for_input[scale_choice][1]
+    # scale = ''.join(scale)
+    # s = mutilate_scale(scale)
+    log.debug(f'{scales_for_input[scale_choice][1]} <-> {s}')
 
 else:
     print('Wrong option')
@@ -164,11 +182,10 @@ else:
 
 
 
-# Don't repeat notes
-if scale == 2 or scale == 3:
+# if scale == 2 or scale == 3:
     # Add octave
-    s = s + [x + 12 for x in s if x != 0]
-    rx, rx1, rx2, rx3, rx4, rx5, rx6, rx7 = s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7]
+# s = s + [x + 12 for x in s if x != 0]
+rx, rx1, rx2, rx3, rx4, rx5, rx6, rx7 = s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7]
 
 bars_count = 1
 rxs = {}
