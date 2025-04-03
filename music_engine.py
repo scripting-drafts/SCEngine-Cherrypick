@@ -71,26 +71,50 @@ minor = [0, 1, 3, 5, 7, 8, 10, 12]
 augmented = [3, 5, 6, 8, 10]
 
 ### DEBUG
-# scale = int(input('''
-#     Choose a scale or a group:
-#     1. diminished
-#     2. major
-#     3. minor
-#     4. augmented
+scale = int(input('''
+    Choose a scale or a group:
+    1. diminished
+    2. major
+    3. minor
+    4. augmented
                   
-#     5. Standard
-#     6. Other
+    5. Standard
+    6. Other
 
-#     '''))
+    '''))
 
-# def mutilate_scale(scale=6):
-#     multilated_scale = str([b = float(note) - .5 for note in scale.split('-') if '#' in note float(note) + .5])
-#     tempered_scale = mutilate_scale.split()
-#     log.debug(f'tempered_scale_result: {tempered_scale}')
+# scales_data = None
 
-#     tempered_scale
+def section_geolocated_scales(chosen_geoscale, name_located_scales):
+    if chosen_geoscale == 'Arabian':
+        scales_data = name_located_scales[2:15]
+    if chosen_geoscale == 'Chinese':
+        scales_data = name_located_scales[15:20]
+    if chosen_geoscale == 'Exotic':
+        scales_data = name_located_scales[20:24]
+    if chosen_geoscale == 'Greek':
+        scales_data = name_located_scales[24:39]
+    if chosen_geoscale == 'Indian':
+        scales_data = name_located_scales[39:63]
+    if chosen_geoscale == 'Indonesian':
+        scales_data = name_located_scales[63:68]
+    if chosen_geoscale == 'Japanese':
+        scales_data = name_located_scales[20:79]
+    if chosen_geoscale == 'Jewish':
+        scales_data = name_located_scales[79:82]
 
-scale = 6
+    return scales_data
+
+def mutilate_scale(scale):
+    multilated_scale = str([float(note) - .5 for note in scale.split('-') if 'b' in note])
+    multilated_scale = str([float(note) + .5 for note in scale.split('-') if '#' in note])
+    tempered_scale = multilated_scale.split()
+    log.debug(f'tempered_scale_result: {tempered_scale}')
+
+    tempered_scale
+
+# debug
+# scale = 6
 
 if scale == 1:
     s = diminished
@@ -109,19 +133,19 @@ elif scale == 6:
     # for ind, scale_name in enumerate(df.loc[1:14, ['Name', 'aka*']]):
     geographically_located_scales = set([geo for geo in df.index.to_list() if geo is not np.nan])
     sorted_geographically_scales = sorted(geographically_located_scales)
-    log.debug(sorted_geographically_scales)
+    # log.debug(sorted_geographically_scales)
     
     len_geo_scales = len(sorted_geographically_scales)
     listed_geo_scales = ''.join([f'{str(num)}. {i}  ' for num, i in zip(range(1, len_geo_scales + 1 ), sorted_geographically_scales)])
     formatted_geo_scales = listed_geo_scales.replace('  ', '\n')
-    log.debug(formatted_geo_scales)
+    # log.debug(formatted_geo_scales)
     
+    formatted_geo_scales = int(input(formatted_geo_scales)) - 1
     # debug
-    # geo_scale_loc = int(input(formatted_geo_scales)) - 1
-    geo_scale_loc= 0
-
+    # geo_scale_loc= 0
     clear()
-    chosen_geoloc = sorted_geographically_scales[geo_scale_loc]
+
+    chosen_geoloc = sorted_geographically_scales[formatted_geo_scales]
     log.info(f'6 - More Scales - {chosen_geoloc}')
     
     # Get more depth (works until here)
@@ -133,25 +157,18 @@ elif scale == 6:
     # while i < index_size:
     #     chosen_index_len.append(df.iloc[[geo_scale_loc], i])
 
-        
+    # print([x for x in df.iloc[[geo_scale_loc], :14]])
+    # df.iloc[0, :14]
     
-    # log.debug(chosen_index_len)
-
-    name_located_scales = set([(name, scale, aka) for name, scale, aka in df.iloc[[geo_scale_loc], df[:] ]])
-    # print(len(set([name for name in df.iloc[geo_scale_loc, [df[:]] ]])))
-    # name_located_scales = list(name_located_scales)
-    name_located_scales = name_located_scales[0]
-    log.debug(name_located_scales)
-
-    name = name_located_scales[0]
-    aka = name_located_scales[1]
-    scale = name_located_scales[2]
-    log.debug([name, aka])
+    scale = section_geolocated_scales(chosen_geoloc, formatted_geo_scales)
     
-    geo_scale_loc = int(input(formatted_geo_scales)) - 1
-    
-    # mutilate_scale(scale)
+    log.debug(scale)
 
+    #### WORKENG also
+    # name_located_scales = [[x for x in data] for data in df.iloc[geo_scale_loc, :]]
+    # section_geolocated_scales(geo_scale_loc)
+    scale = int(input(scale)) - 1
+    mutilate_scale(scale)
     # sorted_name_located_scales = sorted(name_located_scales)
     # log.debug(sorted_name_located_scales)
 
