@@ -103,9 +103,8 @@ def section_other_scales(chosen_geoscale, df):
 def mutilate_scale(scale):
     # log.debug(f'Default Scale: {scale}')
     s = []
-    for note in scale.split('-'):
-        ref = scale.split('-')
-
+    list_scale = scale.split('-')
+    for note in list_scale:
         if '#' in note:
             if '##' in note:
                 note = note.replace(r'##', '')
@@ -113,8 +112,7 @@ def mutilate_scale(scale):
             else:
                 note = note.replace(r'#', '')
                 note = float(note) + .5
-
-        elif 'b' in note:
+        if 'b' in note:
             if 'bb' in note:
                 note = note.replace(r'bb', '')
                 note = float(note) - 1.
@@ -123,12 +121,12 @@ def mutilate_scale(scale):
                 note = float(note) - .5
         else:
             note = float(note)
-
+        
         s.append(note)
 
     s_gui_result = make_scale_readable(s)
 
-    return s, s_gui_result
+    return list_scale, s, s_gui_result
 
 def make_scale_readable(s):
     s_gui_result = []
@@ -150,7 +148,7 @@ def select_scale(scales_data):
     scales_for_input = []
     for num, i, intervals, y in zip(range(1, scales_data_len + 1 ), scales_data['Name'], scales_data['Intervals'], scales_data['aka*']):
         if y != '-':
-            scales_for_input.append([[f'{str(num)}. {i}    |    known like {y}  '], [intervals]])
+            scales_for_input.append([[f'{str(num)}. {i}, known like {y}  '], [intervals]])
         else:
             scales_for_input.append([[f'{str(num)}. {i}  '], [intervals]])
 
@@ -158,13 +156,24 @@ def select_scale(scales_data):
     scale_choice = int(input( f'\n {scale_names_for_input} \n')) - 1
     scale = scales_for_input[scale_choice][1]
     scale = ''.join(scale)
-    s, s_gui_result = mutilate_scale(scale)
+    list_scale, s, s_gui_result = mutilate_scale(scale)
 
     scale_names_for_input = ''.join([''.join(s[1]) for s in scales_for_input]).replace('  ', '\n')
-    gui_scales_for_input = ''.join(scales_for_input[scale_choice][1])
-    log.debug('{} <-> {}'.format(gui_scales_for_input, s_gui_result))
 
-    return scale, s, s_gui_result
+    return scale, list_scale, s_gui_result, s
+
+def display_acquired_info(s):
+    if s not in [diminished, major, minor, augmented]:
+        print('''
+      
+           {}
+           {}
+           {}
+           {}
+           
+        {} <-> {}
+      
+            '''.format(scale, list_scale, s_gui_result, s, scale, s_gui_result))
 
 # Scales
 diminished = [2, 4, 6, 7, 9]
@@ -191,6 +200,7 @@ elif scale == 2:
     s = major
 elif scale == 3:
     s = minor
+elif scale == 4:
     s = augmented
 elif scale == 5: # Needs to get sheet_name
     log.info('6 - Popular Scales - Choose Mode')
@@ -212,10 +222,12 @@ elif scale == 5: # Needs to get sheet_name
         scales = int(input(f'\n{formatted_geo_scales}')) - 1 # (list vs GUI)
         chosen_geoloc = sorted(set([geo for geo in df.index.to_list() if geo is not np.nan]))[scales]
         
+        log.info(f'6 - Scales - {chosen_geoloc} Group')
+        
+
         clear()
-        log.info(f'6 - Scale Groups - {chosen_geoloc}')
         scales_data = section_standard_scales(chosen_geoloc, df)
-        scale, s, s_gui_result = select_scale(scales_data)
+        scale, list_scale, s_gui_result, s = select_scale(scales_data)
 
 elif scale == 6:  # Need NOT to get sheet_name
     log.info('6 - Scale Groups - Choose Geo Group')
@@ -232,15 +244,18 @@ elif scale == 6:  # Need NOT to get sheet_name
     
     clear()
     log.info(f'6 - Scale Groups - {chosen_geoloc}')
-
     scales_data = section_other_scales(chosen_geoloc, df)
-    scale, s, s_gui_result = select_scale(scales_data)
+    scale, list_scale, s_gui_result, s = select_scale(scales_data)
+
+    
+
+    
 
 else:
     print('Wrong option')
     exit()
 
-
+display_acquired_info(s)
 
 # if scale == 2 or scale == 3:
     # Add octave
