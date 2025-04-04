@@ -31,8 +31,6 @@ replacements_ports = {
     ')':'',
 }
 
-# replacements_
-
 midiout = rtmidi.MidiOut()
 available_ports = midiout.get_ports()
 
@@ -66,8 +64,6 @@ def get_harmonic_range(hr='medium'):
         else:
             exit()
 
-        # Total 21, 94
-
         return n
 
 def section_standard_scales(chosen_geoscale, df):
@@ -77,6 +73,19 @@ def section_standard_scales(chosen_geoscale, df):
         scales_data = df.iloc[7:14]
     if chosen_geoscale == 'Melodic Minor (M.M.)':
         scales_data = df.iloc[14:21]
+        # Next Worksheet
+    if chosen_geoscale == 'Bebop':
+        scales_data = df.iloc[0:4]
+    if chosen_geoscale == 'Blues':
+        scales_data = df.iloc[4:9]
+    if chosen_geoscale == 'Gypsy':
+        scales_data = df.iloc[9:13]
+    if chosen_geoscale == 'Pentatonics':
+        scales_data = df.iloc[13:18]
+    if chosen_geoscale == 'Whole-Half':
+        scales_data = df.iloc[18:21]
+    if chosen_geoscale == 'Other':
+        scales_data = df.iloc[21:34]
 
     return scales_data
 
@@ -156,6 +165,7 @@ def select_scale(scales_data):
     scale_choice = int(input( f'\n {scale_names_for_input} \n')) - 1
     scale = scales_for_input[scale_choice][1]
     scale = ''.join(scale)
+    
     list_scale, s, s_gui_result = mutilate_scale(scale)
 
     scale_names_for_input = ''.join([''.join(s[1]) for s in scales_for_input]).replace('  ', '\n')
@@ -204,30 +214,32 @@ elif scale == 4:
     s = augmented
 elif scale == 5: # Needs to get sheet_name
     log.info('6 - Popular Scales - Choose Mode')
-    scales = int(input('''
+
+    modes = ['Ecclesiastical Modes', 'Bebop']
+
+    scales_option = int(input('''
     1. Ecclesiastical Modes
-    2. Bebop, Blues and derivatives
+    2. Bebop, Blues and more
     
     '''))
 
-    if scales == 1:
-        df = pd.read_excel('resources/scales/Scales-Standard.xlsx', sheet_name='Ecclesiastical Modes', index_col=0, header=0)
-        geographically_located_scales = set([geo for geo in df.index.to_list() if geo is not np.nan])
-        sorted_geographically_scales = sorted(geographically_located_scales)
-        
-        len_geo_scales = len(sorted_geographically_scales)
-        listed_geo_scales = ''.join([f'{str(num)}. {i}  ' for num, i in zip(range(1, len_geo_scales + 1 ), sorted_geographically_scales)])
-        formatted_geo_scales = listed_geo_scales.replace('  ', '\n')
-        
-        scales = int(input(f'\n{formatted_geo_scales}')) - 1 # (list vs GUI)
-        chosen_geoloc = sorted(set([geo for geo in df.index.to_list() if geo is not np.nan]))[scales]
-        
-        log.info(f'6 - Scales - {chosen_geoloc} Group')
-        
+    df = pd.read_excel('resources/scales/Scales-Standard.xlsx', sheet_name=modes[scales_option - 1], index_col=0, header=0)
+    geographically_located_scales = set([geo for geo in df.index.to_list() if geo is not np.nan])
+    sorted_geographically_scales = sorted(geographically_located_scales)
+    
+    len_geo_scales = len(sorted_geographically_scales)
+    listed_geo_scales = ''.join([f'{str(num)}. {i}  ' for num, i in zip(range(1, len_geo_scales + 1 ), sorted_geographically_scales)])
+    formatted_geo_scales = listed_geo_scales.replace('  ', '\n')
+    
+    scales = int(input(f'\n{formatted_geo_scales}')) - 1 # (list vs GUI)
+    chosen_geoloc = sorted(set([geo for geo in df.index.to_list() if geo is not np.nan]))[scales]
+    
+    log.info(f'6 - Scales - {chosen_geoloc} Group')
+    
 
-        clear()
-        scales_data = section_standard_scales(chosen_geoloc, df)
-        scale, list_scale, s_gui_result, s = select_scale(scales_data)
+    clear()
+    scales_data = section_standard_scales(chosen_geoloc, df)
+    scale, list_scale, s_gui_result, s = select_scale(scales_data)
 
 elif scale == 6:  # Need NOT to get sheet_name
     log.info('6 - Scale Groups - Choose Geo Group')
@@ -259,7 +271,8 @@ display_acquired_info(s)
 
 # if scale == 2 or scale == 3:
     # Add octave
-# s = s + [x + 12 for x in s if x != 0]
+# Add Octaves debug
+s = s + [x + 12 for x in s if x != 0] + [x + 24 for x in s if x != 0]
 # rx, rx1, rx2, rx3, rx4, rx5, rx6, rx7 = s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7]
 
 bars_count = 1
@@ -276,7 +289,25 @@ with midiout:
     sleep(1)
     while True:
         try:
-            rx = harmonic_range[random.choice(s)] # [x for x in s if x != rx or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6]
+            first_note = random.choice(s)
+            if type(first_note) == float():
+                if first_note[:2] == 00:
+                    print(f'First Note two decimals {first_note[:2]}')
+                    first_note = int(first_note)
+
+                else:
+                    try:
+                        if s[s.index(first_note) - 1] <= 0:
+                            relative_note = s[s.index(first_note + 1)]
+                        elif s[s.index(first_note) - 1] > 0:
+                            relative_note = s[s.index(first_note) - 1]
+                        
+                    except Exception:
+                        continue
+
+            
+
+            rx = harmonic_range[first_note] # [x for x in s if x != rx or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6]
             note_on = [0x90, rx, 112]
             midiout.send_message(note_on)
             if remainder_use is not None:
