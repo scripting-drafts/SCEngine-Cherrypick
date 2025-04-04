@@ -47,7 +47,7 @@ else:
     midiout.open_virtual_port("My virtual output")
     log.debug('W: Opened virtual port')
 
-def get_harmonic_range(hr='higher'):
+def get_harmonic_range(hr='medium'):
         if hr == 'higher':
             n = [x for x in range(69, 94)]
             return n
@@ -57,12 +57,30 @@ def get_harmonic_range(hr='higher'):
         elif hr == 'low':
             n = [x for x in range(21, 46)]
 
+        elif hr == 'total':
+            n = [x for x in range(21, 94)]
+
+        elif hr == 'medium':
+            n = [x for x in range(33, 94)]
+
         else:
             exit()
 
+        # Total 21, 94
+
         return n
 
-def section_geolocated_scales(chosen_geoscale, df):
+def section_standard_scales(chosen_geoscale, df):
+    if chosen_geoscale == 'Major & Natural Minor (N.M.)':
+        scales_data = df.iloc[0:7]
+    if chosen_geoscale == 'Harmonic Minor (H.M.)':
+        scales_data = df.iloc[7:14]
+    if chosen_geoscale == 'Melodic Minor (M.M.)':
+        scales_data = df.iloc[14:21]
+
+    return scales_data
+
+def section_other_scales(chosen_geoscale, df):
     if chosen_geoscale == 'Arabian':
         scales_data = df.iloc[0:13]
     if chosen_geoscale == 'Chinese':
@@ -83,23 +101,70 @@ def section_geolocated_scales(chosen_geoscale, df):
     return scales_data
 
 def mutilate_scale(scale):
-    log.debug(f'Default Scale: {scale}')
+    # log.debug(f'Default Scale: {scale}')
     s = []
     for note in scale.split('-'):
-        if '#' in note:
-            note = note.replace(r'#', '')
-            s.append(float(note) + .5)
-        if 'b' in note:
-            note = note.replace(r'b', '')
-            s.append(float(note) - .5)
+        ref = scale.split('-')
 
-        note = float(note)
+        if '#' in note:
+            if '##' in note:
+                note = note.replace(r'##', '')
+                note = float(note) + 1.
+            else:
+                note = note.replace(r'#', '')
+                note = float(note) + .5
+
+        elif 'b' in note:
+            if 'bb' in note:
+                note = note.replace(r'bb', '')
+                note = float(note) - 1.
+            else:
+                note = note.replace(r'b', '')
+                note = float(note) - .5
+        else:
+            note = float(note)
 
         s.append(note)
-        
-    log.debug(f'Scale Result: {''.join(s)}')
 
-    return s
+    s_gui_result = make_scale_readable(s)
+
+    return s, s_gui_result
+
+def make_scale_readable(s):
+    s_gui_result = []
+
+    for x in s:
+        if x != s[-1]:
+            s_gui_result.append('{:.2f}-'.format(x))
+        elif x == s[-1]:
+            s_gui_result.append('{:.2f}'.format(x))
+
+    s_gui_result = ''.join(s_gui_result)
+#    log.debug('Scale Result: {}'.format(s_gui_result))
+
+    return s_gui_result
+
+def select_scale(scales_data):
+    scales_data_len = len(scales_data[:])
+
+    scales_for_input = []
+    for num, i, intervals, y in zip(range(1, scales_data_len + 1 ), scales_data['Name'], scales_data['Intervals'], scales_data['aka*']):
+        if y != '-':
+            scales_for_input.append([[f'{str(num)}. {i}    |    known like {y}  '], [intervals]])
+        else:
+            scales_for_input.append([[f'{str(num)}. {i}  '], [intervals]])
+
+    scale_names_for_input = ''.join([''.join(s[0]) for s in scales_for_input]).replace('  ', '\n')
+    scale_choice = int(input( f'\n {scale_names_for_input} \n')) - 1
+    scale = scales_for_input[scale_choice][1]
+    scale = ''.join(scale)
+    s, s_gui_result = mutilate_scale(scale)
+
+    scale_names_for_input = ''.join([''.join(s[1]) for s in scales_for_input]).replace('  ', '\n')
+    gui_scales_for_input = ''.join(scales_for_input[scale_choice][1])
+    log.debug('{} <-> {}'.format(gui_scales_for_input, s_gui_result))
+
+    return scale, s, s_gui_result
 
 # Scales
 diminished = [2, 4, 6, 7, 9]
@@ -127,10 +192,33 @@ elif scale == 2:
 elif scale == 3:
     s = minor
     s = augmented
-elif scale == 5:
-    pass
-elif scale == 6:  # debug
-    log.info('6 - Scale Groups')
+elif scale == 5: # Needs to get sheet_name
+    log.info('6 - Popular Scales - Choose Mode')
+    scales = int(input('''
+    1. Ecclesiastical Modes
+    2. Bebop, Blues and derivatives
+    
+    '''))
+
+    if scales == 1:
+        df = pd.read_excel('resources/scales/Scales-Standard.xlsx', sheet_name='Ecclesiastical Modes', index_col=0, header=0)
+        geographically_located_scales = set([geo for geo in df.index.to_list() if geo is not np.nan])
+        sorted_geographically_scales = sorted(geographically_located_scales)
+        
+        len_geo_scales = len(sorted_geographically_scales)
+        listed_geo_scales = ''.join([f'{str(num)}. {i}  ' for num, i in zip(range(1, len_geo_scales + 1 ), sorted_geographically_scales)])
+        formatted_geo_scales = listed_geo_scales.replace('  ', '\n')
+        
+        scales = int(input(f'\n{formatted_geo_scales}')) - 1 # (list vs GUI)
+        chosen_geoloc = sorted(set([geo for geo in df.index.to_list() if geo is not np.nan]))[scales]
+        
+        clear()
+        log.info(f'6 - Scale Groups - {chosen_geoloc}')
+        scales_data = section_standard_scales(chosen_geoloc, df)
+        scale, s, s_gui_result = select_scale(scales_data)
+
+elif scale == 6:  # Need NOT to get sheet_name
+    log.info('6 - Scale Groups - Choose Geo Group')
     df = pd.read_excel('resources/scales/Scales-Other.xlsx', sheet_name='Sheet1', index_col=0, header=0)
     geographically_located_scales = set([geo for geo in df.index.to_list() if geo is not np.nan])
     sorted_geographically_scales = sorted(geographically_located_scales)
@@ -145,28 +233,8 @@ elif scale == 6:  # debug
     clear()
     log.info(f'6 - Scale Groups - {chosen_geoloc}')
 
-    scales_data = section_geolocated_scales(chosen_geoloc, df)
-    scales_data_len = len(scales_data[:])
-
-    scales_for_input = []
-    for num, i, intervals, y in zip(range(1, scales_data_len + 1 ), scales_data['Name'], scales_data['Intervals'], scales_data['aka*']):
-        if y != '-':
-            scales_for_input.append([[f'{str(num)}. {i}, also known as {y}  '], [intervals]])
-        else:
-            scales_for_input.append([[f'{str(num)}. {i}  '], [intervals]])
-
-    scale_names_for_input = ''.join([''.join(s[0]) for s in scales_for_input]).replace('  ', '\n')
-    scale_choice = int(input(scale_names_for_input)) - 1
-    scale = scales_for_input[scale_choice][1]
-    scale = ''.join(scale)
-    s = mutilate_scale(scale)
-
-    scale_names_for_input = ''.join([''.join(s[1]) for s in scales_for_input]).replace('  ', '\n')
-    # scale_choice = int(input(scale_names_for_input)) - 1
-    # scale = scales_for_input[scale_choice][1]
-    # scale = ''.join(scale)
-    # s = mutilate_scale(scale)
-    log.debug(f'{''.join(scales_for_input[scale_choice][1])} <-> {''.join(s)}')
+    scales_data = section_other_scales(chosen_geoloc, df)
+    scale, s, s_gui_result = select_scale(scales_data)
 
 else:
     print('Wrong option')
@@ -177,7 +245,7 @@ else:
 # if scale == 2 or scale == 3:
     # Add octave
 # s = s + [x + 12 for x in s if x != 0]
-rx, rx1, rx2, rx3, rx4, rx5, rx6, rx7 = s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7]
+# rx, rx1, rx2, rx3, rx4, rx5, rx6, rx7 = s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7]
 
 bars_count = 1
 rxs = {}
@@ -186,14 +254,14 @@ sls = {}
 remainder, remainder_use = None, None
 
 times = Timer()
-n = get_harmonic_range()
+harmonic_range = get_harmonic_range()
 
 with midiout:
     # debugging
     sleep(1)
     while True:
         try:
-            rx = n[random.choice(s)] # [x for x in s if x != rx or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6]
+            rx = harmonic_range[random.choice(s)] # [x for x in s if x != rx or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6]
             note_on = [0x90, rx, 112]
             midiout.send_message(note_on)
             if remainder_use is not None:
