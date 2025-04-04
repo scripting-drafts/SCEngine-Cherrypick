@@ -62,29 +62,6 @@ def get_harmonic_range(hr='higher'):
 
         return n
 
-n = get_harmonic_range()
-
-# Scales
-diminished = [2, 4, 6, 7, 9]
-major = [0, 2, 4, 5, 7, 9, 11, 12]
-minor = [0, 1, 3, 5, 7, 8, 10, 12]
-augmented = [3, 5, 6, 8, 10]
-
-### DEBUG
-scale = int(input('''
-    Choose a scale or a group:
-    1. diminished
-    2. major
-    3. minor
-    4. augmented
-                  
-    5. Standard
-    6. Other
-
-    '''))
-
-# scales_data = None
-
 def section_geolocated_scales(chosen_geoscale, df):
     if chosen_geoscale == 'Arabian':
         scales_data = df.iloc[0:13]
@@ -120,13 +97,28 @@ def mutilate_scale(scale):
 
         s.append(note)
         
-
     log.debug(f'Scale Result: {''.join(s)}')
 
     return s
 
-# debug
-# scale = 6
+# Scales
+diminished = [2, 4, 6, 7, 9]
+major = [0, 2, 4, 5, 7, 9, 11, 12]
+minor = [0, 1, 3, 5, 7, 8, 10, 12]
+augmented = [3, 5, 6, 8, 10]
+
+### DEBUG
+scale = int(input('''
+    Choose a scale or a group:
+    1. diminished
+    2. major
+    3. minor
+    4. augmented
+                  
+    5. Standard
+    6. Other
+
+    '''))
 
 if scale == 1:
     s = diminished
@@ -174,7 +166,7 @@ elif scale == 6:  # debug
     # scale = scales_for_input[scale_choice][1]
     # scale = ''.join(scale)
     # s = mutilate_scale(scale)
-    log.debug(f'{scales_for_input[scale_choice][1]} <-> {s}')
+    log.debug(f'{''.join(scales_for_input[scale_choice][1])} <-> {''.join(s)}')
 
 else:
     print('Wrong option')
@@ -194,13 +186,14 @@ sls = {}
 remainder, remainder_use = None, None
 
 times = Timer()
+n = get_harmonic_range()
 
 with midiout:
     # debugging
     sleep(1)
     while True:
         try:
-            rx = n[random.choice([x for x in s if x != rx or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6])]
+            rx = n[random.choice(s)] # [x for x in s if x != rx or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6]
             note_on = [0x90, rx, 112]
             midiout.send_message(note_on)
             if remainder_use is not None:
