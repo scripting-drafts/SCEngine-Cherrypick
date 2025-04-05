@@ -1,11 +1,12 @@
 import colorama
 import enhancements.mod_initializer as gui_enhancements
 import enhancements.turquoise_logger as turquoise_logger
+import itertools
+import pandas as pd
+import numpy as np
 import random
 import re
 import rtmidi
-import pandas as pd
-import numpy as np
 from enhancements.clear import clear
 from sys import exit
 from time import sleep
@@ -67,13 +68,14 @@ def get_harmonic_range(hr='medium'):
         return n
 
 def section_standard_scales(chosen_geoscale, df):
+    # Ecclesiastical
     if chosen_geoscale == 'Major & Natural Minor (N.M.)':
         scales_data = df.iloc[0:7]
     if chosen_geoscale == 'Harmonic Minor (H.M.)':
         scales_data = df.iloc[7:14]
     if chosen_geoscale == 'Melodic Minor (M.M.)':
         scales_data = df.iloc[14:21]
-        # Next Worksheet
+        # Bebop
     if chosen_geoscale == 'Bebop':
         scales_data = df.iloc[0:4]
     if chosen_geoscale == 'Blues':
@@ -109,10 +111,33 @@ def section_other_scales(chosen_geoscale, df):
 
     return scales_data
 
+def select_scale(scales_data):
+    scales_data_len = len(scales_data[:])
+
+    scales_for_input = []
+    for num, i, intervals, y in zip(range(1, scales_data_len + 1 ), scales_data['Name'], scales_data['Intervals'], scales_data['aka*']):
+        if y != '-':
+            scales_for_input.append([[f'{str(num)}. {i}, known like {y}  '], [intervals]])
+        else:
+            scales_for_input.append([[f'{str(num)}. {i}  '], [intervals]])
+
+    scale_names_for_input = ''.join([''.join(s[0]) for s in scales_for_input]).replace('  ', '\n')
+    scale_choice = int(input( f'\n {scale_names_for_input} \n')) - 1
+    scale = scales_for_input[scale_choice][1]
+    scale = ''.join(scale)
+
+    print(scale)
+    
+    list_scale, s, s_gui_result = mutilate_scale(scale)
+
+    scale_names_for_input = ''.join([''.join(s[1]) for s in scales_for_input]).replace('  ', '\n')
+
+    return scale, list_scale, s_gui_result, s
+
 def mutilate_scale(scale):
     # log.debug(f'Default Scale: {scale}')
     s = []
-    list_scale = scale.split('-')
+    list_scale = [str(n) for n in scale.split('-')]
     for note in list_scale:
         if '#' in note:
             if '##' in note:
@@ -121,7 +146,7 @@ def mutilate_scale(scale):
             else:
                 note = note.replace(r'#', '')
                 note = float(note) + .5
-        if 'b' in note:
+        elif 'b' in note:
             if 'bb' in note:
                 note = note.replace(r'bb', '')
                 note = float(note) - 1.
@@ -151,27 +176,6 @@ def make_scale_readable(s):
 
     return s_gui_result
 
-def select_scale(scales_data):
-    scales_data_len = len(scales_data[:])
-
-    scales_for_input = []
-    for num, i, intervals, y in zip(range(1, scales_data_len + 1 ), scales_data['Name'], scales_data['Intervals'], scales_data['aka*']):
-        if y != '-':
-            scales_for_input.append([[f'{str(num)}. {i}, known like {y}  '], [intervals]])
-        else:
-            scales_for_input.append([[f'{str(num)}. {i}  '], [intervals]])
-
-    scale_names_for_input = ''.join([''.join(s[0]) for s in scales_for_input]).replace('  ', '\n')
-    scale_choice = int(input( f'\n {scale_names_for_input} \n')) - 1
-    scale = scales_for_input[scale_choice][1]
-    scale = ''.join(scale)
-    
-    list_scale, s, s_gui_result = mutilate_scale(scale)
-
-    scale_names_for_input = ''.join([''.join(s[1]) for s in scales_for_input]).replace('  ', '\n')
-
-    return scale, list_scale, s_gui_result, s
-
 def display_acquired_info(s):
     if s not in [diminished, major, minor, augmented]:
         print('''
@@ -182,6 +186,8 @@ def display_acquired_info(s):
            {}
            
         {} <-> {}
+              
+
       
             '''.format(scale, list_scale, s_gui_result, s, scale, s_gui_result))
 
@@ -226,18 +232,18 @@ elif scale == 5: # Needs to get sheet_name
     df = pd.read_excel('resources/scales/Scales-Standard.xlsx', sheet_name=modes[scales_option - 1], index_col=0, header=0)
     geographically_located_scales = set([geo for geo in df.index.to_list() if geo is not np.nan])
     sorted_geographically_scales = sorted(geographically_located_scales)
-    
+
     len_geo_scales = len(sorted_geographically_scales)
     listed_geo_scales = ''.join([f'{str(num)}. {i}  ' for num, i in zip(range(1, len_geo_scales + 1 ), sorted_geographically_scales)])
     formatted_geo_scales = listed_geo_scales.replace('  ', '\n')
-    
+
     scales = int(input(f'\n{formatted_geo_scales}')) - 1 # (list vs GUI)
     chosen_geoloc = sorted(set([geo for geo in df.index.to_list() if geo is not np.nan]))[scales]
-    
-    log.info(f'6 - Scales - {chosen_geoloc} Group')
-    
 
-    clear()
+    print(f'6 - Scales - {chosen_geoloc} Group')
+
+
+    # clear()
     scales_data = section_standard_scales(chosen_geoloc, df)
     scale, list_scale, s_gui_result, s = select_scale(scales_data)
 
@@ -289,26 +295,33 @@ with midiout:
     sleep(1)
     while True:
         try:
-            first_note = random.choice(s)
-            if type(first_note) == float():
-                if first_note[:2] == 00:
-                    print(f'First Note two decimals {first_note[:2]}')
-                    first_note = int(first_note)
+        #     first_note = random.choice(s)
+        #     if type(first_note) == float():
+        #         if first_note[:2] == 00:
+        #             print(f'First Note two decimals {first_note[:2]}')
+        #             first_note = int(first_note)
 
-                else:
-                    try:
-                        if s[s.index(first_note) - 1] <= 0:
-                            relative_note = s[s.index(first_note + 1)]
-                        elif s[s.index(first_note) - 1] > 0:
-                            relative_note = s[s.index(first_note) - 1]
+        #         else:
+        #             try:
+        #                 if s[s.index(first_note) - 1] <= 0:
+        #                     relative_note = s[s.index(first_note + 1)]
+        #                 elif s[s.index(first_note) - 1] > 0:
+        #                     relative_note = s[s.index(first_note) - 1]
                         
-                    except Exception:
-                        continue
+        #             except Exception:
+        #                 continue
 
             
+                        # 0xE0 midi bend
+            # n=[i for i in harmonic_range]
+            # n = [[e, i] for i, e in zip(itertools.cycle(s), n)]
+            note = random.choice(s)
 
-            rx = harmonic_range[first_note] # [x for x in s if x != rx or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6]
-            note_on = [0x90, rx, 112]
+            if note[:2] != 00:
+                rx = harmonic_range[note] # harmonic_range[random.choice(s)] [x for x in s if x != rx or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6]
+                note_on = [0x90, rx, 112]
+            
+            
             midiout.send_message(note_on)
             if remainder_use is not None:
                 note_length = times.formulate_time(remainder)
