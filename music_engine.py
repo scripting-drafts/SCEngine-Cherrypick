@@ -122,7 +122,7 @@ def select_scale(scales_data):
             scales_for_input.append([[f'{str(num)}. {i}  '], [intervals]])
 
     scale_names_for_input = ''.join([''.join(s[0]) for s in scales_for_input]).replace('  ', '\n')
-    scale_choice = int(input( f'\n {scale_names_for_input} \n')) - 1
+    scale_choice = int(input( f'\n {scale_names_for_input} \n')) - 1    # debug
     scale = scales_for_input[scale_choice][1]
     scale = ''.join(scale)
 
@@ -237,7 +237,7 @@ elif scale == 5: # Needs to get sheet_name
     listed_geo_scales = ''.join([f'{str(num)}. {i}  ' for num, i in zip(range(1, len_geo_scales + 1 ), sorted_geographically_scales)])
     formatted_geo_scales = listed_geo_scales.replace('  ', '\n')
 
-    scales = int(input(f'\n{formatted_geo_scales}')) - 1 # (list vs GUI)
+    scales = int(input(f'\n{formatted_geo_scales}')) - 1 # (list vs GUI) input debug
     chosen_geoloc = sorted(set([geo for geo in df.index.to_list() if geo is not np.nan]))[scales]
 
     print(f'6 - Scales - {chosen_geoloc} Group')
@@ -274,10 +274,18 @@ else:
     exit()
 
 display_acquired_info(s)
+harmonic_range = [33, 94]
 
-# if scale == 2 or scale == 3:
-    # Add octave
-# Add Octaves debug
+def range_increments(start=33, stop=95, steps=s):
+    i = 0
+    hr = []
+    for _ in steps:
+        hr.append(start + steps[i] - 1)
+        i += 1
+
+    return hr
+
+hr = range_increments(start=harmonic_range[0], stop=harmonic_range[1], s)
 s = s + [x + 12 for x in s if x != 0] + [x + 24 for x in s if x != 0]
 # rx, rx1, rx2, rx3, rx4, rx5, rx6, rx7 = s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7]
 
@@ -290,38 +298,35 @@ remainder, remainder_use = None, None
 times = Timer()
 harmonic_range = get_harmonic_range()
 
+hr = range_increments()
+print(hr)
+
 with midiout:
     # debugging
     sleep(1)
     while True:
         try:
-        #     first_note = random.choice(s)
-        #     if type(first_note) == float():
-        #         if first_note[:2] == 00:
-        #             print(f'First Note two decimals {first_note[:2]}')
-        #             first_note = int(first_note)
+            note = random.choice(hr)
+            case = None
+            bend_receiver = None
+            print(str(note))
 
-        #         else:
-        #             try:
-        #                 if s[s.index(first_note) - 1] <= 0:
-        #                     relative_note = s[s.index(first_note + 1)]
-        #                 elif s[s.index(first_note) - 1] > 0:
-        #                     relative_note = s[s.index(first_note) - 1]
-                        
-        #             except Exception:
-        #                 continue
+            if '.5' in str(note):
+                case = 1
+                center = hr.index(note)
+                if center in range(len(hr), len(hr) - 3) and center in range(len(hr), len(hr) + 3):
+                    distribution = [hr[x] for x in range(center - 3, center + 3)]
+                    bend_receiver = random.choice(distribution)
+                else:
+                    bend_receiver = random.choice(hr)
 
-            
-                        # 0xE0 midi bend
-            # n=[i for i in harmonic_range]
-            # n = [[e, i] for i, e in zip(itertools.cycle(s), n)]
-            note = random.choice(s)
-
-            if note[:2] != 00:
-                rx = harmonic_range[note] # harmonic_range[random.choice(s)] [x for x in s if x != rx or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6]
+                rx = note # [x for x in s if x != rx or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6]
+                note_on = [0xE0, rx, bend_receiver]
+            elif '.0' in str(note):
+                case = 2
+                rx = note # [x for x in s if x != rx or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6]
                 note_on = [0x90, rx, 112]
-            
-            
+
             midiout.send_message(note_on)
             if remainder_use is not None:
                 note_length = times.formulate_time(remainder)
