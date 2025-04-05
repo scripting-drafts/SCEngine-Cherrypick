@@ -156,31 +156,43 @@ def range_increments(start=33, stop=95, steps=s):
 hr = range_increments()
 print(hr)
 
-note = random.choice(hr)
-case = None
 
 with midiout:
-    # debugging
     sleep(1)
     while True:
         try:
-            if str(note)[:-2] != '00':
+            note = random.choice(hr)
+            case = None
+            bend_receiver = None
+            print(str(note))
+
+            if '.5' in str(note):
                 case = 1
-                center = hr[hr.index(note)]
-                distribution = [hr[x] for x in range(hr.index(center) - 6, hr.index(center) + 7)]
-                bend_receiver = random.choice(distribution)
+                center = hr.index(note)
+                if center in range(len(hr), len(hr) - 3) and center in range(len(hr), len(hr) + 3):
+                    distribution = [hr[x] for x in range(center - 3, center + 3)]
+                    bend_receiver = random.choice(distribution)
+                else:
+                    bend_receiver = random.choice(hr)
+
                 rx = note # [x for x in s if x != rx or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6]
                 note_on = [0xE0, rx, bend_receiver]
-            elif note[:-2] == 00:
+            elif '.0' in str(note):
                 case = 2
                 rx = note # [x for x in s if x != rx or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6]
                 note_on = [0x90, rx, 112]
 
             midiout.send_message(note_on)
-            sleep(1)
+            if bend_receiver == None:
+                print(f'Note On: {rx}')
+            else:      
+                print(f'Note On: {rx} Bend Receiver: {bend_receiver}')
+    
+            sleep(3)
 
             note_off = [0x80, rx, 0]
             midiout.send_message(note_off)
+            print(f'Note Off: {rx}')
         
 
         except KeyboardInterrupt:
