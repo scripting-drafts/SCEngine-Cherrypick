@@ -43,10 +43,13 @@ replacements_ports = {
 if available_ports:
     mr = multireplacer_initializer()
     listed_ports = mr.multireplace(re.sub(r'^\s', '', str(available_ports)), replacements_ports) # str([r'{} '.format(x) for x in available_ports]).split('\n')
-    selected_port = 0
+    log.debug(f'Available Ports: \n\n{listed_ports} \n')
+    selected_port = 1
     midiout.open_port(selected_port)
+    log.debug(f'Port #{selected_port} Open')
 else:
     midiout.open_virtual_port("My virtual output")
+    log.debug('W: Opened virtual port')
 
 
 def select_scale(scales_data):
@@ -142,7 +145,7 @@ normal_scales = {
     'minor': [0, 1, 3, 5, 7, 8, 10, 12],
     'augmented': [3, 5, 6, 8, 10]
         }
-clear()
+# clear()
 
 scale = int(input('''
     Choose a scale or a group:
@@ -180,7 +183,7 @@ if scale == 1:
 
     print(f'1 - Scales - {chosen_geoloc} Group')
 
-    clear()
+    # clear()
     scales_data = section_scales.section_scales(chosen_geoloc, df)
     scale, list_scale, s_gui_result, s = select_scale(scales_data)
 
@@ -202,7 +205,7 @@ elif scale == 2:
     scales = int(input(f'\n{formatted_geo_scales}')) - 1 # (list vs GUI)
     chosen_geoloc = sorted(set([geo for geo in df.index.to_list() if geo is not np.nan]))[scales]
     
-    clear()
+    # clear()
     log.info(f'2 - Scale Groups - {chosen_geoloc}')
     scales_data = section_scales.section_scales(chosen_geoloc, df)
     scale, list_scale, s_gui_result, s = select_scale(scales_data)
@@ -280,6 +283,7 @@ with midiout:
                 log.debug(f'{note_length=}')
     
             note_off = [0x80, rx, 0]
+            
             midiout.send_message(note_off)
             silence_balancer, remainder = times.even_time(note_length)
             log.debug(f'{silence_balancer=}')
@@ -322,6 +326,13 @@ with midiout:
     while True:
         try:
             for bars_count in range(1, 17):
+                if bend_receiver is not None:
+                    log.debug(f'Note On: {rx}')
+                    log.debug(f'{note_length=}')
+                else:      
+                    log.debug(f'Note On: {rx} Bend Receiver: {bend_receiver}')
+                    log.debug(f'{note_length=}')
+                
                 note_on = [0x90, rxs[bars_count], 112]
                 midiout.send_message(note_on)
                 sleep(dts[bars_count])
@@ -334,3 +345,5 @@ with midiout:
             midiout.send_message(note_off)
             del midiout
             exit()
+
+

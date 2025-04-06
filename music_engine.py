@@ -396,7 +396,7 @@ with midiout:
             log.debug(f'{rx=}')
             log.debug(f'{note_length=}')
             sleep(note_length)
-
+            
             note_off = [0x80, rx, 0]
             midiout.send_message(note_off)
             silence_balancer, remainder = times.even_time(note_length)
