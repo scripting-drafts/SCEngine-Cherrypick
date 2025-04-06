@@ -1,3 +1,7 @@
+import colorama
+
+import enhancements.mod_initializer as gui_enhancements
+import enhancements.turquoise_logger as turquoise_logger
 import pandas as pd
 import numpy as np
 from itertools import cycle
@@ -5,10 +9,28 @@ import random
 import re
 import rtmidi
 from time import sleep
-from multireplacer import multireplacer_initializer
+from enhancements.clear import clear
+from sys import exit
+from time import sleep
+from resources.timer import Timer
+from resources.multireplacer import multireplacer_initializer
+from resources.scales import section_scales
+
 
 midiout = rtmidi.MidiOut()
 available_ports = midiout.get_ports()
+
+colorama.init()
+GREEN = colorama.Fore.GREEN
+GRAY = colorama.Fore.LIGHTBLACK_EX
+RESET = colorama.Fore.RESET
+RED = colorama.Fore.RED
+
+gui_enhancements.run_music_engine()
+
+tl_log = turquoise_logger.Logger()
+log = tl_log.logging()
+
 
 replacements_ports = {
     '[': '', ']':'',
@@ -26,29 +48,6 @@ if available_ports:
 else:
     midiout.open_virtual_port("My virtual output")
 
-def section_standard_scales(chosen_geoscale, df):
-    # Ecclesiastical
-    if chosen_geoscale == 'Major & Natural Minor (N.M.)':
-        scales_data = df.iloc[0:7]
-    elif chosen_geoscale == 'Harmonic Minor (H.M.)':
-        scales_data = df.iloc[7:14]
-    elif chosen_geoscale == 'Melodic Minor (M.M.)':
-        scales_data = df.iloc[14:21]
-        # Bebop
-    elif chosen_geoscale == 'Bebop':
-        scales_data = df.iloc[0:4]
-    elif chosen_geoscale == 'Blues':
-        scales_data = df.iloc[4:9]
-    elif chosen_geoscale == 'Gypsy':
-        scales_data = df.iloc[9:13]
-    elif chosen_geoscale == 'Pentatonics':
-        scales_data = df.iloc[13:18]
-    elif chosen_geoscale == 'Whole-Half':
-        scales_data = df.iloc[18:21]
-    elif chosen_geoscale == 'Other':
-        scales_data = df.iloc[21:34]
-
-    return scales_data
 
 def select_scale(scales_data):
     scales_data_len = len(scales_data[:])
@@ -61,11 +60,9 @@ def select_scale(scales_data):
             scales_for_input.append([[f'{str(num)}. {i}  '], [intervals]])
 
     scale_names_for_input = ''.join([''.join(s[0]) for s in scales_for_input]).replace('  ', '\n')
-    scale_choice = 0 # input
+    scale_choice = int(input( f'\n {scale_names_for_input} \n')) - 1 # input
     scale = scales_for_input[scale_choice][1]
     scale = ''.join(scale)
-
-    print(scale)
     
     list_scale, s, s_gui_result = mutilate_scale(scale)
 
@@ -115,38 +112,89 @@ def make_scale_readable(s):
 
     return s_gui_result
 
-df = pd.read_excel('../resources/scales/Scales-Standard.xlsx', sheet_name='Bebop', index_col=0, header=0)
-geographically_located_scales = set([geo for geo in df.index.to_list() if geo is not np.nan])
-sorted_geographically_scales = sorted(geographically_located_scales)
+normal_scales = {
+    'diminished': [2, 4, 6, 7, 9],
+    'major': [0, 2, 4, 5, 7, 9, 11, 12],
+    'minor': [0, 1, 3, 5, 7, 8, 10, 12],
+    'augmented': [3, 5, 6, 8, 10]
+        }
+clear()
 
-len_geo_scales = len(sorted_geographically_scales)
-listed_geo_scales = ''.join([f'{str(num)}. {i}  ' for num, i in zip(range(1, len_geo_scales + 1 ), sorted_geographically_scales)])
-formatted_geo_scales = listed_geo_scales.replace('  ', '\n')
+scale = int(input('''
+    Choose a scale or a group:
+    1. Standard
+    2. Other
+                  
+    3. diminished
+    4. minor            
+    5. major
+    6. augmented
 
-scales = 0 # input
-chosen_geoloc = sorted(set([geo for geo in df.index.to_list() if geo is not np.nan]))[scales]
+    '''))
 
-print(f'6 - Scales - {chosen_geoloc} Group')
+if scale == 1:
+    modes = ['Ecclesiastical Modes', 'Bebop']
 
+    scales_option = int(input('''
+    1. Ecclesiastical Modes
+    2. Bebop, Blues and more
 
-# clear()
-scales_data = section_standard_scales(chosen_geoloc, df)
-scale, list_scale, s_gui_result, s = select_scale(scales_data)
+    '''))
+    mode = ''.join([modes[scales_option - 1]])
+    log.info(f'6 - {mode} Scales - Choose One')  # log debug
+    
+    df = pd.read_excel('resources/scales/Scales-Standard.xlsx', sheet_name=mode, index_col=0, header=0)
+    geographically_located_scales = set([geo for geo in df.index.to_list() if geo is not np.nan])
+    sorted_geographically_scales = sorted(geographically_located_scales)
 
+    len_geo_scales = len(sorted_geographically_scales)
+    listed_geo_scales = ''.join([f'{str(num)}. {i}  ' for num, i in zip(range(1, len_geo_scales + 1 ), sorted_geographically_scales)])
+    formatted_geo_scales = listed_geo_scales.replace('  ', '\n')
 
-n=[i for i in range(33, 94)]
-n = [[e, i] for i, e in zip(cycle(s), n)]
+    scales = int(input(f'\n{formatted_geo_scales}')) - 1 # (list vs GUI) input debug
+    chosen_geoloc = sorted(set([geo for geo in df.index.to_list() if geo is not np.nan]))[scales]
 
-# print(n)
+    print(f'6 - Scales - {chosen_geoloc} Group')
+
+    clear()
+    scales_data = section_scales.section_scales(chosen_geoloc, df)
+    scale, list_scale, s_gui_result, s = select_scale(scales_data)
+
+    # debug
+    # n=[i for i in range(33, 94)]
+    # n = [[e, i] for i, e in zip(cycle(s), n)]
+
+if scale == 2:
+    log.info('6 - Scale Grouped by Geolocation - Choose a Group')
+    sheet = 'Generic'
+    df = pd.read_excel('resources/scales/Scales-Other.xlsx', sheet_name=sheet, index_col=0, header=0)
+    geographically_located_scales = set([geo for geo in df.index.to_list() if geo is not np.nan])
+    sorted_geographically_scales = sorted(geographically_located_scales)
+    
+    len_geo_scales = len(sorted_geographically_scales)
+    listed_geo_scales = ''.join([f'{str(num)}. {i}  ' for num, i in zip(range(1, len_geo_scales + 1 ), sorted_geographically_scales)])
+    formatted_geo_scales = listed_geo_scales.replace('  ', '\n')
+    
+    scales = int(input(f'\n{formatted_geo_scales}')) - 1 # (list vs GUI)
+    chosen_geoloc = sorted(set([geo for geo in df.index.to_list() if geo is not np.nan]))[scales]
+    
+    clear()
+    log.info(f'6 - Scale Groups - {chosen_geoloc}')
+    scales_data = section_scales.section_scales(chosen_geoloc, df)
+    scale, list_scale, s_gui_result, s = select_scale(scales_data)
+
+if scale in [3, 4, 5, 6]:
+    s = normal_scales[scale]
+
 
 harmonic_range = [33, 94]
 s = s + [x + 12 for x in s if x != 0] + [x + 24 for x in s if x != 0]
 
-def range_increments(start=33, stop=95, steps=s):
+def range_increments(start=33, stop=95, intervals=s):
     i = 0
     hr = []
-    for _ in steps:
-        hr.append(start + steps[i] - 1)
+    for _ in intervals:
+        hr.append(start + intervals[i] - 1)
         i += 1
 
     print(hr)
@@ -155,7 +203,6 @@ def range_increments(start=33, stop=95, steps=s):
         
 hr = range_increments()
 print(hr)
-
 
 with midiout:
     sleep(.3)

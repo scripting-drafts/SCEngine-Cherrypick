@@ -1,4 +1,5 @@
 from os import name, system
+from sys import stdout
 
 def clear():
    # for mac and linux(here, name is 'posix')

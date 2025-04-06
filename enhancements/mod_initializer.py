@@ -72,8 +72,8 @@ def run_music_engine():
     | |\/| | | | / __| |/ __| |  __| '_ \ / _` | | '_ \ / _ \
     | |  | | |_| \__ \ | (__  | |__| | | | (_| | | | | |  __/
     \_|  |_/\__,_|___/_|\___| \____/_| |_|\__, |_|_| |_|\___|
-                                        __/ |             
-                                        |___/              
+                                           __/ |             
+                                          |___/              
           
           ''')
 
@@ -82,3 +82,17 @@ def run_music_engine():
 def attribution():
     print('''\U0001F310 Developed by Gerard Sala @ https://www.github.com/scripting-drafts
           ''')
+    
+
+def spinning_cursor():
+    while True:
+        for cursor in '|/-\\':
+            yield cursor
+
+# Usage
+# spinner = spinning_cursor()
+# for _ in range(50):
+#     sys.stdout.write(next(spinner))
+#     sys.stdout.flush()
+#     time.sleep(0.1)
+#     sys.stdout.write('\b')
