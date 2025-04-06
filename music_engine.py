@@ -7,6 +7,7 @@ import numpy as np
 import random
 import re
 import rtmidi
+import 
 from enhancements.clear import clear
 from sys import exit
 from time import sleep
@@ -66,6 +67,24 @@ def get_harmonic_range(hr='medium'):
             exit()
 
         return n
+
+diminished = [2, 4, 6, 7, 9]
+major = [0, 2, 4, 5, 7, 9, 11, 12]
+minor = [0, 1, 3, 5, 7, 8, 10, 12]
+augmented = [3, 5, 6, 8, 10]
+
+### DEBUG
+scale = int(input('''
+    Choose a scale or a group:
+    1. diminished
+    2. major
+    3. minor
+    4. augmented
+                  
+    5. Standard
+    6. Other
+
+    '''))
 
 def section_standard_scales(chosen_geoscale, df):
     # Ecclesiastical
@@ -228,6 +247,52 @@ elif scale == 5: # Needs to get sheet_name
     2. Bebop, Blues and more
     
     '''))
+
+if scale == 1:
+    df = pd.read_excel('resources/scales/Scales-Standard.xlsx', sheet_name=modes[scales_option - 1], index_col=0, header=0)
+    geographically_located_scales = set([geo for geo in df.index.to_list() if geo is not np.nan])
+    sorted_geographically_scales = sorted(geographically_located_scales)
+
+    len_geo_scales = len(sorted_geographically_scales)
+    listed_geo_scales = ''.join([f'{str(num)}. {i}  ' for num, i in zip(range(1, len_geo_scales + 1 ), sorted_geographically_scales)])
+    formatted_geo_scales = listed_geo_scales.replace('  ', '\n')
+
+    scales = int(input(f'\n{formatted_geo_scales}')) - 1 # (list vs GUI) input debug
+    chosen_geoloc = sorted(set([geo for geo in df.index.to_list() if geo is not np.nan]))[scales]
+
+    print(f'6 - Scales - {chosen_geoloc} Group')
+
+
+    # clear()
+    scales_data = section_standard_scales(chosen_geoloc, df)
+    scale, list_scale, s_gui_result, s = select_scale(scales_data)
+
+elif scale == 6:  # Need NOT to get sheet_name
+    log.info('6 - Scale Groups - Choose Geo Group')
+    df = pd.read_excel('resources/scales/Scales-Other.xlsx', sheet_name='Sheet1', index_col=0, header=0)
+    geographically_located_scales = set([geo for geo in df.index.to_list() if geo is not np.nan])
+    sorted_geographically_scales = sorted(geographically_located_scales)
+    
+    len_geo_scales = len(sorted_geographically_scales)
+    listed_geo_scales = ''.join([f'{str(num)}. {i}  ' for num, i in zip(range(1, len_geo_scales + 1 ), sorted_geographically_scales)])
+    formatted_geo_scales = listed_geo_scales.replace('  ', '\n')
+    
+    scales = int(input(f'\n{formatted_geo_scales}')) - 1 # (list vs GUI)
+    chosen_geoloc = sorted(set([geo for geo in df.index.to_list() if geo is not np.nan]))[scales]
+    
+    clear()
+    log.info(f'6 - Scale Groups - {chosen_geoloc}')
+    scales_data = section_other_scales(chosen_geoloc, df)
+    scale, list_scale, s_gui_result, s = select_scale(scales_data)
+    
+elif scale == 2:
+    s = major
+elif scale == 3:
+    s = minor
+elif scale == 4:
+    s = augmented
+elif scale == 5: # Needs to get sheet_name
+    s = diminished
 
     df = pd.read_excel('resources/scales/Scales-Standard.xlsx', sheet_name=modes[scales_option - 1], index_col=0, header=0)
     geographically_located_scales = set([geo for geo in df.index.to_list() if geo is not np.nan])

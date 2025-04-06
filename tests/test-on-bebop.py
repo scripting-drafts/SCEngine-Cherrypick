@@ -158,7 +158,7 @@ print(hr)
 
 
 with midiout:
-    sleep(1)
+    sleep(.3)
     while True:
         try:
             note = random.choice(hr)
@@ -188,7 +188,7 @@ with midiout:
             else:      
                 print(f'Note On: {rx} Bend Receiver: {bend_receiver}')
     
-            sleep(3)
+            sleep(random.uniform(.07, .1))
 
             note_off = [0x80, rx, 0]
             midiout.send_message(note_off)

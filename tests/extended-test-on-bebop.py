@@ -6,6 +6,7 @@ import re
 import rtmidi
 from time import sleep
 from ..resources.multireplacer import multireplacer_initializer
+from ..resources.timer import Timer
 
 midiout = rtmidi.MidiOut()
 available_ports = midiout.get_ports()
@@ -25,6 +26,35 @@ if available_ports:
     midiout.open_port(selected_port)
 else:
     midiout.open_virtual_port("My virtual output")
+
+# Scales
+diminished = [2, 4, 6, 7, 9]
+major = [0, 2, 4, 5, 7, 9, 11, 12]
+minor = [0, 1, 3, 5, 7, 8, 10, 12]
+augmented = [3, 5, 6, 8, 10]
+
+### DEBUG
+scale = int(input('''
+    Choose a scale or a group:
+    1. diminished
+    2. major
+    3. minor
+    4. augmented
+                  
+    5. Standard
+    6. Other
+
+    '''))
+
+if scale == 1:
+    s = diminished
+elif scale == 2:
+    s = major
+elif scale == 3:
+    s = minor
+elif scale == 4:
+    s = augmented
+elif scale == 5: # Needs to get sheet_name
 
 def section_standard_scales(chosen_geoscale, df):
     # Ecclesiastical
@@ -47,6 +77,26 @@ def section_standard_scales(chosen_geoscale, df):
         scales_data = df.iloc[18:21]
     elif chosen_geoscale == 'Other':
         scales_data = df.iloc[21:34]
+
+    return scales_data
+
+def section_other_scales(chosen_geoscale, df):
+    if chosen_geoscale == 'Arabian':
+        scales_data = df.iloc[0:13]
+    if chosen_geoscale == 'Chinese':
+        scales_data = df.iloc[13:18]
+    if chosen_geoscale == 'Exotic':
+        scales_data = df.iloc[18:22]
+    if chosen_geoscale == 'Greek':
+        scales_data = df.iloc[22:37]
+    if chosen_geoscale == 'Indian':
+        scales_data = df.iloc[37:61]
+    if chosen_geoscale == 'Indonesian':
+        scales_data = df.iloc[61:66]
+    if chosen_geoscale == 'Japanese':
+        scales_data = df.iloc[66:76]
+    if chosen_geoscale == 'Jewish':
+        scales_data = df.iloc[76:79]
 
     return scales_data
 
@@ -156,9 +206,14 @@ def range_increments(start=33, stop=95, steps=s):
 hr = range_increments()
 print(hr)
 
+times = Timer()
+hr = range_increments()
+print(hr)
+
+remainder, remainder_use = None, None
 
 with midiout:
-    sleep(1)
+    sleep(.3)
     while True:
         try:
             note = random.choice(hr)
