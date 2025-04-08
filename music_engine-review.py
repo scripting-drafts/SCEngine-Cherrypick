@@ -15,6 +15,7 @@ from time import sleep
 from resources.timer import Timer
 from resources.multireplacer import multireplacer_initializer
 from resources.scales import section_scales
+from resources.harmonic_ranges import get_harmonic_range
 
 
 midiout = rtmidi.MidiOut()
@@ -241,7 +242,8 @@ else:
     print('Wrong option')
     exit()
 
-harmonic_range = [33, 94]
+harmonic_range = get_harmonic_range('higher')
+# harmonic_range = [33, 94] Perfect
 s = s + [x + 12 for x in s if x != 0] + [x + 24 for x in s if x != 0]
 hr = range_increments(start=harmonic_range[0], stop=harmonic_range[1], steps=s)
 
@@ -275,17 +277,20 @@ def debug_bend_receiver():
 
     log.debug(f'{t=}')
 
+t = 27.42857142857143
+
 with midiout:
     sleep(.3)
     while True:
         try:
+            key = bars_count
             note = random.choice(hr)
             case = None
             bend_receiver = None
-            t = 27.42857142857143 # debug
-            pre_t = times.silent_pre(t)
-            sleep(pre_t)
-            debug_t()
+             # debug
+            t = times.silent(t)
+            silence_pre[key] = (t)
+            sleep(t)
 
             if '.5' in str(note):
                 case = 1
@@ -306,9 +311,12 @@ with midiout:
 
             midiout.send_message(note_on)
 
-            during_t = times.silent_during(t)
-            sleep(during_t)
-            debug_t
+            rxs[key] = (rx)
+            bend[key] = (bend_receiver)
+
+            t = times.silent(t)
+            silence_during[key] = (t)
+            sleep(t)
 
             debug_bend_receiver()
     
@@ -317,19 +325,9 @@ with midiout:
             midiout.send_message(note_off)
             log.debug(f'Note OFF: {rx}')
 
-            after_t = times.silent_after(t)
-            sleep(after_t)
-            debug_t
-
-            
-        
-            # Bars and vuelta length
-            key = bars_count
-            rxs[key] = (rx)
-            bend[key] = bend_receiver
-            silence_pre[key] = (pre_t)
-            silence_during[key] = (during_t)
-            silence_after[key] = (after_t)
+            t = times.silent(t)
+            silence_after[key] = (t)
+            sleep(t)
 
             bars_count += 1
 
