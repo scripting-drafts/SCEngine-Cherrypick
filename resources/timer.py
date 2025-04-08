@@ -13,25 +13,68 @@ class Timer:
     Actually -> 27.42857142857143
     '0.4285714285714286'
     '''
-    # def __init__(self):
-    #     ftime_uniform = range(0.0000000000000000, 0.4285714285714286)
+    def __init__(self):
+        self.times = [0.0000000000000000, 0.4285714285714286]
+        self.last_fact = [] # bool
+        self.summary = [random.choice([True, False]) for _ in range(3)]
+        self.remainder = None
 
-    #     self.ftime_uniform = ftime_uniform
+    def silent_pre(self, t=None):
+        evener = random.choice([None, self.remainder, None])
+        if evener is not None and self.remainder is not None:
+            self.even_time(t)
 
-    def formulate_time(self, remainder=None):
-        t = random.uniform(0.0000000000000000, 0.4285714285714286)
-        if remainder is not None:
-            t = t + remainder
+        t = random.uniform(self.times[0], self.times[1])
+        if self.remainder is not None:
+            t = t + self.remainder
+
+        return t
+
+    def silent_during(self, t=None):
+        evener = random.choice([None, self.remainder, None])
+        if evener is not None and self.remainder is not None:
+            self.even_time(t)
+
+        t = random.uniform(self.times[0], self.times[1])
+        if self.remainder is not None:
+            t = t + self.remainder
+        
+        return t
+    
+    def silent_after(self, t=None):
+        evener = random.choice([None, self.remainder, None])
+        if evener is not None and self.remainder is not None:
+            self.even_time(t)
+
+        t = random.uniform(self.times[0], self.times[1])
+        if self.remainder is not None:
+            t = t + self.remainder
         
         return t
     
     def even_time(self, t):
-        even= 0.4285714285714286 - t
-        if t != 0:
-            summary = even + t
-            remainder = 0.4285714285714286 - summary
+        summary = [x for x in self.last_fact[:3] if x == False]
+        if len(summary) == 10000:
+            summary = [True for _ in range(3)]
+        if len(summary) == 2:
+            truth = True
+        else:
+            truth = bool()
 
-        if remainder == 0:
-            remainder = None
+        if truth == True:
+            even= self.times[1] - t
+            if t != 0:
+                summar = even + t
+                self.remainder = self.times[1] - summar
 
-        return even, remainder
+            if self.remainder == 0:
+                self.remainder = None
+
+            self.last_fact.append(True)
+
+        else:
+            even = None
+            self.last_fact.append(False)
+            pass
+
+        return even

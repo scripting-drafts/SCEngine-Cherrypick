@@ -139,6 +139,23 @@ def range_increments(start=33, stop=95, steps=None):
 
     return hr
 
+def debug_midi_roll():
+    log.debug("{:<8} {:<15}".format('Key','Label'))
+    for k, v in zip(rxs.keys(), rxs.values()):
+        log.debug("{:<8} {:<15}".format(k, v))
+
+    log.debug("{:<8} {:<15}".format('Key','Label'))
+    for k, v in zip(silence_pre.keys(), silence_pre.values()):
+        log.debug("{:<8} {:<15}".format(k, v))
+
+    log.debug("{:<8} {:<15}".format('Key','Label'))
+    for k, v in zip(silence_during.keys(), silence_during.values()):
+        log.debug("{:<8} {:<15}".format(k, v))
+
+    log.debug("{:<8} {:<15}".format('Key','Label'))
+    for k, v in zip(silence_after.keys(), silence_after.values()):
+        log.debug("{:<8} {:<15}".format(k, v))
+
 normal_scales = {
     'diminished': [2, 4, 6, 7, 9],
     'major': [0, 2, 4, 5, 7, 9, 11, 12],
@@ -153,8 +170,8 @@ scale = int(input('''
     2. Other
                   
     3. diminished
-    4. minor            
-    5. major
+    4. major            
+    5. minor
     6. augmented
 
     '''))
@@ -212,35 +229,51 @@ elif scale == 2:
 
 elif scale in [x + 1 for x in range(1, len(normal_scales) + 1)]:
     # keys = normal_scales.keys()
-    # it = normal_scales.items()
-    # s = it[scale]
-    # log.info(f'3, 4, 5, 6 - Normal Scale Groups - {keys[scale]} chosen')
-    # TODO
-    pass
+    # it = [i for i in normal_scales.items()]
+    scale = scale - 3
+    normal_scales = normal_scales.items()
+    normal_scales = [list(i) for i in normal_scales]
+    print(normal_scales[scale][1], normal_scales[scale][0])
+    s = normal_scales[scale][1]
+    log.info(f'3, 4, 5, 6 - Normal Scale Groups - {normal_scales[scale][0]} chosen')
 
 else:
     print('Wrong option')
     exit()
 
-display_acquired_info(s)
-
 harmonic_range = [33, 94]
 s = s + [x + 12 for x in s if x != 0] + [x + 24 for x in s if x != 0]
 hr = range_increments(start=harmonic_range[0], stop=harmonic_range[1], steps=s)
 
+# display_acquired_info(s)
+
 bars_count = 1 
 rxs = {}
 bend = {}
-dts = {}
-sls = {}
+silence_pre = {}
+silence_during = {}
+silence_after = {}
 
-remainder, remainder_use = None, None
 times = Timer()
 
+'''
+"0x90" Breakdown of MIDI MESSAGE:
+"0x9": This part of the status byte (0x90) indicates that the message is a "Note On" message. 
+"0": This part of the status byte (0x90) specifies that the message is intended for channel 1. 
 
+'''
 
+def debug_t():
+    log.debug(f'{t=}')
 
-print(hr)
+def debug_bend_receiver():
+    if bend_receiver is not None:
+        log.debug(f'Note On: {rx}')
+        
+    else:      
+        log.debug(f'Note On: {rx} Bend Receiver: {bend_receiver}')
+
+    log.debug(f'{t=}')
 
 with midiout:
     sleep(.3)
@@ -249,11 +282,14 @@ with midiout:
             note = random.choice(hr)
             case = None
             bend_receiver = None
-            print(str(note))
+            t = 27.42857142857143 # debug
+            pre_t = times.silent_pre(t)
+            sleep(pre_t)
+            debug_t()
 
             if '.5' in str(note):
                 case = 1
-                center = hr.index(note)
+                center = hr.index(note) # RANDOM SAMAAAAAMPLES:!
                 if center in range(len(hr), len(hr) - 3) and center in range(len(hr), len(hr) + 3):
                     distribution = [hr[x] for x in range(center - 3, center + 3)]
                     bend_receiver = random.choice(distribution)
@@ -262,7 +298,7 @@ with midiout:
 
                 rx = note # [x for x in s if x != rx or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6]
                 note_on = [0xE0, rx, bend_receiver]
-            elif '.0' in str(note):
+            if '.0' in str(note) or '.' not in str(note):
                 case = 2
                 rx = note # [x for x in s if x != rx or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6]
                 note_on = [0x90, rx, 112]
@@ -270,36 +306,30 @@ with midiout:
 
             midiout.send_message(note_on)
 
-            if remainder_use is not None:
-                note_length = times.formulate_time(remainder)
-            else:
-                note_length = times.formulate_time()
+            during_t = times.silent_during(t)
+            sleep(during_t)
+            debug_t
 
-            if bend_receiver is not None:
-                log.debug(f'Note On: {rx}')
-                log.debug(f'{note_length=}')
-            else:      
-                log.debug(f'Note On: {rx} Bend Receiver: {bend_receiver}')
-                log.debug(f'{note_length=}')
+            debug_bend_receiver()
     
             note_off = [0x80, rx, 0]
             
             midiout.send_message(note_off)
-            silence_balancer, remainder = times.even_time(note_length)
-            log.debug(f'{silence_balancer=}')
+            log.debug(f'Note OFF: {rx}')
 
-            remainder_use = random.choice([remainder, 0.])
-            remainder_use = remainder_use if remainder is not None else 0
-            sleep(silence_balancer + remainder_use)
+            after_t = times.silent_after(t)
+            sleep(after_t)
+            debug_t
 
-            log.debug(f'Note Off: {rx}')
+            
         
             # Bars and vuelta length
             key = bars_count
             rxs[key] = (rx)
             bend[key] = bend_receiver
-            dts[key] = (note_length)
-            sls[key] = (silence_balancer)
+            silence_pre[key] = (pre_t)
+            silence_during[key] = (during_t)
+            silence_after[key] = (after_t)
 
             bars_count += 1
 
@@ -311,35 +341,21 @@ with midiout:
             del midiout
             exit()
 
-    log.debug("{:<8} {:<15}".format('Key','Label'))
-    for k, v in zip(rxs.keys(), rxs.values()):
-        log.debug("{:<8} {:<15}".format(k, v))
-
-    log.debug("{:<8} {:<15}".format('Key','Label'))
-    for k, v in zip(dts.keys(), dts.values()):
-        log.debug("{:<8} {:<15}".format(k, v))
-
-    log.debug("{:<8} {:<15}".format('Key','Label'))
-    for k, v in zip(sls.keys(), sls.values()):
-        log.debug("{:<8} {:<15}".format(k, v))
+    debug_midi_roll()
 
     while True:
         try:
             for bars_count in range(1, 17):
-                if bend_receiver is not None:
-                    log.debug(f'Note On: {rx}')
-                    log.debug(f'{note_length=}')
-                else:      
-                    log.debug(f'Note On: {rx} Bend Receiver: {bend_receiver}')
-                    log.debug(f'{note_length=}')
+                
+                sleep(silence_pre[bars_count])
                 
                 note_on = [0x90, rxs[bars_count], 112]
                 midiout.send_message(note_on)
-                sleep(dts[bars_count])
+                sleep(silence_during[bars_count])
 
                 note_off = [0x80, rxs[bars_count], 0]
                 midiout.send_message(note_off)
-                sleep(sls[bars_count])
+                sleep(silence_after[bars_count])
 
         except KeyboardInterrupt:
             midiout.send_message(note_off)
