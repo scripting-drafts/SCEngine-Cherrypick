@@ -228,9 +228,9 @@ elif scale == 2:
     scales_data = section_scales.section_scales(chosen_geoloc, df)
     scale, list_scale, s_gui_result, s = select_scale(scales_data)
 
-elif scale in [x + 1 for x in range(1, len(normal_scales) + 1)]:
-    # keys = normal_scales.keys()
-    # it = [i for i in normal_scales.items()]
+elif scale in [x for x in range(3, 7)]:
+    # # keys = normal_scales.keys()
+    # # it = [i for i in normal_scales.items()]
     scale = scale - 3
     normal_scales = normal_scales.items()
     normal_scales = [list(i) for i in normal_scales]
