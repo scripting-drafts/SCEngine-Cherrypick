@@ -145,9 +145,9 @@ def debug_midi_roll():
     for k, v in zip(rxs.keys(), rxs.values()):
         log.debug("{:<8} {:<15}".format(k, v))
 
-    log.debug("{:<8} {:<15}".format('Key','Label'))
-    for k, v in zip(silence_pre.keys(), silence_pre.values()):
-        log.debug("{:<8} {:<15}".format(k, v))
+    # log.debug("{:<8} {:<15}".format('Key','Label'))
+    # for k, v in zip(silence_pre.keys(), silence_pre.values()):
+    #     log.debug("{:<8} {:<15}".format(k, v))
 
     log.debug("{:<8} {:<15}".format('Key','Label'))
     for k, v in zip(silence_during.keys(), silence_during.values()):
@@ -252,7 +252,7 @@ hr = range_increments(start=harmonic_range[0], stop=harmonic_range[1], steps=s)
 bars_count = 1 
 rxs = {}
 bend = {}
-silence_pre = {}
+# silence_pre = {}
 silence_during = {}
 silence_after = {}
 
@@ -354,7 +354,7 @@ with midiout:
         try:
             for bars_count in range(1, 17):
                 
-                sleep(silence_pre[bars_count])
+                # sleep(silence_pre[bars_count])
                 
                 note_on = [0x90, rxs[bars_count], 112]
                 midiout.send_message(note_on)
