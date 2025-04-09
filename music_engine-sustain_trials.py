@@ -19,6 +19,9 @@ from resources.harmonic_ranges import get_harmonic_range
 midiout = rtmidi.MidiOut()
 available_ports = midiout.get_ports()
 
+port = 1 # Side-Chain
+first_silence = True # silence_pre function in the Timer class
+
 colorama.init()
 GREEN = colorama.Fore.GREEN
 GRAY = colorama.Fore.LIGHTBLACK_EX
@@ -42,7 +45,7 @@ if available_ports:
     mr = multireplacer_initializer()
     listed_ports = mr.multireplace(re.sub(r'^\s', '', str(available_ports)), replacements_ports) # str([r'{} '.format(x) for x in available_ports]).split('\n')
     log.debug(f'Available Ports: \n\n{listed_ports} \n')
-    selected_port = 0
+    selected_port = port
     midiout.open_port(selected_port)
     log.debug(f'Port #{selected_port} Open')
 else:
@@ -145,9 +148,10 @@ def debug_midi_roll():
     for k, v in zip(rxs.keys(), rxs.values()):
         log.debug("{:<8} {:<15}".format(k, v))
 
-    # log.debug("{:<8} {:<15}".format('Key','Label'))
-    # for k, v in zip(silence_pre.keys(), silence_pre.values()):
-    #     log.debug("{:<8} {:<15}".format(k, v))
+    if first_silence == True:
+        log.debug("{:<8} {:<15}".format('Key','Label'))
+        for k, v in zip(silence_pre.keys(), silence_pre.values()):
+            log.debug("{:<8} {:<15}".format(k, v))
 
     log.debug("{:<8} {:<15}".format('Key','Label'))
     for k, v in zip(silence_during.keys(), silence_during.values()):
@@ -252,7 +256,7 @@ hr = range_increments(start=harmonic_range[0], stop=harmonic_range[1], steps=s)
 bars_count = 1 
 rxs = {}
 bend = {}
-# silence_pre = {}
+silence_pre = {} if first_silence == True else None
 silence_during = {}
 silence_after = {}
 
@@ -288,16 +292,17 @@ with midiout:
             bend_receiver = None
             
             # DEBUG
-            # if random.choice([True, True, False]) == True:
-            #     t, position = times.silent(t, 'Pre')
-            #     silence_pre[key] = (t)
-            # else:
-            #     position = f'Pre: {t}'
-            #     t = 0.
+            if first_silence == True:
+                if random.choice([True, True, False]) == True:
+                    t, position = times.silent(t, 'Pre')
+                    silence_pre[key] = (t)
+                else:
+                    position = f'Pre: {t}'
+                    t = 0.
 
-            # silence_pre[key] = (t)
-            # sleep(t)
-            # log.debug(position)
+                silence_pre[key] = (t)
+                sleep(t)
+                log.debug(position)
 
 
             if '.5' in str(note):
@@ -384,8 +389,8 @@ with midiout:
     while True:
         try:
             for bars_count in range(1, 17):
-                
-                # sleep(silence_pre[bars_count])
+                if first_silence == True:
+                    sleep(silence_pre[bars_count])
                 
                 note_on = [0x90, rxs[bars_count], 112]
                 midiout.send_message(note_on)
