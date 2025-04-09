@@ -1,5 +1,4 @@
 import colorama
-
 import enhancements.mod_initializer as gui_enhancements
 import enhancements.turquoise_logger as turquoise_logger
 import pandas as pd
@@ -13,10 +12,9 @@ from enhancements.clear import clear
 from sys import exit
 from time import sleep
 from resources.timer import Timer
-from resources.multireplacer import multireplacer_initializer
+from enhancements.multireplacer import multireplacer_initializer
 from resources.scales import section_scales
 from resources.harmonic_ranges import get_harmonic_range
-
 
 midiout = rtmidi.MidiOut()
 available_ports = midiout.get_ports()
@@ -32,7 +30,6 @@ gui_enhancements.run_music_engine()
 tl_log = turquoise_logger.Logger()
 log = tl_log.logging()
 
-
 replacements_ports = {
     '[': '', ']':'',
     r'\'':'',
@@ -45,13 +42,12 @@ if available_ports:
     mr = multireplacer_initializer()
     listed_ports = mr.multireplace(re.sub(r'^\s', '', str(available_ports)), replacements_ports) # str([r'{} '.format(x) for x in available_ports]).split('\n')
     log.debug(f'Available Ports: \n\n{listed_ports} \n')
-    selected_port = 1
+    selected_port = 0
     midiout.open_port(selected_port)
     log.debug(f'Port #{selected_port} Open')
 else:
     midiout.open_virtual_port("My virtual output")
     log.debug('W: Opened virtual port')
-
 
 def select_scale(scales_data):
     scales_data_len = len(scales_data[:])
@@ -112,7 +108,6 @@ def make_scale_readable(s):
             s_gui_result.append('{:.2f}'.format(x))
 
     s_gui_result = ''.join(s_gui_result)
-#    log.debug('Scale Result: {}'.format(s_gui_result))
 
     return s_gui_result
 
