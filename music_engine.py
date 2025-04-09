@@ -66,9 +66,14 @@ def select_scale(scales_data):
     
     list_scale, s, s_gui_result = mutilate_scale(scale)
 
-    scale_names_for_input = ''.join([''.join(s[1]) for s in scales_for_input]).replace('  ', '\n')
+    # ???
+    # scale_names_for_input = ''.join([''.join(s[1]) for s in scales_for_input]).replace('  ', '\n')
 
-    return scale, list_scale, s_gui_result, s
+    name = ''.join(scales_for_input[scale_choice][0])
+    name = ''.join(name.split('known like')[0])
+    name = name[2:].replace(',', '')
+
+    return scale, list_scale, s_gui_result, s, name
 
 def mutilate_scale(scale):
     # log.debug(f'Default Scale: {scale}')
@@ -165,10 +170,10 @@ scale = int(input('''
     1. Standard
     2. Other
                   
-    3. diminished
-    4. major            
-    5. minor
-    6. augmented
+    3. Diminished
+    4. Major            
+    5. Minor
+    6. Augmented
 
     '''))
 
@@ -181,7 +186,7 @@ if scale == 1:
 
     '''))
     mode = ''.join([modes[scales_option - 1]])
-    log.info(f'6 - {mode} Scales - Choose One')  # log debug
+    log.debug(f'{mode}')  # log debug
     
     df = pd.read_excel('resources/scales/Scales-Standard.xlsx', sheet_name=mode, index_col=0, header=0)
     geographically_located_scales = set([geo for geo in df.index.to_list() if geo is not np.nan])
@@ -194,18 +199,16 @@ if scale == 1:
     scales = int(input(f'\n{formatted_geo_scales}')) - 1 # (list vs GUI) input debug
     chosen_geoloc = sorted(set([geo for geo in df.index.to_list() if geo is not np.nan]))[scales]
 
-    print(f'1 - Scales - {chosen_geoloc} Group')
+    log.debug(f'{mode} - {chosen_geoloc}')
 
     # clear()
     scales_data = section_scales.section_scales(chosen_geoloc, df)
-    scale, list_scale, s_gui_result, s = select_scale(scales_data)
+    scale, list_scale, s_gui_result, s, name = select_scale(scales_data)
 
-    # debug
-    # n=[i for i in range(33, 94)]
-    # n = [[e, i] for i, e in zip(cycle(s), n)]
+    log.debug(f'{mode} - {chosen_geoloc} - {name}')
 
 elif scale == 2:
-    log.info('2 - Scale Grouped by Geolocation - Choose a Group')
+    log.info('Geolocation Groups')
     sheet = 'Generic'
     df = pd.read_excel('resources/scales/Scales-Other.xlsx', sheet_name=sheet, index_col=0, header=0)
     geographically_located_scales = set([geo for geo in df.index.to_list() if geo is not np.nan])
@@ -219,9 +222,11 @@ elif scale == 2:
     chosen_geoloc = sorted(set([geo for geo in df.index.to_list() if geo is not np.nan]))[scales]
     
     # clear()
-    log.info(f'2 - Scale Groups - {chosen_geoloc}')
+    log.info(f'Geolocation Groups - {chosen_geoloc}')
     scales_data = section_scales.section_scales(chosen_geoloc, df)
-    scale, list_scale, s_gui_result, s = select_scale(scales_data)
+    scale, list_scale, s_gui_result, s, name = select_scale(scales_data)
+
+    log.info(f'Geolocation Groups - {chosen_geoloc} - {name}')
 
 elif scale in [x for x in range(3, 7)]:
     # # keys = normal_scales.keys()
@@ -269,8 +274,7 @@ def debug_bend_receiver():
         
     else:      
         log.debug(f'Note On: {rx} Bend Receiver: {bend_receiver}')
-
-    log.debug(f'{t=}')
+        
 
 t = 27.42857142857143
 
@@ -282,10 +286,19 @@ with midiout:
             note = random.choice(hr)
             case = None
             bend_receiver = None
-             # debug
-            t = times.silent(t)
-            silence_pre[key] = (t)
-            sleep(t)
+            
+            # DEBUG
+            # if random.choice([True, True, False]) == True:
+            #     t, position = times.silent(t, 'Pre')
+            #     silence_pre[key] = (t)
+            # else:
+            #     position = f'Pre: {t}'
+            #     t = 0.
+
+            # silence_pre[key] = (t)
+            # sleep(t)
+            # log.debug(position)
+
 
             if '.5' in str(note):
                 case = 1
@@ -305,24 +318,25 @@ with midiout:
                 bend_receiver = None
 
             midiout.send_message(note_on)
+            debug_bend_receiver()
 
             rxs[key] = (rx)
             bend[key] = (bend_receiver)
 
-            t = times.silent(t)
+            t, position = times.silent(t, 'Sustain')
             silence_during[key] = (t)
             sleep(t)
-
-            debug_bend_receiver()
+            log.debug(position)
     
             note_off = [0x80, rx, 0]
             
             midiout.send_message(note_off)
             log.debug(f'Note OFF: {rx}')
 
-            t = times.silent(t)
+            t, position = times.silent(t, 'After')
             silence_after[key] = (t)
             sleep(t)
+            log.debug(position)
 
             bars_count += 1
 

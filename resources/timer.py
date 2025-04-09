@@ -19,7 +19,7 @@ class Timer:
         self.summary = [random.choice([True, False]) for _ in range(3)]
         self.remainder = None
 
-    def silent(self, t=None):
+    def silent(self, t=None, position='default'):
         evener = random.choice([None, self.remainder, None])
         if evener is not None and self.remainder is not None:
             self.even_time(t)
@@ -28,7 +28,9 @@ class Timer:
         if self.remainder is not None:
             t = t + self.remainder
 
-        return t
+        position = f'{position}: {t}'
+
+        return t, position
     
     def even_time(self, t):
         summary = [x for x in self.last_fact[:3] if x == False]
