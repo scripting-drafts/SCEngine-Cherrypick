@@ -1,4 +1,4 @@
-def get_harmonic_range(hr='_medium_broad'):
+def get_harmonic_range(hr='bass'):
         '''
         SUB
         9 - A - 13.57hz
