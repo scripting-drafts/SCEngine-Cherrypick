@@ -140,12 +140,18 @@ def range_increments(start=33, stop=95, steps=None):
         hr.append(start + steps[i] - 1)
         i += 1
 
+    # 5 ~33-66
     hr = range_increments_extension(hr, steps)
+    hr = range_increments_extension(hr, steps)
+    hr = range_increments_extension(hr, steps)
+    hr = range_increments_extension(hr, steps)
+    hr = range_increments_extension(hr, steps)
+
     hr = list(set(hr))
 
     return hr
 
-def range_increments_extension(hr, steps, stop):
+def range_increments_extension(hr, steps):
     i = 0
     start = hr[-1]
     for _ in steps:
