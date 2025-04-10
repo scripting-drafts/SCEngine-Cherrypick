@@ -3,12 +3,10 @@ import enhancements.mod_initializer as gui_enhancements
 import enhancements.turquoise_logger as turquoise_logger
 import pandas as pd
 import numpy as np
-from itertools import cycle
 import random
 import re
 import rtmidi
 from time import sleep
-from enhancements.clear import clear
 from sys import exit
 from time import sleep
 from resources.timer import Timer
@@ -19,8 +17,8 @@ from resources.harmonic_ranges import get_harmonic_range
 midiout = rtmidi.MidiOut()
 available_ports = midiout.get_ports()
 
-port = 1 # Side-Chain
-first_silence = True # silence_pre function in the Timer class
+port = 0 # Side-Chain
+first_silence = False # silence_pre function in the Timer class
 
 colorama.init()
 GREEN = colorama.Fore.GREEN
@@ -28,7 +26,7 @@ GRAY = colorama.Fore.LIGHTBLACK_EX
 RESET = colorama.Fore.RESET
 RED = colorama.Fore.RED
 
-gui_enhancements.run_music_engine()
+# gui_enhancements.run_music_engine()
 
 tl_log = turquoise_logger.Logger()
 log = tl_log.logging()
@@ -141,6 +139,22 @@ def range_increments(start=33, stop=95, steps=None):
         hr.append(start + steps[i] - 1)
         i += 1
 
+    while hr[-1] <= stop:
+        hr = range_increments_extension(hr, steps)
+        
+    hr = [hr.remove(x) for x in hr if x > stop]
+
+    hr = list(set(hr))
+
+    return hr
+
+def range_increments_extension(hr, steps):
+    i = 0
+    start = hr[-1]
+    for _ in steps:
+        hr.append(start + steps[i] - 1)
+        i += 1
+
     return hr
 
 def debug_midi_roll():
@@ -246,9 +260,9 @@ else:
     print('Wrong option')
     exit()
 
-harmonic_range = get_harmonic_range('higher')
+harmonic_range = get_harmonic_range('medium')
 # harmonic_range = [33, 94] Perfect
-s = s + [x + 12 for x in s if x != 0] + [x + 24 for x in s if x != 0]
+# s = s + [x + 12 for x in s if x != 0] + [x + 24 for x in s if x != 0]
 hr = range_increments(start=harmonic_range[0], stop=harmonic_range[1], steps=s)
 
 # display_acquired_info(s)
@@ -281,102 +295,105 @@ def debug_bend_receiver():
         
 
 t = 27.42857142857143
+log.debug(hr)
 
 with midiout:
     sleep(.3)
     while True:
         try:
             key = bars_count
-            note = random.choice(hr)
+            notes = random.sample(hr, k=random.randint(2, 8))
             case = None
             bend_receiver = None
             
-            # DEBUG
-            if first_silence == True:
-                if random.choice([True, True, False]) == True:
-                    t, position = times.silent(t, 'Pre')
-                    silence_pre[key] = (t)
-                else:
-                    position = f'Pre: {t}'
-                    t = 0.
 
-                silence_pre[key] = (t)
+            for note in notes:
+                # DEBUG
+                if first_silence == True:
+                    if random.choice([True, True, False]) == True:
+                        t, position = times.silent(t, 'Pre')
+                        silence_pre[key] = (t)
+                    else:
+                        position = f'Pre: {t}'
+                        t = 0.
+
+                    silence_pre[key] = (t)
+                    sleep(t)
+                    log.debug(position)
+
+
+                if '.5' in str(note):
+                    case = 1
+                    center = hr.index(note) # RANDOM SAMAAAAAMPLES:!
+                    if center in range(len(hr), len(hr) - 3) and center in range(len(hr), len(hr) + 3):
+                        distribution = [hr[x] for x in range(center - 3, center + 3)]
+                        bend_receiver = random.choice(distribution)
+                    else:
+                        bend_receiver = random.choice(hr)
+
+                    rx = note # [x for x in s if x != rx or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6]
+                    note_on = [0xE0, rx, bend_receiver]
+                if '.0' in str(note) or '.' not in str(note):
+                    case = 2
+                    rx = note # [x for x in s if x != rx or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6]
+                    note_on = [0x90, rx, 112]
+                    bend_receiver = None
+
+                midiout.send_message(note_on)
+                debug_bend_receiver()
+
+                rxs[key] = (rx)
+                bend[key] = (bend_receiver)
+
+                t, position = times.silent(t, 'Sustain')
+                silence_during[key] = (t)
                 sleep(t)
                 log.debug(position)
 
 
-            if '.5' in str(note):
-                case = 1
-                center = hr.index(note) # RANDOM SAMAAAAAMPLES:!
-                if center in range(len(hr), len(hr) - 3) and center in range(len(hr), len(hr) + 3):
-                    distribution = [hr[x] for x in range(center - 3, center + 3)]
-                    bend_receiver = random.choice(distribution)
-                else:
-                    bend_receiver = random.choice(hr)
+                # Notes off and sustain dev
+                sustained_notes = []
+        
+                if random.uniform(0., 1.) < .7:
+                    note_off = [0x80, rx, 0]
+                    midiout.send_message(note_off)
+                    log.debug(f'Note OFF: {rx}')
+                    
+                elif random.uniform(0., 1.) >= .7:
+                    sustained_notes.append([rx, bars_count])
 
-                rx = note # [x for x in s if x != rx or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6]
-                note_on = [0xE0, rx, bend_receiver]
-            if '.0' in str(note) or '.' not in str(note):
-                case = 2
-                rx = note # [x for x in s if x != rx or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6]
-                note_on = [0x90, rx, 112]
-                bend_receiver = None
-
-            midiout.send_message(note_on)
-            debug_bend_receiver()
-
-            rxs[key] = (rx)
-            bend[key] = (bend_receiver)
-
-            t, position = times.silent(t, 'Sustain')
-            silence_during[key] = (t)
-            sleep(t)
-            log.debug(position)
-
-
-            # Notes off and sustain dev
-            sustained_notes = []
-    
-            if random.uniform(0., 1.) < .7:
-                note_off = [0x80, rx, 0]
-                midiout.send_message(note_off)
-                log.debug(f'Note OFF: {rx}')
+                    if len(sustained_notes) > 2:
+                        for n in sustained_notes:
+                            rx = n[0]
+                            note_off = [0x80, rx, 0]
+                            midiout.send_message(note_off)
+                            log.debug(f'Note OFF: {rx}')
                 
-            elif random.uniform(0., 1.) >= .7:
-                sustained_notes.append([rx, bars_count])
+                elif len(sustained_notes) != 0:
+                    if random.uniform(0., 1.) > .4:
+                        rx = random.choice([sustained_notes])
+                        rx = rx[0]
+                        note_off = [0x80, rx, 0]
+                        midiout.send_message(note_off)
+                        log.debug(f'Note OFF: {rx}')
 
-                if len(sustained_notes) > 2:
+                elif bars_count == 33:
                     for n in sustained_notes:
                         rx = n[0]
                         note_off = [0x80, rx, 0]
                         midiout.send_message(note_off)
                         log.debug(f'Note OFF: {rx}')
-            
-            elif len(sustained_notes) != 0:
-                if random.uniform(0., 1.) > .4:
-                    rx = random.choice([sustained_notes])
-                    rx = rx[0]
-                    note_off = [0x80, rx, 0]
-                    midiout.send_message(note_off)
-                    log.debug(f'Note OFF: {rx}')
 
-            elif bars_count == 17:
-                for n in sustained_notes:
-                    rx = n[0]
-                    note_off = [0x80, rx, 0]
-                    midiout.send_message(note_off)
-                    log.debug(f'Note OFF: {rx}')
+                # End of notes off and sustain dev
 
-            # End of notes off and sustain dev
-
-            t, position = times.silent(t, 'After')
-            silence_after[key] = (t)
-            sleep(t)
-            log.debug(position)
+                t, position = times.silent(t, 'After')
+                silence_after[key] = (t)
+                sleep(t)
+                log.debug(position)
 
             bars_count += 1
 
-            if bars_count == 17:
+            if bars_count == 33:
                 break
 
         except KeyboardInterrupt:
@@ -388,7 +405,7 @@ with midiout:
 
     while True:
         try:
-            for bars_count in range(1, 17):
+            for bars_count in range(1, 33):
                 if first_silence == True:
                     sleep(silence_pre[bars_count])
                 

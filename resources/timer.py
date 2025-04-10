@@ -5,8 +5,8 @@ class Timer:
     Calculating Bar Duration:
     length = 60 seconds
 
-    beat_at_140 = 1.716 seconds aprox (60 seconds / 140 BPM = 0.429 seconds/beat). 
-    BAR_4_beats = 0.4285714285714286
+    BAR_at_140 = 1.716 seconds aprox (60 seconds / 140 BPM = 0.429 seconds/beat). 
+    BEAT_at_140 = 0.4285714285714286
 
     A bar (or measure) typically consists of 4 beats, so a bar would last approximately 1.716 seconds (0.429 seconds/beat * 4 beats = 1.716 seconds/bar). 
     Therefore, 16 bars would last about 27.45 seconds (1.716 seconds/bar * 16 bars = 27.45 seconds). 
@@ -14,7 +14,7 @@ class Timer:
     '0.4285714285714286'
     '''
     def __init__(self):
-        self.times = [0.0000000000000000, 0.4285714285714286]
+        self.times = [0.0000000000000000, 0.4285714285714286 / 4]
         self.last_fact = [] # bool
         self.summary = [random.choice([True, False]) for _ in range(3)]
         self.remainder = None
