@@ -3,3 +3,4 @@ enhancements/__pycache__
 resources/geckodriver.exe
 resources/profile_path
 *.log
+.vscode
