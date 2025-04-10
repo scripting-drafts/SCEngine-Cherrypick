@@ -139,8 +139,15 @@ def range_increments(start=33, stop=95, steps=None):
         hr.append(start + steps[i] - 1)
         i += 1
 
+<<<<<<< HEAD
     # 5 ~33-66
     hr = range_increments_extension(hr, steps, stop)
+=======
+    while hr[-1] <= stop:
+        hr = range_increments_extension(hr, steps)
+        
+    hr = [hr.remove(x) for x in hr if x > stop]
+>>>>>>> parent of 00d0d64 (harmonic range increments)
 
     hr = list(set(hr))
 
