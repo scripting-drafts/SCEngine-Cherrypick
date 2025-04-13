@@ -1,11 +1,8 @@
-Known bugs
-
- x 259: s = s + [x + 12 for x in s if x != 0] + [x + 24 for x in s if x != 0]
+Fixed bugs:
+ - 259: s = s + [x + 12 for x in s if x != 0] + [x + 24 for x in s if x != 0]
     This is not apppropiated for all scales - Workaround on range_increments
+  
+Known bugs:
  - Doubts with timer
  - Bars need to be set at 32, cause 16 means 8
  - The length of a beat per Timer is 4 times less than it shall be?
-
-
-Changes:
-258 - Left it default to 'medium'

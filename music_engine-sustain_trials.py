@@ -140,14 +140,11 @@ def range_increments(start=33, stop=95, steps=None):
         hr.append(start + steps[i] - 1)
         i += 1
 
-    # 5 ~33-66
     hr = range_increments_extension(hr, steps)
-    hr = range_increments_extension(hr, steps)
-    hr = range_increments_extension(hr, steps)
-    hr = range_increments_extension(hr, steps)
-    hr = range_increments_extension(hr, steps)
-
-    hr = list(set(hr))
+    while not len(hr) > stop - start:
+        hr = range_increments_extension(hr, steps)
+    else:
+        hr = list(set(hr))
 
     return hr
 
@@ -263,7 +260,7 @@ else:
     print('Wrong option')
     exit()
 
-harmonic_range = get_harmonic_range('medium')
+harmonic_range = get_harmonic_range('bass')
 # harmonic_range = [33, 94] Perfect
 # s = s + [x + 12 for x in s if x != 0] + [x + 24 for x in s if x != 0]
 hr = range_increments(start=harmonic_range[0], stop=harmonic_range[1], steps=s)

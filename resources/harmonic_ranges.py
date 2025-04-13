@@ -46,37 +46,53 @@ def get_harmonic_range(hr='bass'):
         '''
         if hr == 'sub':  # 16 -> E 20.60hz
             n = [x for x in range(9, 34)]
+
+            return n
         
         elif hr == 'bass':  # 16 -> E 20.60hz
             n = [x for x in range(33, 46)]
 
+            return n
+
         elif hr == '_bass_medium_sub':
             n = [x for x in range(21, 46)]
+
+            return n
 
         elif hr == 'medium':
             n = [x for x in range(45, 58)]
 
+            return n
+
         elif hr == '_medium_broad':
             n = [x for x in range(33, 58)]
+
+            return n
 
         elif hr == 'medium_high':
             n = [x for x in range(57, 70)]
 
+            return n
+
         elif hr == 'high':
             n = [x for x in range(69, 82)]
 
+            return n
+
         elif hr == 'higher':
             n = [x for x in range(81, 105)]
+
             return n
         
         elif hr == 'highest':
             n = [x for x in range(105, 118)]
+
             return n
 
-        if hr == '_full_spectrum':
+        elif hr == '_full_spectrum':
             n = [x for x in range(9, 118)]
+
+            return n
         
         else:
             exit()
-
-        return n
