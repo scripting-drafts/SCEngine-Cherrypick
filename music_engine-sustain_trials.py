@@ -17,7 +17,7 @@ from resources.harmonic_ranges import get_harmonic_range
 midiout = rtmidi.MidiOut()
 available_ports = midiout.get_ports()
 
-port = 0 # Side-Chain
+port = 1 # Side-Chain
 first_silence = False # silence_pre function in the Timer class
 
 colorama.init()
@@ -26,7 +26,7 @@ GRAY = colorama.Fore.LIGHTBLACK_EX
 RESET = colorama.Fore.RESET
 RED = colorama.Fore.RED
 
-# gui_enhancements.run_music_engine()
+gui_enhancements.run_music_engine()
 
 tl_log = turquoise_logger.Logger()
 log = tl_log.logging()
