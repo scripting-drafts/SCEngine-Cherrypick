@@ -12,7 +12,7 @@ To do:
  - MIDI format melody rolls  
   
 ### Scales Scraper (deprecated)
-![Based on these Selenium Module](https://github.com/scripting-drafts/Selenium-Module)  
+Based on these ![Selenium Module](https://github.com/scripting-drafts/Selenium-Module)  
 
 Requirements:  
  - pip install openpyxl  
