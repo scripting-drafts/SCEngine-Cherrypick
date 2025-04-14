@@ -3,6 +3,7 @@ Fixed bugs:
     This is not apppropiated for all scales - Workaround on range_increments
   
 Known bugs:
+ - Bending trajectory not displayed
  - Doubts with timer
  - Bars need to be set at 32, cause 16 means 8
  - The length of a beat per Timer is 4 times less than it shall be?

@@ -260,7 +260,7 @@ else:
     print('Wrong option')
     exit()
 
-harmonic_range = get_harmonic_range('bass')
+harmonic_range = get_harmonic_range('_medium_broad')
 # harmonic_range = [33, 94] Perfect
 # s = s + [x + 12 for x in s if x != 0] + [x + 24 for x in s if x != 0]
 hr = range_increments(start=harmonic_range[0], stop=harmonic_range[1], steps=s)
