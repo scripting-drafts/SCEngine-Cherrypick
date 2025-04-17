@@ -17,4 +17,7 @@ Then OK
 Given longest harmonic ranges (full spectrum)
 When any scale is applied
 Then all OK
+
+Modify parameters in order to adjust to
+dominants and rythms
 '''
