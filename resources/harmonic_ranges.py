@@ -1,4 +1,7 @@
-def get_harmonic_range(hr='bass'):
+from sys import exit
+
+def get_harmonic_range(intervals='bass', note='A'):
+        
         '''
         SUB
         9 - A - 13.57hz
@@ -44,55 +47,39 @@ def get_harmonic_range(hr='bass'):
         
         
         '''
-        if hr == 'sub':  # 16 -> E 20.60hz
-            n = [x for x in range(9, 34)]
+        hr = {
+                  'sub': range(9, 34),
+                  'bass': range(33, 46),
+                  '_bass_medium_sub': range(21, 46),
+                  'medium': range(45, 58),
+                  '_medium_broad': range(33, 58),
+                  'medium_high': range(57, 70),
+                  'high': range(69, 82),
+                  'higher': range(81, 105),
+                  'highest': range(105, 118)
+                  
+            }
 
-            return n
+        notes = ['a', 1, 'b', 0.5, 'c', 1, 'd', 1, 'e', 0.5, 'f']
+        note = note.lower()
+        deviation = 0
+
+        n = [n for n in notes if note == n]
+        if n != 'a':
+            i = 0
+            distance = [i + interval for interval in notes[notes.index(note)] if interval is int()]
+            i = 0
+
+            hr = hr[intervals]
+            hr = [distance + y for y in hr]
+
+            return hr
         
-        elif hr == 'bass':  # 16 -> E 20.60hz
-            n = [x for x in range(33, 46)]
+        elif note == 'a':
+            hr_a = [x for x in hr_a[intervals]]
 
-            return n
-
-        elif hr == '_bass_medium_sub':
-            n = [x for x in range(21, 46)]
-
-            return n
-
-        elif hr == 'medium':
-            n = [x for x in range(45, 58)]
-
-            return n
-
-        elif hr == '_medium_broad':
-            n = [x for x in range(33, 58)]
-
-            return n
-
-        elif hr == 'medium_high':
-            n = [x for x in range(57, 70)]
-
-            return n
-
-        elif hr == 'high':
-            n = [x for x in range(69, 82)]
-
-            return n
-
-        elif hr == 'higher':
-            n = [x for x in range(81, 105)]
-
-            return n
-        
-        elif hr == 'highest':
-            n = [x for x in range(105, 118)]
-
-            return n
-
-        elif hr == '_full_spectrum':
-            n = [x for x in range(9, 118)]
-
-            return n
+            return hr
         
         else:
+            AssertionError('We might have computed an unexistant tone')
             exit()
