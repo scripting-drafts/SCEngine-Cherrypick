@@ -1,6 +1,7 @@
 from sys import exit
+import random
 
-def get_harmonic_range(intervals='bass', note='A'):
+def get_harmonic_range(texture='bass', note='A'):
         
         '''
         SUB
@@ -47,6 +48,14 @@ def get_harmonic_range(intervals='bass', note='A'):
         
         
         '''
+        
+        # df = pd.read_excel('scales/Midi_Notes.xlsx', header=0)    
+        # len_text = len(hr[texture])
+        # min_text = min(hr[texture])
+
+        # for row in df.loc[:, df['Note Names']]:
+        #         if row >= min_text:
+
         hr = {
                   'sub': range(9, 34),
                   'bass': range(33, 46),
@@ -60,26 +69,39 @@ def get_harmonic_range(intervals='bass', note='A'):
                   
             }
 
-        notes = ['a', 1, 'b', 0.5, 'c', 1, 'd', 1, 'e', 0.5, 'f']
+        notes = {'a': [1, 1],
+                 'b': [1, 0],
+                 'c': [1, 1],
+                 'd': [1, 1],
+                 'e': [1, 0],
+                 'f': [0, 1],
+                 'g': [1, 1],
+                 
+                 }
+        
         note = note.lower()
-        deviation = 0
 
-        n = [n for n in notes if note == n]
-        if n != 'a':
-            i = 0
-            distance = [i + interval for interval in notes[notes.index(note)] if interval is int()]
-            i = 0
+        below_tones = [x[0] for x in notes.values()]
+        above_tones = [x[1] for x in notes.values()]
 
-            hr = hr[intervals]
-            hr = [distance + y for y in hr]
+        rangy = hr[texture]
+        note_keys = list(notes.keys())
+        note_index = note_keys.index(note)
+        resulting_notes = []
 
-            return hr
-        
-        elif note == 'a':
-            hr_a = [x for x in hr_a[intervals]]
+        for nut in rangy:
+            if note == note_keys[-1]:
+                i = 0
+                resulting_notes.append(nut + below_tones[:note_index][i])
+                i += 1
+            if note == note_keys[0]:
+                q = 0
+                resulting_notes.append(nut + above_tones[note_index:][q])
+                q += 1 
+            else:
+                z = 0
+                chosen = random.choice([below_tones[:note_index], above_tones[note_index:]])
+                resulting_notes.append(nut + chosen[z])
+                z += 1
 
-            return hr
-        
-        else:
-            AssertionError('We might have computed an unexistant tone')
-            exit()
+        return  resulting_notes

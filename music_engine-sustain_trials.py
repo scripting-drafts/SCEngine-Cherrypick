@@ -17,10 +17,10 @@ from resources.harmonic_ranges import get_harmonic_range
 midiout = rtmidi.MidiOut()
 available_ports = midiout.get_ports()
 
-port = 1 # Side-Chain
+port = 0 # 1 Side-Chain
 first_silence = False # silence_pre function in the Timer class
 main_tone = input('''Choose the main_tone:''').upper()
-
+main_tone = main_tone if main_tone != '' else exit()
 
 colorama.init()
 GREEN = colorama.Fore.GREEN
@@ -142,8 +142,10 @@ def range_increments(start=33, stop=95, steps=None):
         hr.append(start + steps[i] - 1)
         i += 1
 
+    i = 0
     hr = range_increments_extension(hr, steps)
-    while not len(hr) > stop - start:
+
+    while not len(hr) > stop + start:
         hr = range_increments_extension(hr, steps)
     else:
         hr = list(set(hr))
@@ -262,11 +264,12 @@ else:
     print('Wrong option')
     exit()
 
-harmonic_range = get_harmonic_range(intervals='_medium_broad', note=main_tone)
+harmonic_range = get_harmonic_range(texture='_bass_medium_sub', note=main_tone)
+print(harmonic_range)
 # harmonic_range = [33, 94] Perfect
 # s = s + [x + 12 for x in s if x != 0] + [x + 24 for x in s if x != 0]
 hr = range_increments(start=harmonic_range[0], stop=harmonic_range[1], steps=s)
-
+print(hr)
 # display_acquired_info(s)
 
 bars_count = 1 
@@ -297,7 +300,6 @@ def debug_bend_receiver():
         
 
 t = 27.42857142857143
-log.debug(hr)
 
 with midiout:
     sleep(.3)
