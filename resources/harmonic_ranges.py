@@ -1,4 +1,8 @@
-def get_harmonic_range(hr='bass'):
+from sys import exit
+import random
+
+def get_harmonic_range(texture='bass', note='A'):
+        
         '''
         SUB
         9 - A - 13.57hz
@@ -44,55 +48,60 @@ def get_harmonic_range(hr='bass'):
         
         
         '''
-        if hr == 'sub':  # 16 -> E 20.60hz
-            n = [x for x in range(9, 34)]
-
-            return n
         
-        elif hr == 'bass':  # 16 -> E 20.60hz
-            n = [x for x in range(33, 46)]
+        # df = pd.read_excel('scales/Midi_Notes.xlsx', header=0)    
+        # len_text = len(hr[texture])
+        # min_text = min(hr[texture])
 
-            return n
+        # for row in df.loc[:, df['Note Names']]:
+        #         if row >= min_text:
 
-        elif hr == '_bass_medium_sub':
-            n = [x for x in range(21, 46)]
+        hr = {
+                  'sub': range(9, 34),
+                  'bass': range(33, 46),
+                  '_bass_medium_sub': range(21, 46),
+                  'medium': range(45, 58),
+                  '_medium_broad': range(33, 58),
+                  'medium_high': range(57, 70),
+                  'high': range(69, 82),
+                  'higher': range(81, 105),
+                  'highest': range(105, 118)
+                  
+            }
 
-            return n
-
-        elif hr == 'medium':
-            n = [x for x in range(45, 58)]
-
-            return n
-
-        elif hr == '_medium_broad':
-            n = [x for x in range(33, 58)]
-
-            return n
-
-        elif hr == 'medium_high':
-            n = [x for x in range(57, 70)]
-
-            return n
-
-        elif hr == 'high':
-            n = [x for x in range(69, 82)]
-
-            return n
-
-        elif hr == 'higher':
-            n = [x for x in range(81, 105)]
-
-            return n
+        notes = {'a': [1, 1],
+                 'b': [1, 0],
+                 'c': [1, 1],
+                 'd': [1, 1],
+                 'e': [1, 0],
+                 'f': [0, 1],
+                 'g': [1, 1],
+                 
+                 }
         
-        elif hr == 'highest':
-            n = [x for x in range(105, 118)]
+        note = note.lower()
 
-            return n
+        below_tones = [x[0] for x in notes.values()]
+        above_tones = [x[1] for x in notes.values()]
 
-        elif hr == '_full_spectrum':
-            n = [x for x in range(9, 118)]
+        rangy = hr[texture]
+        note_keys = list(notes.keys())
+        note_index = note_keys.index(note)
+        resulting_notes = []
 
-            return n
-        
-        else:
-            exit()
+        for nut in rangy:
+            if note == note_keys[-1]:
+                i = 0
+                resulting_notes.append(nut + below_tones[:note_index][i])
+                i += 1
+            if note == note_keys[0]:
+                q = 0
+                resulting_notes.append(nut + above_tones[note_index:][q])
+                q += 1 
+            else:
+                z = 0
+                chosen = random.choice([below_tones[:note_index], above_tones[note_index:]])
+                resulting_notes.append(nut + chosen[z])
+                z += 1
+
+        return  resulting_notes

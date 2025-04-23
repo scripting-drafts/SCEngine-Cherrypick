@@ -3,12 +3,10 @@ import enhancements.mod_initializer as gui_enhancements
 import enhancements.turquoise_logger as turquoise_logger
 import pandas as pd
 import numpy as np
-from itertools import cycle
 import random
 import re
 import rtmidi
 from time import sleep
-from enhancements.clear import clear
 from sys import exit
 from time import sleep
 from resources.timer import Timer
@@ -18,6 +16,11 @@ from resources.harmonic_ranges import get_harmonic_range
 
 midiout = rtmidi.MidiOut()
 available_ports = midiout.get_ports()
+
+port = 0 # 1 Side-Chain
+first_silence = False # silence_pre function in the Timer class
+main_tone = input('''Choose the main_tone:''').upper()
+main_tone = main_tone if main_tone != '' else exit()
 
 colorama.init()
 GREEN = colorama.Fore.GREEN
@@ -42,7 +45,7 @@ if available_ports:
     mr = multireplacer_initializer()
     listed_ports = mr.multireplace(re.sub(r'^\s', '', str(available_ports)), replacements_ports) # str([r'{} '.format(x) for x in available_ports]).split('\n')
     log.debug(f'Available Ports: \n\n{listed_ports} \n')
-    selected_port = 0
+    selected_port = port
     midiout.open_port(selected_port)
     log.debug(f'Port #{selected_port} Open')
 else:
@@ -134,6 +137,24 @@ def display_acquired_info(s):
 def range_increments(start=33, stop=95, steps=None):
     i = 0
     hr = []
+    
+    for _ in steps:
+        hr.append(start + steps[i] - 1)
+        i += 1
+
+    i = 0
+    hr = range_increments_extension(hr, steps)
+
+    while not len(hr) > stop + start:
+        hr = range_increments_extension(hr, steps)
+    else:
+        hr = list(set(hr))
+
+    return hr
+
+def range_increments_extension(hr, steps):
+    i = 0
+    start = hr[-1]
     for _ in steps:
         hr.append(start + steps[i] - 1)
         i += 1
@@ -145,9 +166,10 @@ def debug_midi_roll():
     for k, v in zip(rxs.keys(), rxs.values()):
         log.debug("{:<8} {:<15}".format(k, v))
 
-    # log.debug("{:<8} {:<15}".format('Key','Label'))
-    # for k, v in zip(silence_pre.keys(), silence_pre.values()):
-    #     log.debug("{:<8} {:<15}".format(k, v))
+    if first_silence == True:
+        log.debug("{:<8} {:<15}".format('Key','Label'))
+        for k, v in zip(silence_pre.keys(), silence_pre.values()):
+            log.debug("{:<8} {:<15}".format(k, v))
 
     log.debug("{:<8} {:<15}".format('Key','Label'))
     for k, v in zip(silence_during.keys(), silence_during.values()):
@@ -242,17 +264,18 @@ else:
     print('Wrong option')
     exit()
 
-harmonic_range = get_harmonic_range('higher')
+harmonic_range = get_harmonic_range(texture='_bass_medium_sub', note=main_tone)
+print(harmonic_range)
 # harmonic_range = [33, 94] Perfect
-s = s + [x + 12 for x in s if x != 0] + [x + 24 for x in s if x != 0]
+# s = s + [x + 12 for x in s if x != 0] + [x + 24 for x in s if x != 0]
 hr = range_increments(start=harmonic_range[0], stop=harmonic_range[1], steps=s)
-
+print(hr)
 # display_acquired_info(s)
 
 bars_count = 1 
 rxs = {}
 bend = {}
-# silence_pre = {}
+silence_pre = {} if first_silence == True else None
 silence_during = {}
 silence_after = {}
 
@@ -283,64 +306,98 @@ with midiout:
     while True:
         try:
             key = bars_count
-            note = random.choice(hr)
+            notes = random.sample(hr, k=random.randint(2, 8))
             case = None
             bend_receiver = None
             
-            # DEBUG
-            # if random.choice([True, True, False]) == True:
-            #     t, position = times.silent(t, 'Pre')
-            #     silence_pre[key] = (t)
-            # else:
-            #     position = f'Pre: {t}'
-            #     t = 0.
 
-            # silence_pre[key] = (t)
-            # sleep(t)
-            # log.debug(position)
+            for note in notes:
+                # DEBUG
+                if first_silence == True:
+                    if random.choice([True, True, False]) == True:
+                        t, position = times.silent(t, 'Pre')
+                        silence_pre[key] = (t)
+                    else:
+                        position = f'Pre: {t}'
+                        t = 0.
+
+                    silence_pre[key] = (t)
+                    sleep(t)
+                    log.debug(position)
 
 
-            if '.5' in str(note):
-                case = 1
-                center = hr.index(note) # RANDOM SAMAAAAAMPLES:!
-                if center in range(len(hr), len(hr) - 3) and center in range(len(hr), len(hr) + 3):
-                    distribution = [hr[x] for x in range(center - 3, center + 3)]
-                    bend_receiver = random.choice(distribution)
-                else:
-                    bend_receiver = random.choice(hr)
+                if '.5' in str(note):
+                    case = 1
+                    center = hr.index(note) # RANDOM SAMAAAAAMPLES:!
+                    if center in range(len(hr), len(hr) - 3) and center in range(len(hr), len(hr) + 3):
+                        distribution = [hr[x] for x in range(center - 3, center + 3)]
+                        bend_receiver = random.choice(distribution)
+                    else:
+                        bend_receiver = random.choice(hr)
 
-                rx = note # [x for x in s if x != rx or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6]
-                note_on = [0xE0, rx, bend_receiver]
-            if '.0' in str(note) or '.' not in str(note):
-                case = 2
-                rx = note # [x for x in s if x != rx or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6]
-                note_on = [0x90, rx, 112]
-                bend_receiver = None
+                    rx = note # [x for x in s if x != rx or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6]
+                    note_on = [0xE0, rx, bend_receiver]
+                if '.0' in str(note) or '.' not in str(note):
+                    case = 2
+                    rx = note # [x for x in s if x != rx or x != rx1 or x != rx2 or x != rx3 or x != rx4 or x != rx5 or x != rx6]
+                    note_on = [0x90, rx, 112]
+                    bend_receiver = None
 
-            midiout.send_message(note_on)
-            debug_bend_receiver()
+                midiout.send_message(note_on)
+                debug_bend_receiver()
 
-            rxs[key] = (rx)
-            bend[key] = (bend_receiver)
+                rxs[key] = (rx)
+                bend[key] = (bend_receiver)
 
-            t, position = times.silent(t, 'Sustain')
-            silence_during[key] = (t)
-            sleep(t)
-            log.debug(position)
-    
-            note_off = [0x80, rx, 0]
-            
-            midiout.send_message(note_off)
-            log.debug(f'Note OFF: {rx}')
+                t, position = times.silent(t, 'Sustain')
+                silence_during[key] = (t)
+                sleep(t)
+                log.debug(position)
 
-            t, position = times.silent(t, 'After')
-            silence_after[key] = (t)
-            sleep(t)
-            log.debug(position)
+
+                # Notes off and sustain dev
+                sustained_notes = []
+        
+                if random.uniform(0., 1.) < .7:
+                    note_off = [0x80, rx, 0]
+                    midiout.send_message(note_off)
+                    log.debug(f'Note OFF: {rx}')
+                    
+                elif random.uniform(0., 1.) >= .7:
+                    sustained_notes.append([rx, bars_count])
+
+                    if len(sustained_notes) > 2:
+                        for n in sustained_notes:
+                            rx = n[0]
+                            note_off = [0x80, rx, 0]
+                            midiout.send_message(note_off)
+                            log.debug(f'Note OFF: {rx}')
+                
+                elif len(sustained_notes) != 0:
+                    if random.uniform(0., 1.) > .4:
+                        rx = random.choice([sustained_notes])
+                        rx = rx[0]
+                        note_off = [0x80, rx, 0]
+                        midiout.send_message(note_off)
+                        log.debug(f'Note OFF: {rx}')
+
+                elif bars_count == 33:
+                    for n in sustained_notes:
+                        rx = n[0]
+                        note_off = [0x80, rx, 0]
+                        midiout.send_message(note_off)
+                        log.debug(f'Note OFF: {rx}')
+
+                # End of notes off and sustain dev
+
+                t, position = times.silent(t, 'After')
+                silence_after[key] = (t)
+                sleep(t)
+                log.debug(position)
 
             bars_count += 1
 
-            if bars_count == 17:
+            if bars_count == 33:
                 break
 
         except KeyboardInterrupt:
@@ -352,9 +409,9 @@ with midiout:
 
     while True:
         try:
-            for bars_count in range(1, 17):
-                
-                # sleep(silence_pre[bars_count])
+            for bars_count in range(1, 33):
+                if first_silence == True:
+                    sleep(silence_pre[bars_count])
                 
                 note_on = [0x90, rxs[bars_count], 112]
                 midiout.send_message(note_on)
